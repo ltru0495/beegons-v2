@@ -18,7 +18,7 @@ func init() {
 }
 
 func RenderTemplate(w http.ResponseWriter, filename string, data interface{}) {
-	log.Println(filename)
+	log.Println("Rendering", filename)
 	err := rnd.HTML(w, http.StatusOK, filename, data)
 	if err != nil {
 		log.Println(err)

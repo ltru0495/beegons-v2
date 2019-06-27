@@ -1,33 +1,82 @@
-2019/05/28 12:26:19 Connected to MongoDB!
-2019/05/28 12:26:19 Connection OK
-2019/06/18 09:53:03 Connected to MongoDB!
-2019/06/18 09:53:03 Connection OK
-2019/06/18 09:53:03 listen tcp: address 3000: missing port in address
-2019/06/18 09:53:28 Connected to MongoDB!
-2019/06/18 09:53:28 Connection OK
-2019/06/18 09:54:01 Connected to MongoDB!
-2019/06/18 09:54:01 Connection OK
-2019/06/18 09:54:51 Connected to MongoDB!
-2019/06/18 09:54:51 Connection OK
-2019/06/18 09:54:51 Starting server at 127.0.0.1:3000
-2019/06/18 11:28:33 Connected to MongoDB!
-2019/06/18 11:28:33 Connection OK
-2019/06/18 11:28:33 Starting server at 127.0.0.1:3000
-2019/06/18 11:29:17 Connected to MongoDB!
-2019/06/18 11:29:17 Connection OK
-2019/06/18 11:29:17 Starting server at 127.0.0.1:3000
-2019/06/18 11:29:19 module_create
-2019/06/25 15:21:38 Starting server at 127.0.0.1:3000
-2019/06/25 15:21:51 Starting server at 127.0.0.1:3000
-2019/06/25 15:23:09 Connected to MongoDB!
-2019/06/25 15:23:09 Connection OK
-2019/06/25 15:23:09 Starting server at 127.0.0.1:3000
-2019/06/25 15:45:14 Connected to MongoDB!
-2019/06/25 15:45:14 Connection OK
-2019/06/25 15:45:14 Starting server at 127.0.0.1:3000
-2019/06/25 16:07:34 Connected to MongoDB!
-2019/06/25 16:07:34 Connection OK
-2019/06/25 16:07:34 Starting server at 127.0.0.1:3000
-2019/06/25 16:08:18 Connected to MongoDB!
-2019/06/25 16:08:18 Connection OK
-2019/06/25 16:08:18 Starting server at 127.0.0.1:3000
+2019/06/27 11:26:20 Connected to MongoDB...
+2019/06/27 11:26:20 Connection OK
+2019/06/27 11:26:20 Starting server at 127.0.0.1:3000
+2019/06/27 11:26:23 http: panic serving 127.0.0.1:44858: runtime error: invalid memory address or nil pointer dereference
+goroutine 52 [running]:
+net/http.(*conn).serve.func1(0xc000298820)
+	/usr/local/go/src/net/http/server.go:1746 +0xd0
+panic(0x982da0, 0xf24840)
+	/usr/local/go/src/runtime/panic.go:513 +0x1b9
+net/http.HandlerFunc.ServeHTTP(0x0, 0xb70720, 0xc00032c000, 0xc000254500)
+	/usr/local/go/src/net/http/server.go:1964 +0x3f
+github.com/gorilla/mux.(*Router).ServeHTTP(0xc0002960c0, 0xb70720, 0xc00032c000, 0xc000254500)
+	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
+github.com/gorilla/mux.(*Router).ServeHTTP(0xc000296000, 0xb70720, 0xc00032c000, 0xc000254300)
+	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
+net/http.serverHandler.ServeHTTP(0xc0002608f0, 0xb70720, 0xc00032c000, 0xc000254100)
+	/usr/local/go/src/net/http/server.go:2741 +0xab
+net/http.(*conn).serve(0xc000298820, 0xb718e0, 0xc00028e240)
+	/usr/local/go/src/net/http/server.go:1847 +0x646
+created by net/http.(*Server).Serve
+	/usr/local/go/src/net/http/server.go:2851 +0x2f5
+2019/06/27 11:26:24 http: panic serving 127.0.0.1:44862: runtime error: invalid memory address or nil pointer dereference
+goroutine 6 [running]:
+net/http.(*conn).serve.func1(0xc00017f9a0)
+	/usr/local/go/src/net/http/server.go:1746 +0xd0
+panic(0x982da0, 0xf24840)
+	/usr/local/go/src/runtime/panic.go:513 +0x1b9
+net/http.HandlerFunc.ServeHTTP(0x0, 0xb70720, 0xc00032c0e0, 0xc000254900)
+	/usr/local/go/src/net/http/server.go:1964 +0x3f
+github.com/gorilla/mux.(*Router).ServeHTTP(0xc0002960c0, 0xb70720, 0xc00032c0e0, 0xc000254900)
+	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
+github.com/gorilla/mux.(*Router).ServeHTTP(0xc000296000, 0xb70720, 0xc00032c0e0, 0xc000254700)
+	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
+net/http.serverHandler.ServeHTTP(0xc0002608f0, 0xb70720, 0xc00032c0e0, 0xc00022a300)
+	/usr/local/go/src/net/http/server.go:2741 +0xab
+net/http.(*conn).serve(0xc00017f9a0, 0xb718e0, 0xc000033100)
+	/usr/local/go/src/net/http/server.go:1847 +0x646
+created by net/http.(*Server).Serve
+	/usr/local/go/src/net/http/server.go:2851 +0x2f5
+2019/06/27 11:26:24 http: panic serving 127.0.0.1:44866: runtime error: invalid memory address or nil pointer dereference
+goroutine 7 [running]:
+net/http.(*conn).serve.func1(0xc00017fa40)
+	/usr/local/go/src/net/http/server.go:1746 +0xd0
+panic(0x982da0, 0xf24840)
+	/usr/local/go/src/runtime/panic.go:513 +0x1b9
+net/http.HandlerFunc.ServeHTTP(0x0, 0xb70720, 0xc000372000, 0xc00027c600)
+	/usr/local/go/src/net/http/server.go:1964 +0x3f
+github.com/gorilla/mux.(*Router).ServeHTTP(0xc0002960c0, 0xb70720, 0xc000372000, 0xc00027c600)
+	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
+github.com/gorilla/mux.(*Router).ServeHTTP(0xc000296000, 0xb70720, 0xc000372000, 0xc00027c400)
+	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
+net/http.serverHandler.ServeHTTP(0xc0002608f0, 0xb70720, 0xc000372000, 0xc00022a200)
+	/usr/local/go/src/net/http/server.go:2741 +0xab
+net/http.(*conn).serve(0xc00017fa40, 0xb718e0, 0xc000032fc0)
+	/usr/local/go/src/net/http/server.go:1847 +0x646
+created by net/http.(*Server).Serve
+	/usr/local/go/src/net/http/server.go:2851 +0x2f5
+2019/06/27 11:26:24 http: panic serving 127.0.0.1:44870: runtime error: invalid memory address or nil pointer dereference
+goroutine 55 [running]:
+net/http.(*conn).serve.func1(0xc0002988c0)
+	/usr/local/go/src/net/http/server.go:1746 +0xd0
+panic(0x982da0, 0xf24840)
+	/usr/local/go/src/runtime/panic.go:513 +0x1b9
+net/http.HandlerFunc.ServeHTTP(0x0, 0xb70720, 0xc0003720e0, 0xc00027ca00)
+	/usr/local/go/src/net/http/server.go:1964 +0x3f
+github.com/gorilla/mux.(*Router).ServeHTTP(0xc0002960c0, 0xb70720, 0xc0003720e0, 0xc00027ca00)
+	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
+github.com/gorilla/mux.(*Router).ServeHTTP(0xc000296000, 0xb70720, 0xc0003720e0, 0xc00027c800)
+	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
+net/http.serverHandler.ServeHTTP(0xc0002608f0, 0xb70720, 0xc0003720e0, 0xc000254a00)
+	/usr/local/go/src/net/http/server.go:2741 +0xab
+net/http.(*conn).serve(0xc0002988c0, 0xb718e0, 0xc00028e4c0)
+	/usr/local/go/src/net/http/server.go:1847 +0x646
+created by net/http.(*Server).Serve
+	/usr/local/go/src/net/http/server.go:2851 +0x2f5
+2019/06/27 11:26:51 Connected to MongoDB...
+2019/06/27 11:26:51 Connection OK
+2019/06/27 11:26:51 Starting server at 127.0.0.1:3000
+2019/06/27 11:26:54 index
+2019/06/27 11:26:54 html/template: "index" is undefined
+2019/06/27 11:26:54 http: multiple response.WriteHeader calls
+2019/06/27 11:26:59 user_create

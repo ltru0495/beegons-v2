@@ -11,6 +11,10 @@ import (
 	"github.com/beegons/utils"
 )
 
-func IndexGET(w http.ResponseWriter, r *http.Request) {
+func Index(w http.ResponseWriter, r *http.Request) {
 	utils.RenderTemplate(w, "index", nil)
+}
+
+func UserCreate(w http.ResponseWriter, r *http.Request) {
+	utils.RenderTemplate(w, "user_create", nil)
 }

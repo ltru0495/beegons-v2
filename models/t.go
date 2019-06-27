@@ -34,7 +34,7 @@ func (t *Test) Update() error {
 	return err
 }
 
-func FindTest(id primitive.ObjectID) ( test Test,err error ){
+func FindTest(id primitive.ObjectID) (test Test, err error) {
 	filter := bson.D{{"_id", id}}
 	err = getDatabase().Collection(TEST_COL).FindOne(context.Background(), filter).Decode(&test)
 	return
