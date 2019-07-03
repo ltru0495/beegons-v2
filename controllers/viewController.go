@@ -14,7 +14,3 @@ import (
 func Index(w http.ResponseWriter, r *http.Request) {
 	utils.RenderTemplate(w, "index", nil)
 }
-
-func UserCreate(w http.ResponseWriter, r *http.Request) {
-	utils.RenderTemplate(w, "user_create", nil)
-}
