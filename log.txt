@@ -1,82 +1,39 @@
-2019/06/27 11:26:20 Connected to MongoDB...
-2019/06/27 11:26:20 Connection OK
-2019/06/27 11:26:20 Starting server at 127.0.0.1:3000
-2019/06/27 11:26:23 http: panic serving 127.0.0.1:44858: runtime error: invalid memory address or nil pointer dereference
-goroutine 52 [running]:
-net/http.(*conn).serve.func1(0xc000298820)
-	/usr/local/go/src/net/http/server.go:1746 +0xd0
-panic(0x982da0, 0xf24840)
-	/usr/local/go/src/runtime/panic.go:513 +0x1b9
-net/http.HandlerFunc.ServeHTTP(0x0, 0xb70720, 0xc00032c000, 0xc000254500)
-	/usr/local/go/src/net/http/server.go:1964 +0x3f
-github.com/gorilla/mux.(*Router).ServeHTTP(0xc0002960c0, 0xb70720, 0xc00032c000, 0xc000254500)
-	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
-github.com/gorilla/mux.(*Router).ServeHTTP(0xc000296000, 0xb70720, 0xc00032c000, 0xc000254300)
-	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
-net/http.serverHandler.ServeHTTP(0xc0002608f0, 0xb70720, 0xc00032c000, 0xc000254100)
-	/usr/local/go/src/net/http/server.go:2741 +0xab
-net/http.(*conn).serve(0xc000298820, 0xb718e0, 0xc00028e240)
-	/usr/local/go/src/net/http/server.go:1847 +0x646
-created by net/http.(*Server).Serve
-	/usr/local/go/src/net/http/server.go:2851 +0x2f5
-2019/06/27 11:26:24 http: panic serving 127.0.0.1:44862: runtime error: invalid memory address or nil pointer dereference
-goroutine 6 [running]:
-net/http.(*conn).serve.func1(0xc00017f9a0)
-	/usr/local/go/src/net/http/server.go:1746 +0xd0
-panic(0x982da0, 0xf24840)
-	/usr/local/go/src/runtime/panic.go:513 +0x1b9
-net/http.HandlerFunc.ServeHTTP(0x0, 0xb70720, 0xc00032c0e0, 0xc000254900)
-	/usr/local/go/src/net/http/server.go:1964 +0x3f
-github.com/gorilla/mux.(*Router).ServeHTTP(0xc0002960c0, 0xb70720, 0xc00032c0e0, 0xc000254900)
-	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
-github.com/gorilla/mux.(*Router).ServeHTTP(0xc000296000, 0xb70720, 0xc00032c0e0, 0xc000254700)
-	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
-net/http.serverHandler.ServeHTTP(0xc0002608f0, 0xb70720, 0xc00032c0e0, 0xc00022a300)
-	/usr/local/go/src/net/http/server.go:2741 +0xab
-net/http.(*conn).serve(0xc00017f9a0, 0xb718e0, 0xc000033100)
-	/usr/local/go/src/net/http/server.go:1847 +0x646
-created by net/http.(*Server).Serve
-	/usr/local/go/src/net/http/server.go:2851 +0x2f5
-2019/06/27 11:26:24 http: panic serving 127.0.0.1:44866: runtime error: invalid memory address or nil pointer dereference
-goroutine 7 [running]:
-net/http.(*conn).serve.func1(0xc00017fa40)
-	/usr/local/go/src/net/http/server.go:1746 +0xd0
-panic(0x982da0, 0xf24840)
-	/usr/local/go/src/runtime/panic.go:513 +0x1b9
-net/http.HandlerFunc.ServeHTTP(0x0, 0xb70720, 0xc000372000, 0xc00027c600)
-	/usr/local/go/src/net/http/server.go:1964 +0x3f
-github.com/gorilla/mux.(*Router).ServeHTTP(0xc0002960c0, 0xb70720, 0xc000372000, 0xc00027c600)
-	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
-github.com/gorilla/mux.(*Router).ServeHTTP(0xc000296000, 0xb70720, 0xc000372000, 0xc00027c400)
-	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
-net/http.serverHandler.ServeHTTP(0xc0002608f0, 0xb70720, 0xc000372000, 0xc00022a200)
-	/usr/local/go/src/net/http/server.go:2741 +0xab
-net/http.(*conn).serve(0xc00017fa40, 0xb718e0, 0xc000032fc0)
-	/usr/local/go/src/net/http/server.go:1847 +0x646
-created by net/http.(*Server).Serve
-	/usr/local/go/src/net/http/server.go:2851 +0x2f5
-2019/06/27 11:26:24 http: panic serving 127.0.0.1:44870: runtime error: invalid memory address or nil pointer dereference
-goroutine 55 [running]:
-net/http.(*conn).serve.func1(0xc0002988c0)
-	/usr/local/go/src/net/http/server.go:1746 +0xd0
-panic(0x982da0, 0xf24840)
-	/usr/local/go/src/runtime/panic.go:513 +0x1b9
-net/http.HandlerFunc.ServeHTTP(0x0, 0xb70720, 0xc0003720e0, 0xc00027ca00)
-	/usr/local/go/src/net/http/server.go:1964 +0x3f
-github.com/gorilla/mux.(*Router).ServeHTTP(0xc0002960c0, 0xb70720, 0xc0003720e0, 0xc00027ca00)
-	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
-github.com/gorilla/mux.(*Router).ServeHTTP(0xc000296000, 0xb70720, 0xc0003720e0, 0xc00027c800)
-	/home/smartcity/go/src/github.com/gorilla/mux/mux.go:215 +0xf1
-net/http.serverHandler.ServeHTTP(0xc0002608f0, 0xb70720, 0xc0003720e0, 0xc000254a00)
-	/usr/local/go/src/net/http/server.go:2741 +0xab
-net/http.(*conn).serve(0xc0002988c0, 0xb718e0, 0xc00028e4c0)
-	/usr/local/go/src/net/http/server.go:1847 +0x646
-created by net/http.(*Server).Serve
-	/usr/local/go/src/net/http/server.go:2851 +0x2f5
-2019/06/27 11:26:51 Connected to MongoDB...
-2019/06/27 11:26:51 Connection OK
-2019/06/27 11:26:51 Starting server at 127.0.0.1:3000
-2019/06/27 11:26:54 index
-2019/06/27 11:26:54 html/template: "index" is undefined
-2019/06/27 11:26:54 http: multiple response.WriteHeader calls
-2019/06/27 11:26:59 user_create
+2019/07/09 14:38:37 Connected to MongoDB...
+2019/07/09 14:38:37 Connection OK
+2019/07/09 14:38:37 Starting server at 127.0.0.1:3000
+2019/07/09 14:38:37 listen tcp 127.0.0.1:3000: bind: address already in use
+2019/07/09 14:38:49 Connected to MongoDB...
+2019/07/09 14:38:49 Connection OK
+2019/07/09 14:38:49 Starting server at 127.0.0.1:3000
+2019/07/09 14:38:56 Rendering index
+2019/07/09 14:39:02 Rendering user_create
+2019/07/09 14:39:29 Connected to MongoDB...
+2019/07/09 14:39:29 Connection OK
+2019/07/09 14:39:29 Starting server at 127.0.0.1:3000
+2019/07/09 14:39:33 Rendering user_create
+2019/07/09 14:39:42 Rendering user_create
+2019/07/09 14:39:46 Rendering user_table
+2019/07/09 14:41:03 Connected to MongoDB...
+2019/07/09 14:41:03 Connection OK
+2019/07/09 14:41:03 Starting server at 127.0.0.1:3000
+2019/07/09 14:41:06 Rendering user_table
+2019/07/09 14:41:13 POSTT T
+2019/07/09 14:41:13 Rendering user_create
+2019/07/09 14:41:18 Rendering user_table
+2019/07/09 14:41:43 Connected to MongoDB...
+2019/07/09 14:41:43 Connection OK
+2019/07/09 14:41:43 Starting server at 127.0.0.1:3000
+2019/07/09 14:41:53 Rendering user_create
+2019/07/09 14:42:00 POSTT T
+2019/07/09 14:42:00 &{ObjectID("000000000000000000000000")   }
+2019/07/09 14:42:00 Rendering user_create
+2019/07/09 14:43:02 Connected to MongoDB...
+2019/07/09 14:43:02 Connection OK
+2019/07/09 14:43:02 Starting server at 127.0.0.1:3000
+2019/07/09 14:43:07 Rendering index
+2019/07/09 14:43:11 Rendering user_create
+2019/07/09 14:43:18 POSTT T
+2019/07/09 14:43:18 map[id:[a00] name:[asdfa] username:[asdflkj] password:[asdflkjalf]]
+2019/07/09 14:43:18 schema: converter not found for primitive.ObjectID
+2019/07/09 14:43:18 Rendering user_create
+2019/07/09 14:43:22 Rendering user_table

@@ -1,6 +1,6 @@
 package utils
 
 func Init() {
-	SetLogger()
+	// SetLogger()
 
 }
