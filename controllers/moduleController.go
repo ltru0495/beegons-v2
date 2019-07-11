@@ -16,7 +16,7 @@ func ModuleCreate(w http.ResponseWriter, r *http.Request) {
 		} else {
 			module := new(models.Module)
 			sensors, err := module.DecodeModuleForm(r)
-
+			module.Id = "urn:ngsi-ld:Module:" + module.Name
 			if err != nil {
 				log.Println(err)
 			}
@@ -38,7 +38,7 @@ func ModuleCreate(w http.ResponseWriter, r *http.Request) {
 }
 
 func ModuleTable(w http.ResponseWriter, r *http.Request) {
-	modules, err := models.AllModules()
+	modules, err := utils.GetEntities("Module")
 	if err != nil {
 		log.Println(err)
 	}
