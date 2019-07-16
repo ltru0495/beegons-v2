@@ -21,7 +21,7 @@ $('#create').on('click', function(e) {
     }, {
         name: "Humedad",
         model: "SPEC",
-        type: "humedad",
+        type: "humidity",
         unit: "~"
     }, {
         name: "Ozono (O3) ",

@@ -16,16 +16,15 @@ func ModuleCreate(w http.ResponseWriter, r *http.Request) {
 		} else {
 			module := new(models.Module)
 			sensors, err := module.DecodeModuleForm(r)
-			module.Id = "urn:ngsi-ld:Module:" + module.Name
+			module.CreateModule()
+
+			aqo := models.NewAirQualityObserved(*module)
+			aqo.CreateAirQualityObserved()
+
 			if err != nil {
 				log.Println(err)
-			}
-
-			// log.Println(module)
-
-			err = utils.PostEntity(module)
-			if err != nil {
-				log.Println(err)
+				models.SendUnprocessableEntity(w)
+				return
 			}
 			res := models.CreateDefaultResponse(w)
 			res.Message = "Module has been created"
@@ -38,7 +37,7 @@ func ModuleCreate(w http.ResponseWriter, r *http.Request) {
 }
 
 func ModuleTable(w http.ResponseWriter, r *http.Request) {
-	modules, err := utils.GetEntities("Module")
+	modules, err := models.GetAllModules()
 	if err != nil {
 		log.Println(err)
 	}
@@ -48,35 +47,3 @@ func ModuleTable(w http.ResponseWriter, r *http.Request) {
 
 	utils.RenderTemplate(w, "module_table", context)
 }
-
-/*
-
-curl -iX POST \
-  'http://localhost:1026/v2/entities' \
-  -H 'Content-Type: application/json' \
-  -d '
-{
-    "id": "urn:ngsi-ld:Store:001",
-    "type": "Store",
-    "address": {
-        "type": "PostalAddress",
-        "value": {
-            "streetAddress": "Bornholmer Straße 65",
-            "addressRegion": "Berlin",
-            "addressLocality": "Prenzlauer Berg",
-            "postalCode": "10439"
-        }
-    },
-    "location": {
-        "type": "geo:json",
-        "value": {
-             "type": "Point",
-             "coordinates": [13.3986, 52.5547]
-        }
-    },
-    "name": {
-        "type": "Text",
-        "value": "Bösebrücke Einkauf"
-    }
-}'
-*/

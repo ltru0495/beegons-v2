@@ -48,3 +48,8 @@ func getDatabase() *mongo.Database {
 	}
 	return mDatabase
 }
+
+func Insert(data interface{}, collection string) error {
+	_, err := getDatabase().Collection(collection).InsertOne(context.Background(), data)
+	return err
+}

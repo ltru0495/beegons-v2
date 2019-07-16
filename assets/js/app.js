@@ -10,12 +10,9 @@ function post(url, data, method) {
         },
         error: function(jqXHR, textStatus, errorThrown) {
             console.log('ERROR');
-            console.log('jqXHR:');
-            console.log(jqXHR);
-            console.log('textStatus:');
-            console.log(textStatus);
-            console.log('errorThrown:');
-            console.log(errorThrown);
+            console.log(jqXHR.status);
+            console.log('textStatus: '+textStatus);
+            console.log('errorThrown: '+ errorThrown);
 
         }
     }).done(function(res){

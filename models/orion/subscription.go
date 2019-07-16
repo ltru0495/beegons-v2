@@ -1,6 +1,7 @@
 package orion
 
 type Subscription struct {
+	_Id            string                   `bson:"_id"`
 	SubscriptionId string                   `json:"subscriptionId" `
 	Data           []map[string]interface{} `json:"data"`
 }

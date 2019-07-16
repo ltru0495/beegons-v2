@@ -7,6 +7,8 @@ import (
 	// "go.mongodb.org/mongo-driver/bson"
 	// "go.mongodb.org/mongo-driver/bson/primitive"
 	"net/http"
+
+	"github.com/beegons/utils"
 )
 
 type Module struct {
@@ -49,6 +51,26 @@ func (m *Module) DecodeModuleForm(r *http.Request) ([]Sensor, error) {
 	}
 	m.ControlledProperties = props
 	return sensors, nil
+}
+
+func (m *Module) CreateModule() (err error) {
+	m.Id = "urn:ngsi-ld:Module:" + m.Name
+	err = utils.PostEntity(m)
+	return
+}
+
+func GetAllModules() (modules []Module, err error) {
+	err = utils.GetEntities("Module", &modules)
+	return
+}
+
+func GetModule(id string) (module Module, err error) {
+	id = "urn:ngsi-ld:Module:" + id
+	err = utils.GetEntity(id, &module)
+	if err != nil {
+		return
+	}
+	return
 }
 
 /*==============================================================================================*/

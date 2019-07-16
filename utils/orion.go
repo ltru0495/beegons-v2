@@ -6,7 +6,6 @@ import (
 	"net/http"
 
 	"errors"
-	"github.com/beegons/models"
 	"log"
 )
 
@@ -36,8 +35,10 @@ func PostEntity(entity interface{}) error {
 	// buf.ReadFrom(body)
 	// s := buf.String()
 	// log.Println(s)
-	if err != nil {
-		return err
+	// log.Println(resp.StatusCode)
+
+	if err != nil || resp.StatusCode < 200 || resp.StatusCode > 299 {
+		return errors.New("An error has ocurred")
 	}
 
 	defer resp.Body.Close()
@@ -45,7 +46,7 @@ func PostEntity(entity interface{}) error {
 	return nil
 }
 
-func GetEntities(entityType string) (modules []models.Module, err error) {
+func GetEntities(entityType string, itf interface{}) (err error) {
 	url := orionURL + "?options=keyValues&type=" + entityType
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -58,15 +59,15 @@ func GetEntities(entityType string) (modules []models.Module, err error) {
 	}
 	defer res.Body.Close()
 
-	err = json.NewDecoder(res.Body).Decode(&modules)
+	err = json.NewDecoder(res.Body).Decode(&itf)
 	if err != nil {
 		return
 	}
-	// log.Println(modules)
+	log.Println(itf)
 	return
 }
 
-func GetEntity(entityId string) (module models.Module, err error) {
+func GetEntity(entityId string, itf interface{}) (err error) {
 	url := orionURL + "/" + entityId + "?options=keyValues"
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
@@ -79,11 +80,11 @@ func GetEntity(entityId string) (module models.Module, err error) {
 	}
 	defer res.Body.Close()
 
-	err = json.NewDecoder(res.Body).Decode(&module)
+	err = json.NewDecoder(res.Body).Decode(&itf)
 	if err != nil {
 		return
 	}
-	log.Println(res.StatusCode)
+	log.Println(itf)
 	if res.StatusCode == 404 {
 		err = errors.New("Not Found")
 	}

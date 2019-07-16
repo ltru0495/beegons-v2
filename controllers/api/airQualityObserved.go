@@ -8,16 +8,17 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func ModuleGet(w http.ResponseWriter, r *http.Request) {
+func AirQualityObservedGet(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
 	id := vars["id"]
-	module, err := models.GetModule(id)
+	aqo, err := models.GetAirQualityObserved(id)
+	// log.Println(aqo)
 	if err != nil {
 		log.Println(err)
 		models.SendNotFound(w)
 		return
 	}
-	models.SendData(w, module)
+	models.SendData(w, aqo)
 	return
 }

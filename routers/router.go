@@ -8,7 +8,8 @@ import (
 func InitRoutes() *mux.Router {
 	router := mux.NewRouter().StrictSlash(false)
 	router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("assets/"))))
-	router = SetAppRoutes(router)
 	router = SetApiRoutes(router)
+
+	router = SetAppRoutes(router)
 	return router
 }

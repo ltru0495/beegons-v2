@@ -6,10 +6,8 @@ import (
 )
 
 func SetApiRoutes(router *mux.Router) *mux.Router {
-	apiRouter := mux.NewRouter()
-
-	apiRouter.HandleFunc("/api/module/{id}", api.ModuleGet).Methods("GET")
-	router.PathPrefix("/").Handler(apiRouter)
+	router.HandleFunc("/api/module/{id}", api.ModuleGet).Methods("GET")
+	router.HandleFunc("/api/aqo/{id}", api.AirQualityObservedGet).Methods("GET")
 	return router
 
 }
