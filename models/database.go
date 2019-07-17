@@ -24,14 +24,14 @@ func connect(host string, port int) {
 	uri := fmt.Sprintf("mongodb://%s:%d/", host, port)
 
 	var err error
-	ctx, timeout := context.WithTimeout(context.Background(), 10*time.Second)
+	ctx, timeout := context.WithTimeout(context.Background(), 3*time.Second)
 	defer timeout()
 	mClient, err = mongo.Connect(ctx, options.Client().ApplyURI(uri))
 	if err != nil {
 		log.Fatal(err)
 		return
 	}
-	log.Println("Connected to MongoDB...")
+	log.Println("Connecting to MongoDB...")
 }
 
 func ping() {

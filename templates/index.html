@@ -2,8 +2,10 @@
 {{template "header"}}
 </head>
 <body>
-	<h1>ASDFSADFASFD</h1>
-	<div class="container">
+{{template "sidebar"}}
+<h1>ASDFSADFASFD</h1>
+<div class="content-wrap">
+	<main id="content" class="content" role="main">
 		<div class="row">
 			<div class="col-md-12">
 				<table class="table">
@@ -15,28 +17,25 @@
 							<th scope="col">State</th>
 							<th scope="col">Protocol</th>
 							<th scope="col">Controlled Properties</th>x
-
 						</tr>
 					</thead>
-
 					<tbody>
 						{{ range .Modules }}
-							<tr>
-								<!-- <td>{{ .Id }}</td> -->
-								<td>{{ .Type }}</td>
-								<td>{{ .Mac }}</td>
-								<td>{{ .State }}</td>
-								<td>{{ .Protocol}}</td>
-
-								<td> {{ range  .ControlledProperties  }} {{. }} {{ end }}</td>
-
-							</tr>
+						<tr>
+							<!-- <td>{{ .Id }}</td> -->
+							<td>{{ .Type }}</td>
+							<td>{{ .Mac }}</td>
+							<td>{{ .State }}</td>
+							<td>{{ .Protocol}}</td>
+							<td> {{ range  .ControlledProperties  }} {{. }} {{ end }}</td>
+						</tr>
 						{{end}}
 					</tbody>
 				</table>
 			</div>
 		</div>
-	</div>
+	</main>
+</div>
 {{template "footer"}}
 </body>
 {{ end }}

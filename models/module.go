@@ -13,13 +13,14 @@ import (
 
 type Module struct {
 	// _Id                  primitive.ObjectID `json:"_id" bson:"_id"`
-	Id                   string   `json:"id" bson:"id"`
-	Type                 string   `json:"type" bson:"type"`
-	Mac                  string   `json:"mac" bson:"mac"`
-	Name                 string   `json:"name" bson:"name"`
-	State                string   `json:"state" bson:"state"`
-	Protocol             string   `json:"protocol" bson:"protocol"`
-	ControlledProperties []string `json:"controlledProperties" bson:"controlledProperties"`
+	Id                   string     `json:"id" bson:"id"`
+	Type                 string     `json:"type" bson:"type"`
+	Mac                  string     `json:"mac" bson:"mac"`
+	Name                 string     `json:"name" bson:"name"`
+	State                string     `json:"state" bson:"state"`
+	Protocol             string     `json:"protocol" bson:"protocol"`
+	ControlledProperties []string   `json:"controlledProperties" bson:"controlledProperties"`
+	Coordinates          [2]float64 `json:"coordinates" bson:coordinates`
 }
 
 type Sensor struct {

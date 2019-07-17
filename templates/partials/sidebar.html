@@ -1,0 +1,77 @@
+{{ define "sidebar" }}
+
+<nav id="sidebar" class="sidebar" role="navigation">
+    <!-- need this .js class to initiate slimscroll -->
+    <div class="js-sidebar-content">
+        <header class="logo hidden-xs">
+            <a href="/">BeeGOns!</a>
+        </header>
+       
+        <ul class="sidebar-nav">
+            
+            <li>
+                <a class="collapsed" href="#sidebar-levels" data-toggle="collapse" data-parent="#sidebar">
+                    <span class="icon">
+                        <i class="fa fa-desktop"></i>
+                    </span>
+                    Administrar
+                    <i class="toggle fa fa-angle-down"></i>
+                </a>
+
+                <ul id="sidebar-levels" class="collapse">
+                    <li>
+                        <a class="collapsed" href="#module-levels" data-toggle="collapse" data-parent="#sidebar-levels">
+                            Módulo IOT
+                            <i class="toggle fa fa-angle-down"></i>
+                        </a>
+                        <ul id="module-levels" class="collapse">
+                            <li><a href="/module/create">Añadir módulo</a></li>
+                            <!-- <li><a href="/module/modify">Modificar o eliminar módulo</a></li> -->
+                        </ul>
+                    </li>
+
+                    
+                </ul>
+            </li>
+
+            <li>
+                <a class="collapsed" href="#info-levels" data-toggle="collapse" data-parent="#sidebar">
+                <span class="icon">
+                    <i class="fa fa-info"></i>
+                </span>
+                    Información
+                    <i class="toggle fa fa-angle-down"></i>
+                </a>
+
+                <ul id="info-levels" class="collapse">
+                    <li>
+                        <a href="/modules">
+                            Módulos
+                        </a>
+                    </li>
+                </ul>
+            </li>
+            
+            <li>
+                <a class="collapsed" href="#charts-levels" data-toggle="collapse" data-parent="#sidebar">
+                <span class="icon">
+                    <i class="fa fa-bar-chart"></i>
+                    
+                </span>
+                    Gráficos
+                    <i class="toggle fa fa-angle-down"></i>
+
+                </a>
+
+                <ul id="charts-levels" class="collapse">
+                    <li>
+                        <a href="/charts/realtime">Tiempo real</a>
+                    </li>
+                </ul>
+            </li>
+
+        </ul>
+     
+    </div>
+</nav>
+{{ end }}

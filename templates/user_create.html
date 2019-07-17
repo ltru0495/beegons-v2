@@ -2,27 +2,29 @@
 {{template "header"}}
 </head>
 <body>
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<form class="form" action="/user/create" method="post">
-				<div class="form-group">
-					<label for="inputName">Name</label>
-					<input type="text" class="form-control" id="inputName" name="name" placeholder="Enter Name">
-				</div>
-				<div class="form-group">
-					<label for="inputUsername">Username</label>
-					<input type="text" class="form-control" id="inputUsername" name="username" placeholder="Enter Username">
-				</div>
-				<div class="form-group">
-					<label for="inputPassword">Password</label>
-					<input type="text" class="form-control" id="inputPassword" name="password" placeholder="Enter Password">
-				</div>
-				
-				<button id="create" type="submit" class="btn btn-primary">Submit</button>
-			</form>
+<div class="content-wrap">
+	<main id="content" class="content" role="main">
+		<div class="row">
+			<div class="col-md-12">
+				<form class="form" action="/user/create" method="post">
+					<div class="form-group">
+						<label for="inputName">Name</label>
+						<input type="text" class="form-control" id="inputName" name="name" placeholder="Enter Name">
+					</div>
+					<div class="form-group">
+						<label for="inputUsername">Username</label>
+						<input type="text" class="form-control" id="inputUsername" name="username" placeholder="Enter Username">
+					</div>
+					<div class="form-group">
+						<label for="inputPassword">Password</label>
+						<input type="text" class="form-control" id="inputPassword" name="password" placeholder="Enter Password">
+					</div>
+					
+					<button id="create" type="submit" class="btn btn-primary">Submit</button>
+				</form>
+			</div>
 		</div>
-	</div>
+	</main>
 </div>
 {{template "footer"}}
 </body>

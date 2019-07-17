@@ -2,20 +2,26 @@
 {{template "header"}}
 </head>
 <body>
-<div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<select id="moduleid">
-			{{range .Modules}}
-			<option value="none">Seleccionar ID</option>
-			<option value="{{.Id}}">{{.Id}}</option>
-			{{ end }}
-			</select>
+{{template "sidebar"}}
+<div class="content-wrap">
+	<main id="content" class="content" role="main">
+		<div class="row">
+			<div class="col-md-3">
+				<div class="card">
+					<div class="card-body">
+						<select id="moduleid">
+							<option value="none">Seleccionar ID</option>
+							{{range .Modules}}
+							<option value="{{.Id}}">{{.Id}}</option>
+							{{ end }}
+						</select>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>
+	</main>
 </div>
 {{template "footer"}}
 <script type="text/javascript" src="../../assets/js/charts/realtime.js"></script>
-
 </body>
 {{ end }}

@@ -11,5 +11,9 @@ $(function() {
         $.getJSON(url_server + '/api/module/' + moduleid, function(mod) {
             console.log(mod.data)
         });
+
+        $.getJSON(url_server + '/api/aqo/' + moduleid, function(aqo) {
+            console.log(aqo.data)
+        });
     });
 });

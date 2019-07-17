@@ -59,6 +59,7 @@ curl localhost:1026/v2/entities?options=keyValues -s -S -H 'Content-Type: applic
 {
   "id": "urn:ngsi-ld:AirQualityObserved:MOD01",
   "type": "AirQualityObserved",
+  "airQualityIndex"
   "temperature":  23,
   "humidity": 80,
   "co": 100,

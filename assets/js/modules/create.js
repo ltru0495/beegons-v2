@@ -8,11 +8,7 @@ $('#addsensor').on('click', function(e) {
 
 $('#create').on('click', function(e) {
     e.preventDefault();
-
-
     var mod = {};
-
-
     sensors = [{
         name: "Temperatura",
         model: "SPEC",
@@ -36,70 +32,17 @@ $('#create').on('click', function(e) {
     mod.mac = "123ADASDA0012";
     mod.state = "OK";
     mod.protocol = "HTTP";
+    mod.location = [-11.98164, -76.99925];
 
     mod.sensors = JSON.stringify(sensors);
 
     console.log(mod);
 
     post("/module/create", mod, "post")
-    // var sensorsGroup = $(".sensor");
 
-    // let sensors = [];
-    // let sensor = {};
-    // for (let i =0 ; i < sensorsGroup.length; i ++) {
-
-    //     id = sensorsGroup[i].id;
-    //     sensor.type = $('#type_'+id).val();
-    //     sensor.name = $('#name_'+id).val();
-    //     sensor.unit = $('#unit_'+id).val();
-    //     sensor.sensor = $('#sensor_'+id).val();
-
-
-    //     sensors.push(sensor)
-
-    // }
-
-    // console.log(sensors);
-
-
-    // var formData = {
-    //     type: $("#type"),
-    //     mac: $("#mac"),
-    //     name: $("#name"),
-    //     state: $("#state"),
-    //     protocol: $("#protocol"),
-    //     sensors: JSON.stringify(sensors)
-    // };
-
-    // var post_url = url_server + '/module/create';
-    // $.ajaxSettings.traditional = true;
-
-    // $.ajax({
-    //     url: post_url,
-    //     type: 'post',
-    //     data: formData,
-    //     success: function() {
-    //         console.log('SUCCESSSS');
-    //     },
-    //     error: function(jqXHR, textStatus, errorThrown) {
-    //         console.log('ERROR');
-    //         console.log('jqXHR:');
-    //         console.log(jqXHR);
-    //         console.log('textStatus:');
-    //         console.log(textStatus);
-    //         console.log('errorThrown:');
-    //         console.log(errorThrown);
-
-    //     },
-    //     complete: function() {
-    //         window.location = '/module/register';
-    //     }
-    // });
 
     e.stopPropagation();
 });
-
-
 
 function appendSensor() {
     var time = new Date();
@@ -112,8 +55,6 @@ function appendSensor() {
         '<input type="text" id="unit_' + id + '" class="form-control" data-placement="top" placeholder="Unidad">' +
         '<input type="text" id="sensor_' + id + '" class="form-control" data-placement="top" placeholder="Marca">' +
         '</div>');
-
-
 
     $('#remove-sensor' + id).on('click', function(e) {
         e.preventDefault();

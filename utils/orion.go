@@ -9,11 +9,20 @@ import (
 	"log"
 )
 
-const orionURL = "http://localhost:1026/v2/entities"
+const orionURL = "http://localhost:1026/v2"
+
+func CheckOrion() {
+	_, err := http.Get(orionURL)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println("Orion Broker OK at " + orionURL)
+}
 
 func PostEntity(entity interface{}) error {
 
 	q := "?options=keyValues"
+	url := orionURL + "/entities" + q
 	payloadBytes, err := json.Marshal(entity)
 
 	if err != nil {
@@ -22,7 +31,7 @@ func PostEntity(entity interface{}) error {
 
 	body := bytes.NewReader(payloadBytes)
 
-	req, err := http.NewRequest("POST", orionURL+q, body)
+	req, err := http.NewRequest("POST", url, body)
 	if err != nil {
 		return err
 	}
@@ -47,7 +56,7 @@ func PostEntity(entity interface{}) error {
 }
 
 func GetEntities(entityType string, itf interface{}) (err error) {
-	url := orionURL + "?options=keyValues&type=" + entityType
+	url := orionURL + "/entities?options=keyValues&type=" + entityType
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return
@@ -63,12 +72,11 @@ func GetEntities(entityType string, itf interface{}) (err error) {
 	if err != nil {
 		return
 	}
-	log.Println(itf)
 	return
 }
 
 func GetEntity(entityId string, itf interface{}) (err error) {
-	url := orionURL + "/" + entityId + "?options=keyValues"
+	url := orionURL + "/entities/" + entityId + "?options=keyValues"
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return
@@ -84,7 +92,6 @@ func GetEntity(entityId string, itf interface{}) (err error) {
 	if err != nil {
 		return
 	}
-	log.Println(itf)
 	if res.StatusCode == 404 {
 		err = errors.New("Not Found")
 	}
