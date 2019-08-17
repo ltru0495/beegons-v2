@@ -1,19 +1,147 @@
 $(function() {
+
+    var map;
+    var selectedModule;
+
     $('#moduleid').val("none");
 
     $('#moduleid').on('change', function() {
         selectedModule = this.value;
-        const moduleString = "Module"
-        moduleid = selectedModule.substring(selectedModule.indexOf(moduleString) + moduleString.length + 1, selectedModule.length)
+        moduleid = selectedModule;
+        // const moduleString = "Module"
+        // moduleid = selectedModule.substring(selectedModule
+        // .indexOf(moduleString) + moduleString.length + 1, selectedModule.length)
         if (selectedModule === 'none') {
             return
         }
-        $.getJSON(url_server + '/api/module/' + moduleid, function(mod) {
-            console.log(mod.data)
+        console.log(selectedModule)
+
+        $.getJSON(url_server + '/api/modulewdata/' + moduleid, function(res) {
+            let moduleInfo = res.data.Module;
+            let sensors = res.data.Sensors;
+            let data = res.data.Data;
+            console.log(res)
+            appendDivs();
+            initAirQualityDiv(sensors, data.parameters)
+            initStationDiv(sensors, data.parameters)
+                // appendTable(moduleInfo.controlledProperties, data.parameters)
         });
 
-        $.getJSON(url_server + '/api/aqo/' + moduleid, function(aqo) {
-            console.log(aqo.data)
+        $.getJSON(url_server + '/api/lastdata//' + moduleid, function(res) {
+            console.log(res)
+            
         });
     });
+
+
+    function appendDivs() {
+        $("#content").append(`
+            <div id="info" class="row"></div>
+            <div id="charts" class="row">
+            </div>`);
+
+
+        appendCard($("#info"), "airQualityDiv", 6, "Calidad de Aire");
+        appendCard($("#info"), "stationDiv", 5, "Estación Meterológica");
+
+        appendCard($("#charts"), "chart", 12, "Última Hora");
+    }
+
+    function initAirQualityDiv(sensors, dataValues) {
+        $("#airQualityDiv").append(`
+            <div class="col-md-4" id="airQualityIndexDiv" style="text-align:center;">
+                <p id="airQualityIndex" style="display:inline-block;text-align:center">
+                </p>
+                <p id="airQualityLevel" style="display:inline-block;text-align:center">
+
+                </p>
+            </div>
+            <div class="col-md-8 divDataContent" id="airQualityTable" style="text-align:center">
+            </div>
+        `)
+            // $("#airQualityTable")
+            // .append(`<table class="table"><tbody id="airQualityTableBody"></tbody></table>`)
+        sensors.forEach(function(sensor) {
+            if (sensor.model === "SPEC") {
+                $("#airQualityTable")
+                    .append('<div class="col-md-4" style="height:80px;">' +
+                        '<p class="dataNumber">' + dataValues[sensor.parameter] + '</p>' +
+                        '<p>' + sensor.name + '(' + sensor.unit + ')</p>' +
+                        "</div>");
+            }
+        });
+
+        let aqi = 60
+        $("#airQualityIndex").append(`
+          <p id="airQualityNumber">` + aqi + `</p>
+          <p id="airQualityNumber">Moderado</p>
+        `)
+        $("#airQualityNumber").addClass("numberCircle");
+        $("#airQualityNumber").css("color", colorAQI(aqi));
+        $("#airQualityNumber").css("border", "4px solid" + colorAQI(aqi));
+        $("#airQualityLevel").css("color", "white")
+        $("#airQualityLevel")
+            .append(`
+                <p class="aqiLevel" style="background-color:green">Buena 0-50</p>
+                <p class="aqiLevel" style="background-color:#dada25">Regular 51-100</p>
+                <p class="aqiLevel" style="background-color:orange">Mala 101-150</p>
+                <p class="aqiLevel" style="background-color:red">Muy mala 151-200</p>
+                <p class="aqiLevel" style="background-color:purple">Peligrosa 201-250</p>)`);
+    }
+
+
+    function initStationDiv(sensors, dataValues) {
+        $("#stationDiv").css("text-align", "center")
+        $("#stationDiv").addClass("divDataContent")
+
+        $("#stationDiv").append(`
+        `)
+        sensors.forEach(function(sensor) {
+            if (sensor.model === "station") {
+                $("#stationDiv")
+                    .append('<div class="col-md-4" style="height:80px;">' +
+                        '<p class="dataNumber">' + dataValues[sensor.parameter] + '</p>' +
+                        '<p>' + sensor.name + '(' + sensor.unit + ')</p>' +
+                        "</div>");
+            }
+        });
+    }
+
+
+
+    function colorAQI(aqi) {
+        if (aqi > 0 & aqi <= 50) {
+            return "green"
+        }
+        if (aqi > 50 & aqi <= 100) {
+            return "#dada25"
+        }
+        if (aqi > 100 & aqi <= 150) {
+            return "orange"
+        }
+        if (aqi > 150 & aqi <= 200) {
+            return "red"
+        }
+        if (aqi > 200 & aqi <= 250) {
+            return "purple"
+        }
+        return "red"
+    }
+
+    function appendCard(element, id, size, title) {
+        element
+            .append(`<div class="col-md-` + size + `"><div class="card"><div class="card-header">` +
+             title + `</div><div class="card-body" id="` + id + `"></div></div></div>`)
+    }
+
+    function appendTable(parameters, values) {
+        $('#dataTable').append(`<table class="table"><tbody id="table-body"></tbody></table>`)
+        console.log(parameters)
+        for (var i = 0; i < parameters.length; i++) {
+            $("#table-body").append("<tr><td>" + parameters[i] + "</td><td>" + values[parameters[i]] + "</td></tr>")
+        }
+    }
+
+
+
 });

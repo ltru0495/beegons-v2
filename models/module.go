@@ -3,31 +3,48 @@ package models
 import (
 	// "context"
 	"encoding/json"
+	"fmt"
 	"github.com/gorilla/schema"
+	"strings"
 	// "go.mongodb.org/mongo-driver/bson"
 	// "go.mongodb.org/mongo-driver/bson/primitive"
+	"errors"
+	// "log"
 	"net/http"
+	"time"
 
 	"github.com/beegons/utils"
 )
 
 type Module struct {
 	// _Id                  primitive.ObjectID `json:"_id" bson:"_id"`
-	Id                   string     `json:"id" bson:"id"`
-	Type                 string     `json:"type" bson:"type"`
-	Mac                  string     `json:"mac" bson:"mac"`
-	Name                 string     `json:"name" bson:"name"`
-	State                string     `json:"state" bson:"state"`
-	Protocol             string     `json:"protocol" bson:"protocol"`
-	ControlledProperties []string   `json:"controlledProperties" bson:"controlledProperties"`
-	Coordinates          [2]float64 `json:"coordinates" bson:coordinates`
+	Id                   string   `json:"id" bson:"id"`
+	Type                 string   `json:"type" bson:"type"`
+	DataType             string   `json:"dataType"`
+	Mac                  string   `json:"mac" bson:"mac"`
+	Name                 string   `json:"name" bson:"name"`
+	State                string   `json:"state" bson:"state"`
+	Protocol             string   `json:"protocol" bson:"protocol"`
+	ControlledProperties []string `json:"controlledProperties" bson:"controlledProperties"`
+	Latitude             float64  `json:"latitude"`
+	Longitude            float64  `json:"longitude"`
 }
 
 type Sensor struct {
-	Name  string `json:"name" bson:"name"`
-	Type  string `json:"type" bson:"type"`
-	Model string `json:"model" bson:"model"`
-	Unit  string `json:"Unit" bson:"Unit"`
+	Id        string `json:"id"`
+	Name      string `json:"name" bson:"name"`
+	RefModule string `json:"refModule" bson:"refModule"`
+	Type      string `json:"type" bson:"type"`
+	DataType  string `json:"dataType"`
+	Parameter string `json:"parameter" bson:"parameter"`
+	Model     string `json:"model" bson:"model"`
+	Unit      string `json:"unit" bson:"unit"`
+}
+
+type ModuleDataSensors struct {
+	Module  Module
+	Data    DataObserved
+	Sensors []Sensor
 }
 
 func (m *Module) DecodeModuleForm(r *http.Request) ([]Sensor, error) {
@@ -48,15 +65,47 @@ func (m *Module) DecodeModuleForm(r *http.Request) ([]Sensor, error) {
 
 	var props []string
 	for _, sensor := range sensors {
-		props = append(props, sensor.Type)
+		props = append(props, sensor.Parameter)
 	}
 	m.ControlledProperties = props
+	m.Type = "Module"
 	return sensors, nil
 }
 
 func (m *Module) CreateModule() (err error) {
 	m.Id = "urn:ngsi-ld:Module:" + m.Name
+	m.Type = "Module"
 	err = utils.PostEntity(m)
+	return
+}
+
+func (m *Module) CreateSensors(sensors []Sensor) (err error) {
+	for k, sensor := range sensors {
+		sensor.Type = "Sensor"
+		sensor.Id = strings.Replace(
+			fmt.Sprintf("%s:S%03d", m.Id, k), "Module", "Sensor", -1)
+		sensor.RefModule = m.Id
+
+		err = utils.PostEntity(sensor)
+		if err != nil {
+			err = errors.New("Error while creating sensor")
+			return
+		}
+	}
+	return nil
+}
+
+func (m *Module) CreateDataObserved() (err error) {
+	d := make(map[string]interface{})
+	d["id"] = "urn:ngsi-ld:DataObserved:" + m.Name
+	d["type"] = "DataObserved"
+	d["dateObserved"] = time.Now().Format("2006-01-02T15:04:05Z")
+	d["refModule"] = m.Id
+	d["dataType"] = m.DataType
+	for _, v := range m.ControlledProperties {
+		d[v] = 0.0
+	}
+	err = utils.PostEntity(d)
 	return
 }
 
@@ -66,8 +115,21 @@ func GetAllModules() (modules []Module, err error) {
 }
 
 func GetModule(id string) (module Module, err error) {
-	id = "urn:ngsi-ld:Module:" + id
 	err = utils.GetEntity(id, &module)
+	if err != nil {
+		return
+	}
+	return
+}
+
+func GetSensors(moduleid string) (sensors []Sensor, err error) {
+	var s []Sensor
+	err = utils.GetEntities("Sensor", &s)
+	for _, v := range s {
+		if v.RefModule == moduleid {
+			sensors = append(sensors, v)
+		}
+	}
 	if err != nil {
 		return
 	}

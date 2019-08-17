@@ -16,11 +16,22 @@ func ModuleCreate(w http.ResponseWriter, r *http.Request) {
 		} else {
 			module := new(models.Module)
 			sensors, err := module.DecodeModuleForm(r)
-			module.CreateModule()
 
-			aqo := models.NewAirQualityObserved(*module)
-			aqo.CreateAirQualityObserved()
+			err = module.CreateModule()
+			if err != nil {
+				log.Println(err)
+				models.SendUnprocessableEntity(w)
+				return
+			}
 
+			err = module.CreateSensors(sensors)
+			if err != nil {
+				log.Println(err)
+				models.SendUnprocessableEntity(w)
+				return
+			}
+
+			err = module.CreateDataObserved()
 			if err != nil {
 				log.Println(err)
 				models.SendUnprocessableEntity(w)

@@ -18,12 +18,36 @@
   revision = "2a8bb927dd31d8daada140a5d09578521ce5c36a"
 
 [[projects]]
+  digest = "1:cbec35fe4d5a4fba369a656a8cd65e244ea2c743007d8f6c1ccb132acf9d1296"
+  name = "github.com/gorilla/mux"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "00bdffe0f3c77e27d2cf6f5c70232a2d3e4d9c15"
+  version = "v1.7.3"
+
+[[projects]]
+  digest = "1:345ad428d03cc89fa5498d61383d0d7f39afbe8731ca135c0ec92782285121d3"
+  name = "github.com/gorilla/schema"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "124d17ef95858a10835ce95502446cb5a9e9f715"
+  version = "v1.1.0"
+
+[[projects]]
   digest = "1:ecd9aa82687cf31d1585d4ac61d0ba180e42e8a6182b85bd785fcca8dfeefc1b"
   name = "github.com/joho/godotenv"
   packages = ["."]
   pruneopts = "UT"
   revision = "23d116af351c84513e1946b527c88823e476be13"
   version = "v1.3.0"
+
+[[projects]]
+  digest = "1:aee48a5cef97344996b0b403dde6a3c333baf4e9289991897bd401e61689df88"
+  name = "github.com/thedevsaddam/renderer"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "50d2f6151f9d45c16f127596b4cc9be4e5a66b3e"
+  version = "v1.2.0"
 
 [[projects]]
   branch = "master"
@@ -111,11 +135,24 @@
   revision = "342b2e1fbaa52c93f31447ad2c6abc048c63e475"
   version = "v0.3.2"
 
+[[projects]]
+  digest = "1:4d2e5a73dc1500038e504a8d78b986630e3626dc027bc030ba5c75da257cdb96"
+  name = "gopkg.in/yaml.v2"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "51d6538a90f86fe93ac480b35f37b2be17fef232"
+  version = "v2.2.2"
+
 [solve-meta]
   analyzer-name = "dep"
   analyzer-version = 1
   input-imports = [
+    "github.com/gorilla/mux",
+    "github.com/gorilla/schema",
     "github.com/joho/godotenv",
+    "github.com/thedevsaddam/renderer",
+    "go.mongodb.org/mongo-driver/bson",
+    "go.mongodb.org/mongo-driver/bson/primitive",
     "go.mongodb.org/mongo-driver/mongo",
     "go.mongodb.org/mongo-driver/mongo/options",
   ]

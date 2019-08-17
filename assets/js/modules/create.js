@@ -9,30 +9,97 @@ $('#addsensor').on('click', function(e) {
 $('#create').on('click', function(e) {
     e.preventDefault();
     var mod = {};
+
+
+    mod.name = "MOD1"
+    mod.dataType = "AirQuality"
+    mod.mac = "123ADASDA0012";
+    mod.state = "OK";
+    mod.protocol = "HTTP";
+    mod.latitude = -11.98164
+    mod.longitude = -76.99925;
+
     sensors = [{
         name: "Temperatura",
         model: "SPEC",
-        type: "temperature",
+        parameter: "temperature",
+        dataType: mod.dataType,
         unit: "~"
     }, {
         name: "Humedad",
         model: "SPEC",
-        type: "humidity",
+        parameter: "humidity",
+        dataType: mod.dataType,
         unit: "~"
     }, {
-        name: "Ozono (O3) ",
+        name: "Presion",
+        model: "station",
+        parameter: "pressure",
+        dataType: mod.dataType,
+        unit: "ppm"
+    }, {
+        name: "O3",
         model: "SPEC",
-        type: "o3",
-        unit: "ppm "
-    }];
+        parameter: "o3",
+        dataType: mod.dataType,
+        unit: "ppm"
+    }, {
+        name: "NO2",
+        model: "SPEC",
+        parameter: "no2",
+        dataType: mod.dataType,
+        unit: "ppm"
+    }, {
+        name: "H2S",
+        model: "SPEC",
+        parameter: "h2s",
+        dataType: mod.dataType,
+        unit: "ppm"
+    }, {
+        name: "CO",
+        model: "SPEC",
+        parameter: "co",
+        dataType: mod.dataType,
+        unit: "ppm"
+    }, {
+        name: "SO2",
+        model: "SPEC",
+        parameter: "so2",
+        dataType: mod.dataType,
+        unit: "ppm"
+    }, {
+        name: "Dirección del Viento",
+        model: "station",
+        parameter: "windDirection",
+        dataType: mod.dataType,
+        unit: "°"
+    }, {
+        name: "Velocidad de Viento",
+        model: "station",
+        parameter: "windSpeed",
+        dataType: mod.dataType,
+        unit: "km/h"
+    }, {
+        name: "UV",
+        model: "station",
+        parameter: "uv",
+        dataType: mod.dataType,
+        unit: "~"
+    }, {
+        name: "UVA",
+        model: "station",
+        parameter: "uva",
+        dataType: mod.dataType,
+        unit: "~"
+    }, {
+        name: "UVB",
+        model: "station",
+        parameter: "uvb",
+        dataType: mod.dataType,
+        unit: "~"
+    }, ];
 
-    
-    mod.name ="MOD1"
-    mod.type ="Module";
-    mod.mac = "123ADASDA0012";
-    mod.state = "OK";
-    mod.protocol = "HTTP";
-    mod.location = [-11.98164, -76.99925];
+
 
     mod.sensors = JSON.stringify(sensors);
 

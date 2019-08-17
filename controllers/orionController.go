@@ -8,8 +8,6 @@ import (
 
   "github.com/beegons/models"
   "github.com/beegons/models/orion"
-
-  "time"
 )
 
 func OrionSubscription(w http.ResponseWriter, r *http.Request) {
@@ -31,7 +29,6 @@ func OrionSubscription(w http.ResponseWriter, r *http.Request) {
   for k, v := range msg.Data[0] {
     fmt.Println(k, v)
   }
-  msg.Data[0]["_id"] = time.Now()
   err = models.Insert(msg.Data[0], "data")
 
 }
@@ -57,9 +54,8 @@ curl -iX POST \
 /*
 curl localhost:1026/v2/entities?options=keyValues -s -S -H 'Content-Type: application/json' -d '
 {
-  "id": "urn:ngsi-ld:AirQualityObserved:MOD01",
-  "type": "AirQualityObserved",
-  "airQualityIndex"
+  "id": "urn:ngsi-ld:DataObserved:MOD01",
+  "type": "dataObserved",
   "temperature":  23,
   "humidity": 80,
   "co": 100,
@@ -88,11 +84,21 @@ curl -iX POST \
     "attrsFormat" : "keyValues"
   }
 }'
-curl localhost:1026/v2/entities/urn:ngsi-ld:AirQualityObserved:Module1/attrs -s -S -H 'Content-Type: application/json' -X PATCH -d '{
-      "temperature": {
-        "value": '25',
-        "type": "Float"
-      }
+curl localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs?options=keyValues -s -S -H 'Content-Type: application/json' -X PATCH -d '{
+      "dateObserved": "2019-08-16T22:12:22Z",
+      "temperature": '25',
+      "co": '23',
+      "h2s": '24',
+      "humidity": '5',
+      "no2": '110',
+      "o3": '12',
+      "pressure": '9',
+      "so2": '60',
+      "uv": '3',
+      "uva": '2',
+      "uvb": '1',
+      "windDirection": '50',
+      "windSpeed": '20'
   }'
 
 

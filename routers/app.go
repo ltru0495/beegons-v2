@@ -17,7 +17,7 @@ func SetAppRoutes(router *mux.Router) *mux.Router {
 
 	appRouter.HandleFunc("/charts/realtime", controllers.ChartsRealTime).Methods("GET")
 
-	appRouter.HandleFunc("/airQualityObserved", controllers.OrionSubscription)
+	appRouter.HandleFunc("/data", controllers.OrionSubscription)
 	router.PathPrefix("/").Handler(appRouter)
 	return router
 
