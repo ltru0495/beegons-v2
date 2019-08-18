@@ -1,6 +1,6 @@
 $(function() {
 
-    var map;
+    var dataaa;
     var selectedModule;
 
     $('#moduleid').val("none");
@@ -20,17 +20,18 @@ $(function() {
             let moduleInfo = res.data.Module;
             let sensors = res.data.Sensors;
             let data = res.data.Data;
-            console.log(res)
             appendDivs();
             initAirQualityDiv(sensors, data.parameters)
             initStationDiv(sensors, data.parameters)
-                // appendTable(moduleInfo.controlledProperties, data.parameters)
+
+            $.getJSON(url_server + '/api/lastdata/' + moduleid + "/airQualityIndex", function(r) {
+                appendCard($("#charts"), "chartCard", 12, "Última Hora");
+                appendChart("Calidad de Aire");
+                initChart("airQualityIndex", r.data);
+            });
         });
 
-        $.getJSON(url_server + '/api/lastdata//' + moduleid, function(res) {
-            console.log(res)
-            
-        });
+
     });
 
 
@@ -43,8 +44,6 @@ $(function() {
 
         appendCard($("#info"), "airQualityDiv", 6, "Calidad de Aire");
         appendCard($("#info"), "stationDiv", 5, "Estación Meterológica");
-
-        appendCard($("#charts"), "chart", 12, "Última Hora");
     }
 
     function initAirQualityDiv(sensors, dataValues) {
@@ -71,7 +70,7 @@ $(function() {
             }
         });
 
-        let aqi = 60
+        let aqi = dataValues["airQualityIndex"]
         $("#airQualityIndex").append(`
           <p id="airQualityNumber">` + aqi + `</p>
           <p id="airQualityNumber">Moderado</p>
@@ -107,7 +106,80 @@ $(function() {
         });
     }
 
+    function initChart(parameter, rawData) {
+        let data = []
+        for (i = 0; i < rawData.length; i++) {
+            data.push({
+                x: (new Date(rawData[i]["dateObserved"])).getTime(),
+                y: rawData[i][parameter]
+            })
+        }
 
+        let graph = new Rickshaw.Graph({
+            element: document.querySelector('#chart'),
+            width: 1000,
+            height: 350,
+            renderer: 'line',
+            interpolation: 'linear',
+            stroke: true,
+            series: [{
+                data: data,
+                color: "blue",
+                name: "asdasd"
+            }]
+        });
+
+        document.getElementById('chart').style = 'position:relative; left:40px;';
+        document.getElementById('x_axis').style = 'position: relative; left: 40px; height: 40px;'
+        document.getElementById('y_axis').style = 'position: absolute;  width: 40px; height: 500px;';
+
+        ticksTreatment = "glow";
+        var xAxis = new Rickshaw.Graph.Axis.X({
+            graph: graph,
+            orientation: 'bottom',
+            element: document.getElementById("x_axis"),
+            tickFormat: function(x) {
+                var d = new Date(x);
+                var h = d.getUTCHours();
+                var m = d.getUTCMinutes();
+                var s = d.getUTCSeconds();
+
+                if (h < 10) h = "0" + h;
+                if (m < 10) m = "0" + m;
+                if (s < 10) s = "0" + s;
+
+                return h + ":" + m + ":" + s;
+            }
+        });
+        xAxis.render();
+        var yAxis = new Rickshaw.Graph.Axis.Y({
+            graph: graph,
+            orientation: 'left',
+            element: document.getElementById('y_axis'),
+            ticksTreatment: ticksTreatment,
+            tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+        });
+        yAxis.render();
+
+        var hoverDetail = new Rickshaw.Graph.HoverDetail({
+            graph: graph
+        });
+
+        graph.render();
+
+    }
+
+
+
+    function appendChart(title) {
+        $('#chartCard').append(
+            '<div class="col-md-9">' + ///
+            '<div id="y_axis"></div>' +
+            '<div id="chart" class="rickshaw_graph"></div>' +
+            '<div id="x_axis"></div>' +
+            '</div>'
+        );
+    }
 
     function colorAQI(aqi) {
         if (aqi > 0 & aqi <= 50) {
@@ -131,7 +203,7 @@ $(function() {
     function appendCard(element, id, size, title) {
         element
             .append(`<div class="col-md-` + size + `"><div class="card"><div class="card-header">` +
-             title + `</div><div class="card-body" id="` + id + `"></div></div></div>`)
+                title + `</div><div class="card-body" id="` + id + `"></div></div></div>`)
     }
 
     function appendTable(parameters, values) {

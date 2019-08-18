@@ -97,7 +97,15 @@ $('#create').on('click', function(e) {
         parameter: "uvb",
         dataType: mod.dataType,
         unit: "~"
-    }, ];
+    },
+    {
+        name: "Calidad de Aire",
+        model: "aqi",
+        parameter: "airQualityIndex",
+        dataType: mod.dataType,
+        unit: "~"
+    }
+    ];
 
 
 

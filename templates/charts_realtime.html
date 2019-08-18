@@ -1,6 +1,7 @@
 {{ define "charts_realtime"}}
 {{template "header"}}
 <link rel="stylesheet" type="text/css" href="../../assets/css/main.css">
+<link rel="stylesheet" type="text/css" href="../../assets/vendor/rickshaw/rickshaw.min.css">
 </head>
 <body>
 {{template "sidebar"}}
@@ -23,8 +24,11 @@
 	</main>
 </div>
 {{template "footer"}}
+
+<script src="../../assets/vendor/d3/d3.min.js"></script>
+<script src="../../assets/vendor/rickshaw/rickshaw.min.js"></script>
+
 <script type="text/javascript" src="../../assets/js/charts/realtime.js"></script>
-<script src="https://maps.googleapis.com/maps/api/js" async defer></script>
 
 </body>
 {{ end }}

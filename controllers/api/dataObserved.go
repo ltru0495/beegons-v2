@@ -24,10 +24,10 @@ func DataObservedGet(w http.ResponseWriter, r *http.Request) {
 }
 
 func LastDataObserved(w http.ResponseWriter, r *http.Request) {
-
 	vars := mux.Vars(r)
 	id := vars["id"]
-	data, err := models.GetLastDataObserved(id)
+	parameter := vars["parameter"]
+	data, err := models.GetLastDataObservedByParameter(id, parameter)
 	// log.Println(data)
 	if err != nil {
 		log.Println(err)

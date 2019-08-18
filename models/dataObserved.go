@@ -4,6 +4,7 @@ import (
 	"context"
 	"github.com/beegons/utils"
 	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/mongo/options"
 	"strings"
 )
 
@@ -61,6 +62,37 @@ func GetLastDataObserved(id string) (d []map[string]interface{}, err error) {
 			return
 		}
 		d = append(d, a)
+	}
+	if err = cursor.Err(); err != nil {
+		return
+	}
+	cursor.Close(context.TODO())
+	return
+}
+
+func GetLastDataObservedByParameter(id, parameter string) (d []map[string]interface{}, err error) {
+
+	options := options.Find()
+
+	// Sort by `_id` field descending
+	options.SetSort(bson.D{{"dateObserved", 1}})
+
+	cursor, err := getDatabase().Collection("data").Find(context.Background(), bson.D{{}}, options)
+	if err != nil {
+		return
+	}
+	var a map[string]interface{}
+
+	for cursor.Next(context.TODO()) {
+		aux := make(map[string]interface{})
+		err = cursor.Decode(&a)
+		if err != nil {
+			return
+		}
+		aux["dateObserved"] = a["dateObserved"]
+		aux[parameter] = a[parameter]
+		// if a[parameter]
+		d = append(d, aux)
 	}
 	if err = cursor.Err(); err != nil {
 		return
