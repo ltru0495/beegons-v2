@@ -75,6 +75,85 @@ func GetEntities(entityType string, itf interface{}) (err error) {
 	return
 }
 
+type Payload struct {
+	Description  string       `json:"description"`
+	Subject      Subject      `json:"subject"`
+	Notification Notification `json:"notification"`
+	Throttling   int          `json:"throttling"`
+}
+type Entity struct {
+	Id   string `json:"id"`
+	Type string `json:"type"`
+}
+type Subject struct {
+	Entities []Entity `json:"entities"`
+}
+type HTTP struct {
+	URL string `json:"url"`
+}
+type Notification struct {
+	HTTP        HTTP   `json:"http"`
+	AttrsFormat string `json:"attrsFormat"`
+}
+
+func PostSubscription(entityId, entityType string) error {
+	entities := []Entity{{Id: entityId, Type: entityType}}
+	subject := Subject{entities}
+
+	protocol := HTTP{URL: "http://cygnus:5050/notify"}
+	notification := Notification{HTTP: protocol, AttrsFormat: "legacy"}
+
+	data := Payload{
+		Description:  "Notify Cygnus of all sensor changes",
+		Subject:      subject,
+		Notification: notification,
+		Throttling:   5,
+	}
+
+	payloadBytes, err := json.Marshal(data)
+	if err != nil {
+		return err
+	}
+	body := bytes.NewReader(payloadBytes)
+
+	req, err := http.NewRequest("POST", "http://localhost:1026/v2/subscriptions", body)
+	if err != nil {
+		return err
+	}
+	req.Header.Set("Content-Type", "application/json")
+
+	resp, err := http.DefaultClient.Do(req)
+	if err != nil {
+		return err
+	}
+	defer resp.Body.Close()
+
+	return nil
+}
+
+/*
+curl -iX POST \
+  'http://localhost:1026/v2/subscriptions' \
+  -H 'Content-Type: application/json' \
+  -d '{
+  "description": "Notify Cygnus of all context changes",
+  "subject": {
+    "entities": [
+      {
+        "idPattern": ""
+      }
+    ]
+  },
+  "notification": {
+    "http": {
+      "url": "http://cygnus:5050/notify"
+    },
+    "attrsFormat": "legacy"
+  },
+  "throttling": 5
+}'
+*/
+
 func GetEntitiesByIdPattern(entityType, idPattern string, itf interface{}) (err error) {
 	url := orionURL + "/entities?options=keyValues&type=" + entityType + "&idPattern=" + idPattern + ":"
 	println(url)

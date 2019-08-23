@@ -5,32 +5,39 @@
 {{template "sidebar"}}
 <div class="content-wrap">
 	<main id="content" class="content" role="main">
-		<div class="row">
-			<div class="col-md-12">
-				<table class="table">
-					<thead>
-						<tr>
-							<th scope="col">Id</th>
-							<th scope="col">Type</th>
-							<th scope="col">Mac</th>
-							<th scope="col">Name</th>
-							<th scope="col">State</th>
-							<th scope="col">Protocol</th>
-						</tr>
-					</thead>
-					<tbody>
-						{{ range .Modules }}
-						<tr>
-							<td>{{ .Id }}</td>
-							<td>{{ .Type }}</td>
-							<td>{{ .Mac }}</td>
-							<td>{{ .Name }}</td>
-							<td>{{ .State }}</td>
-							<td>{{ .Protocol }}</td>
-						</tr>
-						{{end}}
-					</tbody>
-				</table>
+		<div class="card">
+			<div class="card-header">
+				Módulos
+			</div>
+			<div class="card-body">
+				<div class="row">
+					<div class="col-md-12">
+						<table class="table">
+							<thead>
+								<tr>
+									<th scope="col">Id</th>
+									<th scope="col">Type</th>
+									<th scope="col">Mac</th>
+									<th scope="col">Name</th>
+									<th scope="col">State</th>
+									<th scope="col">Protocol</th>
+								</tr>
+							</thead>
+							<tbody>
+								{{ range .Modules }}
+								<tr>
+									<td>{{ .Id }}</td>
+									<td>{{ .Type }}</td>
+									<td>{{ .Mac }}</td>
+									<td>{{ .Name }}</td>
+									<td>{{ .State }}</td>
+									<td>{{ .Protocol }}</td>
+								</tr>
+								{{end}}
+							</tbody>
+						</table>
+					</div>
+				</div>
 			</div>
 		</div>
 	</main>

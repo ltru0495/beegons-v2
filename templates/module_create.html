@@ -6,34 +6,50 @@
 <div class="content-wrap">
 	<main id="content" class="content" role="main">
 		<div class="row">
-			<div class="col-md-12">
-				<form class="form" action="/module/create" method="post">
-					<div class="form-group">
-						<label for="inputType">Type</label>
-						<input type="text" class="form-control" name="type" id="type" placeholder="Enter Type">
+			<div class="col-md-1"></div>
+			<div class="col-md-8">
+				<div class="card">
+					<div class="card-header">Agregar Módulo</div>
+					<div class="card-body">
+						<form class="form-horizontal" role="form" action="/module/create" method="post">
+							<div class="form-group row">
+								<label class="col-md-4 control-label text-md-right" for="inputType">Tipo</label>
+								<div class="col-md-7">
+									<input type="text" class="form-control" name="type" id="type" placeholder="Calidad de Aire">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-4 control-label text-md-right" for="inputMac">Mac</label>
+								<div class="col-md-7">
+									<input type="text" class="form-control" name="mac" id="mac" placeholder="MAC">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-4 control-label text-md-right" for="inputName">Nombre</label>
+								<div class="col-md-7">
+									<input type="text" class="form-control" name="name" id="name" placeholder="Nombre">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-4 control-label text-md-right" for="inputState">State</label>
+								<div class="col-md-7">
+									<input type="text" class="form-control" name="state" id="state" placeholder="Estado">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-4 control-label text-md-right" for="inputProtocol">Protocol</label>
+								<div class="col-md-7">
+									<input type="text" class="form-control" name="protocol" id="protocol" placeholder="Protocol">
+								</div>
+							</div>
+							<div id="sensors">
+								
+							</div>
+							<button id="addsensor" class="btn btn-info">+</button>
+							<button id="create"class="btn btn-primary">Submit</button>
+						</form>
 					</div>
-					<div class="form-group">
-						<label for="inputMac">Mac</label>
-						<input type="text" class="form-control" name="mac" id="mac" placeholder="Enter Mac">
-					</div>
-					<div class="form-group">
-						<label for="inputName">Name</label>
-						<input type="text" class="form-control" name="name" id="name" placeholder="Enter Name">
-					</div>
-					<div class="form-group">
-						<label for="inputState">State</label>
-						<input type="text" class="form-control" name="state" id="state" placeholder="Enter State">
-					</div>
-					<div class="form-group">
-						<label for="inputProtocol">Protocol</label>
-						<input type="text" class="form-control" name="protocol" id="protocol" placeholder="Enter Protocol">
-					</div>
-					<div id="sensors">
-						
-					</div>
-					<button id="addsensor" class="btn btn-info">+</button>
-					<button id="create"class="btn btn-primary">Submit</button>
-				</form>
+				</div>
 			</div>
 		</div>
 	</main>

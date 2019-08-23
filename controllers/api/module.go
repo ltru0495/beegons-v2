@@ -33,24 +33,12 @@ func RealtimeInfoGet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	data, err := models.GetDataObserved(id)
-	if err != nil {
-		log.Println(err)
-		models.SendNotFound(w)
-	}
+	// data, err := models.GetDataObserved(id)
+	// if err != nil {
+	// 	log.Println(err)
+	// 	models.SendNotFound(w)
+	// }
 
-	sensors, err := models.GetSensors(id)
-	if err != nil {
-		log.Println(err)
-		models.SendNotFound(w)
-	}
-
-	var mds models.ModuleDataSensors
-
-	mds.Module = module
-	mds.Data = data
-	mds.Sensors = sensors
-
-	models.SendData(w, mds)
+	models.SendData(w, module)
 	return
 }

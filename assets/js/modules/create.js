@@ -15,106 +15,12 @@ $('#create').on('click', function(e) {
     mod.dataType = "AirQuality"
     mod.mac = "123ADASDA0012";
     mod.state = "OK";
-    mod.protocol = "HTTP";
-    mod.latitude = -11.98164
-    mod.longitude = -76.99925;
-
-    sensors = [{
-        name: "Temperatura",
-        model: "SPEC",
-        parameter: "temperature",
-        dataType: mod.dataType,
-        unit: "~"
-    }, {
-        name: "Humedad",
-        model: "SPEC",
-        parameter: "humidity",
-        dataType: mod.dataType,
-        unit: "~"
-    }, {
-        name: "Presion",
-        model: "station",
-        parameter: "pressure",
-        dataType: mod.dataType,
-        unit: "ppm"
-    }, {
-        name: "O3",
-        model: "SPEC",
-        parameter: "o3",
-        dataType: mod.dataType,
-        unit: "ppm"
-    }, {
-        name: "NO2",
-        model: "SPEC",
-        parameter: "no2",
-        dataType: mod.dataType,
-        unit: "ppm"
-    }, {
-        name: "H2S",
-        model: "SPEC",
-        parameter: "h2s",
-        dataType: mod.dataType,
-        unit: "ppm"
-    }, {
-        name: "CO",
-        model: "SPEC",
-        parameter: "co",
-        dataType: mod.dataType,
-        unit: "ppm"
-    }, {
-        name: "SO2",
-        model: "SPEC",
-        parameter: "so2",
-        dataType: mod.dataType,
-        unit: "ppm"
-    }, {
-        name: "Dirección del Viento",
-        model: "station",
-        parameter: "windDirection",
-        dataType: mod.dataType,
-        unit: "°"
-    }, {
-        name: "Velocidad de Viento",
-        model: "station",
-        parameter: "windSpeed",
-        dataType: mod.dataType,
-        unit: "km/h"
-    }, {
-        name: "UV",
-        model: "station",
-        parameter: "uv",
-        dataType: mod.dataType,
-        unit: "~"
-    }, {
-        name: "UVA",
-        model: "station",
-        parameter: "uva",
-        dataType: mod.dataType,
-        unit: "~"
-    }, {
-        name: "UVB",
-        model: "station",
-        parameter: "uvb",
-        dataType: mod.dataType,
-        unit: "~"
-    },
-    {
-        name: "Calidad de Aire",
-        model: "aqi",
-        parameter: "airQualityIndex",
-        dataType: mod.dataType,
-        unit: "~"
-    }
-    ];
-
+    mod.supportedProtocol = ["HTTP"];
+    mod.coordinates =  [-12.000123, -77.12312];
 
 
     mod.sensors = JSON.stringify(sensors);
-
-    console.log(mod);
-
     post("/module/create", mod, "post")
-
 
     e.stopPropagation();
 });
@@ -123,12 +29,61 @@ function appendSensor() {
     var time = new Date();
     var id = 'sensor' + nSensors + '_' + time.getTime();
 
-    $('#sensors').append(
-        '<div id="' + id + '" class="sensor">' +
-        '<input type="text" id="type_' + id + '" class="form-control" data-placement="top" placeholder="Tipo">' +
-        '<input type="text" id="name_' + id + '" class="form-control" data-placement="top" placeholder="Nombre">' +
-        '<input type="text" id="unit_' + id + '" class="form-control" data-placement="top" placeholder="Unidad">' +
-        '<input type="text" id="sensor_' + id + '" class="form-control" data-placement="top" placeholder="Marca">' +
+    $('#sensors').append('<div id="'+id+'" class="sensor">'+
+            '<div class="row"></div>'+
+            '<div class="row">' +
+                '<div class="col-md-3"></div>'+
+                '<label class="col-md-6">Sensor</label>' +
+            '</div>'+
+            '<div class="form-group-sm row">' +
+                '<label class="col-md-4"></label>'+
+                '<label class="col-md-1 control-label text-md-right" for="sensorid_'+id+'">Id</label>'+
+                '<div class="col-md-4">' +
+                    '<input type="text" id="sensorid_'+id+'" class="form-control" data-placement="top" placeholder="Id">'+
+                '</div>'+
+            '</div>'+
+            '<div class="form-group-sm row">' +
+                '<label class="col-md-4"></label>'+
+                '<label class="col-md-1 control-label text-md-right" for="type_'+id+'">Tipo</label>'+
+                '<div class="col-md-4">' +
+                    '<input type="text" id="type_'+id+'" class="form-control" data-placement="top" placeholder="Tipo">'+
+                '</div>'+
+            '</div>'+
+            '<div class="form-group-sm row">' +
+                '<label class="col-md-4"></label>'+
+                '<label class="col-md-1 control-label text-md-right" for="label'+id+'">Label</label>'+
+                '<div class="col-md-4">' +
+                    '<input type="text" id="label_'+id+'" class="form-control" data-placement="top" placeholder="Label">'+
+                '</div>'+
+            '</div>'+
+            '<div class="form-group-sm row">' +
+                '<label class="col-md-4"></label>'+
+                '<label class="col-md-1 control-label text-md-right" for="model_'+id+'">Modelo</label>'+
+                '<div class="col-md-4">' +
+                    '<input type="text" id="model_'+id+'" class="form-control" data-placement="top" placeholder="Modelo ">'+
+                '</div>'+
+            '</div>'+
+            '<div class="form-group-sm row">' +
+                '<label class="col-md-4"></label>'+
+                '<label class="col-md-1 control-label text-md-right" for="state_'+id+'">Estado</label>'+
+                '<div class="col-md-4">' +
+                    '<input type="text" id="state_'+id+'" class="form-control" data-placement="top" placeholder="Estado">'+
+                '</div>'+
+            '</div>'+
+
+            '<div class="form-group-sm row">' +
+                '<label class="col-md-4"></label>'+
+                '<label class="col-md-1 control-label text-md-right" for="unit_'+id+'">Unidad</label>'+
+                '<div class="col-md-4">' +
+                    '<input type="text" id="unit_'+id+'" class="form-control" data-placement="top" placeholder="Unidad">'+
+                '</div>'+
+            '</div>'+
+
+            '<div class="form-group row">' +
+                '<label class="col-md-4"></label>'+
+                '<label class="col-md-2 control-label text-md-right">Eliminar</label>'+
+                '<button id="remove-sensor'+id+'" class="fa fa-minus-circle"></button>' +
+            '</div>'+
         '</div>');
 
     $('#remove-sensor' + id).on('click', function(e) {

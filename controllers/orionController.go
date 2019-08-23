@@ -2,8 +2,8 @@ package controllers
 
 import (
   "encoding/json"
-  "fmt"
   "io/ioutil"
+  "log"
   "net/http"
 
   "github.com/beegons/models"
@@ -11,7 +11,6 @@ import (
 )
 
 func OrionSubscription(w http.ResponseWriter, r *http.Request) {
-  fmt.Println("*******************************")
   // Read body
   b, err := ioutil.ReadAll(r.Body)
   defer r.Body.Close()
@@ -22,13 +21,13 @@ func OrionSubscription(w http.ResponseWriter, r *http.Request) {
   var msg orion.Subscription
   err = json.Unmarshal(b, &msg)
   if err != nil {
-    fmt.Println(err)
+    log.Println(err)
     return
   }
 
-  for k, v := range msg.Data[0] {
-    fmt.Println(k, v)
-  }
+  // for k, v := range msg.Data[0] {
+  //   fmt.Println(k, v)
+  // }
   err = models.Insert(msg.Data[0], "data")
 
 }
@@ -54,7 +53,7 @@ curl -iX POST \
 /*
 curl localhost:1026/v2/entities?options=keyValues -s -S -H 'Content-Type: application/json' -d '
 {
-  "id": "urn:ngsi-ld:DataObserved:MOD01",
+  "id": "urn:ngsi-ld:DataObserved:MOD1",
   "type": "dataObserved",
   "temperature":  23,
   "humidity": 80,
@@ -66,25 +65,24 @@ curl localhost:1026/v2/entities?options=keyValues -s -S -H 'Content-Type: applic
 curl 'localhost:1026/v2/entities?options=keyValues&type=AirQualityObserved'
 
 
-curl -iX POST \
+curl -i1X POST \
   --url 'http://localhost:1026/v2/subscriptions' \
   --header 'Content-Type: application/json' \
   --data '{
-  "description": "AirQualityObserved",
+  "description": "Data",
   "subject": {
-    "entities": [{"idPattern": ".*","type": "AirQualityObserved"}],
-    "condition": {
-      "attrs": ["temperature", "humidity", "xo2"]
-    }
+    "entities": [{"idPattern": ".*"}]
   },
   "notification": {
     "http": {
-      "url": "http://beagons.uni.edu.pe:8081/airQualityObserved"
+      "url": "http://cygnus:5050/notify"
     },
-    "attrsFormat" : "keyValues"
-  }
+    "attrsFormat" : "legacy"
+  },
+  "throttling": 5
 }'
-curl localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs?options=keyValues -s -S -H 'Content-Type: application/json' -X PATCH -d '{
+
+curl localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs?options=keyValues -s -S -H 'Content-Type: application/json' -X PUT -d '{
       "dateObserved": "2019-08-16T22:12:22Z",
       "temperature": '25',
       "co": '23',
@@ -101,6 +99,10 @@ curl localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs?options=keyV
       "windSpeed": '20'
   }'
 
+curl localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs?options=keyValues -s -S -H 'Content-Type: application/json' -X PATCH -d '{
+      "dateObserved": "2019-08-16T22:12:22Z",
+      "temperature": '28'
+  }'
 
 SIM OF A SUBSCRIPTION
     curl -v -s -S -X POST http://localhost:8081/airQualityObserved \

@@ -1,0 +1,27 @@
+#!/bin/bash
+#
+#  Command Line Interface to start all services associated with the Getting-Started Tutorial
+#
+#  For this tutorial the commands are merely a convenience script to run docker-compose
+#
+
+set -e
+
+stoppingContainers () {
+	echo "Stopping containers"
+	docker-compose --log-level ERROR -f docker-compose.yml -p fiware down -v --remove-orphans
+}
+
+displayServices () {
+	echo ""
+	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name=fiware-*
+	echo ""
+}
+
+stoppingContainers
+echo -e "Starting five containers \033[1;34mOrion\033[0m, \033[1;34mCygnus\033[0m, \033[1;36mIoT-Agent\033[0m, \033[1;30mTutorial\033[0m and a \033[1;30mMongoDB\033[0m database."	
+echo -e "- \033[1;34mOrion\033[0m is the context broker"
+echo -e "- \033[1;34mCygnus\033[0m is configured to write context data to Mongo-DB only"
+echo ""
+docker-compose --log-level ERROR -f docker-compose.yml -p fiware up -d --remove-orphans
+displayServices

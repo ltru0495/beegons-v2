@@ -15,16 +15,9 @@ func ModuleCreate(w http.ResponseWriter, r *http.Request) {
 			log.Println(err)
 		} else {
 			module := new(models.Module)
-			sensors, err := module.DecodeModuleForm(r)
+			err := module.DecodeModuleForm(r)
 
 			err = module.CreateModule()
-			if err != nil {
-				log.Println(err)
-				models.SendUnprocessableEntity(w)
-				return
-			}
-
-			err = module.CreateSensors(sensors)
 			if err != nil {
 				log.Println(err)
 				models.SendUnprocessableEntity(w)
@@ -39,7 +32,7 @@ func ModuleCreate(w http.ResponseWriter, r *http.Request) {
 			}
 			res := models.CreateDefaultResponse(w)
 			res.Message = "Module has been created"
-			res.Data = sensors
+			res.Data = module
 			res.Send()
 			return
 		}

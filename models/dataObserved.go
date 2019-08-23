@@ -14,25 +14,20 @@ type DataObserved struct {
 	Type         string             `json:"type" bson:"type`
 	DataType     string             `json:"dataType"`
 	DateObserved string             `json:"dateObserved" bson:"dateObserved"`
-	Parameters   map[string]float64 `json:"parameters"`
+	Parameters   map[string]float64 ``
 }
 
-type DataObservedOrion map[string]interface{}
-
-func mapToData(m map[string]interface{}, properties []string) (d DataObserved) {
-	d.Id = m["id"].(string)
-	d.Type = m["type"].(string)
-	d.DateObserved = m["dateObserved"].(string)
-
+func mapToDataObserved(m map[string]interface{}) (d DataObserved) {
 	params := make(map[string]float64)
-	for _, prop := range properties {
-		val, ok := m[prop]
-		if ok {
-			params[prop] = val.(float64)
+	for k, v := range m {
+		switch k {
+		case "id", "type", "refModule", "dateObserved", "dataType":
+			d.Id = v.(string)
+		default:
+			params[k] = v.(float64)
 		}
 	}
 	d.Parameters = params
-
 	return
 }
 
@@ -45,7 +40,7 @@ func GetDataObserved(id string) (d DataObserved, err error) {
 	var aux map[string]interface{}
 	err = utils.GetEntity(id, &aux)
 
-	d = mapToData(aux, module.ControlledProperties)
+	d = mapToDataObserved(aux)
 
 	return
 }
@@ -91,7 +86,6 @@ func GetLastDataObservedByParameter(id, parameter string) (d []map[string]interf
 		}
 		aux["dateObserved"] = a["dateObserved"]
 		aux[parameter] = a[parameter]
-		// if a[parameter]
 		d = append(d, aux)
 	}
 	if err = cursor.Err(); err != nil {

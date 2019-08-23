@@ -45,6 +45,7 @@ func main() {
 
 	for i := 0; i < 10; i++ {
 		// "2019-08-16T22:12:22Z"
+
 		fmt.Println(start.Format("2006-01-02T15:04:05Z"))
 		data := randomData()
 		data.DateObserved = start
@@ -76,7 +77,7 @@ func randomData() Data {
 		Uva:             rand.Intn(1) + 5,
 		Uvb:             rand.Intn(1) + 5,
 		WindDirection:   rand.Intn(60) + 5,
-		WindSpeed:       rand.Intn(50) + 5,
+		WindSpeed:       rand.Intn(5) + 52,
 		AirQualityIndex: rand.Intn(100) + 20,
 	}
 }
@@ -110,7 +111,6 @@ func postToOrion(data Data) {
 
 	}
 	defer resp.Body.Close()
-
 }
 
 func postToServer(data Payload) {
