@@ -1,37 +1,5 @@
 package controllers
 
-import (
-  "encoding/json"
-  "io/ioutil"
-  "log"
-  "net/http"
-
-  "github.com/beegons/models"
-  "github.com/beegons/models/orion"
-)
-
-func OrionSubscription(w http.ResponseWriter, r *http.Request) {
-  // Read body
-  b, err := ioutil.ReadAll(r.Body)
-  defer r.Body.Close()
-  if err != nil {
-    http.Error(w, err.Error(), 500)
-    return
-  }
-  var msg orion.Subscription
-  err = json.Unmarshal(b, &msg)
-  if err != nil {
-    log.Println(err)
-    return
-  }
-
-  // for k, v := range msg.Data[0] {
-  //   fmt.Println(k, v)
-  // }
-  err = models.Insert(msg.Data[0], "data")
-
-}
-
 /*
 
 /*
@@ -85,11 +53,11 @@ curl -i1X POST \
 curl localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs?options=keyValues -s -S -H 'Content-Type: application/json' -X PUT -d '{
       "dateObserved": "2019-08-16T22:12:22Z",
       "temperature": '25',
-      "co": '23',
+      "co": '2',
       "h2s": '24',
       "humidity": '5',
-      "no2": '110',
-      "o3": '12',
+      "no2": '10',
+      "o3": '11',
       "pressure": '9',
       "so2": '60',
       "uv": '3',
@@ -99,10 +67,10 @@ curl localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs?options=keyV
       "windSpeed": '20'
   }'
 
-curl localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs?options=keyValues -s -S -H 'Content-Type: application/json' -X PATCH -d '{
-      "dateObserved": "2019-08-16T22:12:22Z",
-      "temperature": '28'
-  }'
+curl localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs?options=keyValues -s -S -H 'Content-Type: application/json' -X PUT -d '{
+      "temperature": '29',
+      "co2" : '100'
+}'
 
 SIM OF A SUBSCRIPTION
     curl -v -s -S -X POST http://localhost:8081/airQualityObserved \

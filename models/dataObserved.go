@@ -6,6 +6,8 @@ import (
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"strings"
+
+	"time"
 )
 
 type DataObserved struct {
@@ -45,19 +47,35 @@ func GetDataObserved(id string) (d DataObserved, err error) {
 	return
 }
 
-func GetLastDataObserved(id string) (d []map[string]interface{}, err error) {
-	cursor, err := getDatabase().Collection("data").Find(context.Background(), bson.D{{}})
+// sth_/_urn:ngsi-ld:DataObserved:MOD1_AirQualityObserved
+
+/*
+var data []models.Data
+	iter := C.Find(bson.M{"date": bson.M{
+		"$gt": fromDate,
+		"$lt": toDate,
+	}, "type": dataType, "id_moduleiot": moduleid, "id_sensor": sensorid}).Sort("date").Sort("-$natural").
+			Limit(100).Sort("date").Sort("$natural").Iter()
+*/
+func GetHistoricalData(id string) (d []CygnusDocument, err error) {
+	collection := "sth_/_urn:ngsi-ld:DataObserved:MOD1_AirQualityObserved"
+	to, _ := time.Parse("2006-01-02T15:04:05.000Z", "2019-08-28T02:40:59.969Z")
+	filter := bson.M{
+		"attrName": "temperature",
+		"recvTime": bson.M{
+			"$lte": to,
+		},
+	}
+	cursor, err := GetCygnusDatabase().Collection(collection).Find(context.Background(), filter)
 	if err != nil {
 		return
 	}
-	var a map[string]interface{}
-	for cursor.Next(context.TODO()) {
-		err = cursor.Decode(&a)
-		if err != nil {
-			return
-		}
-		d = append(d, a)
+
+	err = cursor.All(context.Background(), &d)
+	if err != nil {
+		return
 	}
+
 	if err = cursor.Err(); err != nil {
 		return
 	}
@@ -72,7 +90,7 @@ func GetLastDataObservedByParameter(id, parameter string) (d []map[string]interf
 	// Sort by `_id` field descending
 	options.SetSort(bson.D{{"dateObserved", 1}})
 
-	cursor, err := getDatabase().Collection("data").Find(context.Background(), bson.D{{}}, options)
+	cursor, err := GetCygnusDatabase().Collection("data").Find(context.Background(), bson.D{{}}, options)
 	if err != nil {
 		return
 	}

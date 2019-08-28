@@ -16,13 +16,17 @@ func main() {
 
 	router := routers.InitRoutes()
 	config := config.New()
-	models.ConnectToDB(config.Database.Host, config.Database.Port, config.Database.Database)
+	models.ConnectToDB()
 	address := fmt.Sprintf("%s:%d", config.Server.Host, config.Server.Port)
 	server := &http.Server{
 		Addr:    address,
 		Handler: router,
 	}
 
+	data, _ := models.GetHistoricalData("asd")
+	log.Println(data)
+
 	log.Println("Starting server at " + address)
 	log.Fatal(server.ListenAndServe())
+
 }

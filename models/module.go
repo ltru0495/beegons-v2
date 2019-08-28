@@ -17,8 +17,6 @@ type Module struct {
 	Mac               string    `json:"mac" bson:"mac"`
 	SupportedProtocol []string  `json:"supportedProtocol" bson:"protocol"`
 	Coordinates       []float64 `json:"coordinates"`
-
-	// ControlledProperties []string `json:"controlledProperties" bson:"controlledProperties"`
 }
 
 func (m *Module) DecodeModuleForm(r *http.Request) error {
@@ -47,8 +45,28 @@ func (m *Module) CreateDataObserved() (err error) {
 	d["refModule"] = m.Id
 	err = utils.PostEntity(d)
 
-	err = utils.PostSubscription(d["id"].(string), d["type"].(string))
 	return
+}
+
+func (m *Module) CreateCygnusSubscription() (err error) {
+	id := "urn:ngsi-ld:DataObserved:" + m.Name
+	entities := []Entity{{Id: id}}
+	subject := Subject{entities}
+
+	url := utils.GetCygnusURL() + "/notify"
+
+	protocol := HTTP{URL: url}
+	notification := Notification{HTTP: protocol, AttrsFormat: "legacy"}
+
+	data := Payload{
+		Description:  "Notify Cygnus of all sensor changes",
+		Subject:      subject,
+		Notification: notification,
+		Throttling:   5,
+	}
+
+	err = utils.PostSubscription(data)
+	return err
 }
 
 func GetAllModules() (modules []Module, err error) {

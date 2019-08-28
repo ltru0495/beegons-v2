@@ -25,6 +25,15 @@ type ServerConfig struct {
 type Config struct {
 	Database DatabaseConfig
 	Server   ServerConfig
+	Fiware   FiwareConfig
+}
+
+type FiwareConfig struct {
+	OrionCB_Host    string
+	OrionCB_Port    int
+	Cygnus_Host     string
+	Cygnus_Port     int
+	Cygnus_Database string
 }
 
 func init() {
@@ -44,7 +53,14 @@ func New() *Config {
 			Password: getEnv("DB_PASSWORD", ""),
 			Host:     getEnv("DB_HOST", "127.0.0.1"),
 			Port:     getEnvAsInt("DB_PORT", 27027),
-			Database: getEnv("DB_DATABASE", "beegons"),
+			Database: getEnv("DB_DATABASE", "defaultdb"),
+		},
+		Fiware: FiwareConfig{
+			OrionCB_Host:    getEnv("ORION_CB_HOST", "localhost"),
+			OrionCB_Port:    getEnvAsInt("ORION_CB_PORT", 1026),
+			Cygnus_Host:     getEnv("CYGNUS_HOST", "localhost"),
+			Cygnus_Port:     getEnvAsInt("CYGNUS_PORT", 5050),
+			Cygnus_Database: getEnv("CYGNUS_DATABASE", "sth_default"),
 		},
 	}
 }
@@ -66,4 +82,8 @@ func getEnvAsInt(name string, defaultVal int) int {
 	}
 
 	return defaultVal
+}
+
+func (c *Config) GetFiwareOrion() {
+
 }

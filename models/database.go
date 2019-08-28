@@ -2,26 +2,26 @@ package models
 
 import (
 	"context"
-	"fmt"
 	"log"
 	"time"
 
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
+
+	"github.com/beegons/utils"
 )
 
 var mClient *mongo.Client
 var mDatabase *mongo.Database
 var db string
 
-func ConnectToDB(host string, port int, database string) {
-	connect(host, port)
+func ConnectToDB() {
+	connect()
 	ping()
-	db = database
 }
 
-func connect(host string, port int) {
-	uri := fmt.Sprintf("mongodb://%s:%d/", host, port)
+func connect() {
+	uri := utils.GetDBURL()
 
 	var err error
 	ctx, timeout := context.WithTimeout(context.Background(), 3*time.Second)
@@ -42,14 +42,14 @@ func ping() {
 	log.Println("Connection OK")
 }
 
-func getDatabase() *mongo.Database {
-	if mDatabase == nil {
-		mDatabase = mClient.Database(db)
-	}
-	return mDatabase
+func getDatabase(dbName string) *mongo.Database {
+	return mClient.Database(dbName)
 }
 
-func Insert(data interface{}, collection string) error {
-	_, err := getDatabase().Collection(collection).InsertOne(context.Background(), data)
-	return err
+func GetAppDatabase() *mongo.Database {
+	return getDatabase(utils.GetAppDBName())
+}
+
+func GetCygnusDatabase() *mongo.Database {
+	return getDatabase(utils.GetCygnusDBName())
 }
