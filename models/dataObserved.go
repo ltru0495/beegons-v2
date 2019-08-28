@@ -8,6 +8,8 @@ import (
 	"strings"
 
 	"time"
+
+	"log"
 )
 
 type DataObserved struct {
@@ -33,12 +35,12 @@ func mapToDataObserved(m map[string]interface{}) (d DataObserved) {
 	return
 }
 
-func GetDataObserved(id string) (d DataObserved, err error) {
-	module, err := GetModule(id)
+func GetDataObserved(moduleid string) (d DataObserved, err error) {
+	module, err := GetModule(moduleid)
 	if err != nil {
 		return
 	}
-	id = strings.Replace(module.Id, "Module", "DataObserved", -1)
+	id := strings.Replace(module.Id, "Module", "DataObserved", -1)
 	var aux map[string]interface{}
 	err = utils.GetEntity(id, &aux)
 
@@ -57,13 +59,13 @@ var data []models.Data
 	}, "type": dataType, "id_moduleiot": moduleid, "id_sensor": sensorid}).Sort("date").Sort("-$natural").
 			Limit(100).Sort("date").Sort("$natural").Iter()
 */
-func GetHistoricalData(id string) (d []CygnusDocument, err error) {
-	collection := "sth_/_urn:ngsi-ld:DataObserved:MOD1_AirQualityObserved"
-	to, _ := time.Parse("2006-01-02T15:04:05.000Z", "2019-08-28T02:40:59.969Z")
+func GetHistoricalData(id, dataType, parameter string, start, end time.Time) (d []CygnusDocument, err error) {
+	collection := "sth_/_" + id + "_" + dataType
 	filter := bson.M{
-		"attrName": "temperature",
+		"attrName": parameter,
 		"recvTime": bson.M{
-			"$lte": to,
+			"$gte": start,
+			"$lte": end,
 		},
 	}
 	cursor, err := GetCygnusDatabase().Collection(collection).Find(context.Background(), filter)

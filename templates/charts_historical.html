@@ -1,0 +1,95 @@
+{{ define "charts_historical"}}
+{{template "header"}}
+<link rel="stylesheet" type="text/css" href="../../assets/css/main.css">
+<link rel="stylesheet" type="text/css" href="../../assets/vendor/rickshaw/rickshaw.min.css">
+</head>
+<body>
+{{template "sidebar"}}
+<div class="content-wrap">
+    <main id="content" class="content" role="main">
+        <div class="row">
+            <div class = col-md-5>
+                <section class="card">
+                    <div class="card-header">
+                        <h4>Seleccionar Módulo</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class='col-md-6'>
+                            <div class="form-group">
+                                <label for="moduleid"></label>
+                                <select name="moduleid" id="moduleid">
+                                    <option value="none">Seleccionar Módulo</option>
+                                    {{range .Modules}}
+                                    <option value="{{.Id}}">{{.Id}}</option>
+                                    {{ end }}
+                                </select>
+                                
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="parameter"></label>
+                            <select name="parameter" id="parameter" disabled>
+                                <option value="none">Seleccionar Parámetro</option>
+                            </select>
+                        </div>
+                        
+                        
+                    </div>
+                </section>
+            </div>
+            <div class="col-md-5">
+                <section class="card">
+                    <div  class="card-header">
+                        <h4>Seleccionar Fecha</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class='col-md-4'>
+                            <div class="form-group">
+                                <label for="from">Fecha de Inicio</label>
+                                <div class='input-group date' id='frompicker'>
+                                    <input type='text' class="form-control date-picker" id="start_date"/>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class='col-md-4'>
+                            <div class="form-group">
+                                <label for="to">Fecha Final</label>
+                                <div class='input-group date' id='topicker'>
+                                    <input type='text' class="form-control date-picker" id="end_date"/>
+                                    <span class="input-group-addon">
+                                        <span class="glyphicon glyphicon-calendar"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="container">
+                                <button class="btn btn-primary" style="margin-top:20px" id="chart">Ver Gráficos</button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <div class="widget hidden">
+                <header>
+
+                </header>
+
+                <section class="widget-body">                    
+                </section>
+            </div>
+        </div>
+    </main>
+</div>
+{{template "footer"}}
+<script src="../../assets/vendor/d3/d3.min.js"></script>
+<script src="../../assets/vendor/rickshaw/rickshaw.min.js"></script>
+<script src="../../assets/vendor/moment/min/moment.min.js"></script>
+<script src="../../assets/vendor/eonasdan-bootstrap-datetimepicker/build/js/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="../../assets/js/charts/historical.js"></script>
+</body>
+{{ end }}

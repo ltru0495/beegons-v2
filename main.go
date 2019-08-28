@@ -23,9 +23,6 @@ func main() {
 		Handler: router,
 	}
 
-	data, _ := models.GetHistoricalData("asd")
-	log.Println(data)
-
 	log.Println("Starting server at " + address)
 	log.Fatal(server.ListenAndServe())
 

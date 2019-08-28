@@ -8,10 +8,10 @@ import (
 	"github.com/gorilla/mux"
 )
 
-func ModuleGet(w http.ResponseWriter, r *http.Request) {
+func Module(w http.ResponseWriter, r *http.Request) {
 
 	vars := mux.Vars(r)
-	id := vars["id"]
+	id := vars["moduleid"]
 	module, err := models.GetModule(id)
 	if err != nil {
 		log.Println(err)
@@ -19,6 +19,26 @@ func ModuleGet(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	models.SendData(w, module)
+	return
+}
+
+func ModuleParameters(w http.ResponseWriter, r *http.Request) {
+
+	vars := mux.Vars(r)
+	id := vars["moduleid"]
+	data, err := models.GetDataObserved(id)
+	var params []string
+
+	for k := range data.Parameters {
+		params = append(params, k)
+	}
+
+	if err != nil {
+		log.Println(err)
+		models.SendNotFound(w)
+		return
+	}
+	models.SendData(w, params)
 	return
 }
 

@@ -29,3 +29,16 @@ func ChartsRealTime(w http.ResponseWriter, r *http.Request) {
 	context["Modules"] = modules
 	utils.RenderTemplate(w, "charts_realtime", context)
 }
+
+func ChartsHistorical(w http.ResponseWriter, r *http.Request) {
+	context := make(map[string]interface{})
+
+	modules, err := models.GetAllModules()
+	if err != nil {
+		http.Redirect(w, r, "/error", http.StatusSeeOther)
+		return
+	}
+
+	context["Modules"] = modules
+	utils.RenderTemplate(w, "charts_historical", context)
+}

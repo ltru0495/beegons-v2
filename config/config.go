@@ -83,7 +83,3 @@ func getEnvAsInt(name string, defaultVal int) int {
 
 	return defaultVal
 }
-
-func (c *Config) GetFiwareOrion() {
-
-}

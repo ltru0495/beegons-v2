@@ -17,9 +17,9 @@
 								<tr>
 									<th scope="col">Id</th>
 									<th scope="col">Type</th>
+									<th scope="col">DataType</th>
 									<th scope="col">Mac</th>
 									<th scope="col">Name</th>
-									<th scope="col">State</th>
 									<th scope="col">Protocol</th>
 								</tr>
 							</thead>
@@ -28,10 +28,10 @@
 								<tr>
 									<td>{{ .Id }}</td>
 									<td>{{ .Type }}</td>
+									<td>{{ .DataType }}</td>
 									<td>{{ .Mac }}</td>
 									<td>{{ .Name }}</td>
-									<td>{{ .State }}</td>
-									<td>{{ .Protocol }}</td>
+									<td>{{ .SupportedProtocol }}</td>
 								</tr>
 								{{end}}
 							</tbody>

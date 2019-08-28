@@ -69,7 +69,9 @@ curl localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs?options=keyV
 
 curl localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs?options=keyValues -s -S -H 'Content-Type: application/json' -X PUT -d '{
       "temperature": '29',
-      "co2" : '100'
+      "co2" : '100',
+      "o3": '20',
+      "pressure": '800'
 }'
 
 SIM OF A SUBSCRIPTION

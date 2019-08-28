@@ -21,7 +21,13 @@
 }
 
 .dataNumber{
-  
   font-size: 25px;
+}
 
+.hidden {
+  display:none;
+}
+
+.date-picker{
+  font-size:13px;
 }
