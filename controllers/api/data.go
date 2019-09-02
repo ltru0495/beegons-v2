@@ -29,11 +29,13 @@ func HistoricalData(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	start, err := time.Parse("2006-01-02T15:04Z", vars["start"])
+	// TODO
+	// start, end <- QUERY
+	start, err := time.Parse("2006-02-01T15:04Z", vars["start"])
 	if err != nil {
 		log.Println(err)
 	}
-	end, err := time.Parse("2006-01-02T15:04Z", vars["end"])
+	end, err := time.Parse("2006-02-01T15:04Z", vars["end"])
 
 	res, err := models.GetHistoricalData(dataId, dataType, parameter, start, end)
 	if err != nil {

@@ -1,5 +1,34 @@
 version: "3.5"
 services:
+  jobmanager:
+    image: flink:latest
+    hostname: jobmanager
+    networks:
+      - default
+    expose:
+      - "6123"
+    ports:
+      - "8081:8081"
+    command: jobmanager
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+
+  taskmanager:
+    image: flink:latest
+    hostname: taskmanager
+    networks:
+      - default
+    expose:
+      - "6121"
+      - "6122"
+    depends_on:
+      - jobmanager
+    command: taskmanager
+    links:
+      - "jobmanager:jobmanager"
+    environment:
+      - JOB_MANAGER_RPC_ADDRESS=jobmanager
+
   orion:
     image: fiware/orion:2.2.0
     hostname: orion

@@ -22,18 +22,24 @@ type ServerConfig struct {
 	LogFile string
 }
 
-type Config struct {
-	Database DatabaseConfig
-	Server   ServerConfig
-	Fiware   FiwareConfig
-}
-
 type FiwareConfig struct {
 	OrionCB_Host    string
 	OrionCB_Port    int
 	Cygnus_Host     string
 	Cygnus_Port     int
 	Cygnus_Database string
+}
+
+type FlinkConfig struct {
+	Host string
+	Port int
+}
+
+type Config struct {
+	Database DatabaseConfig
+	Server   ServerConfig
+	Fiware   FiwareConfig
+	Flink    FlinkConfig
 }
 
 func init() {
@@ -61,6 +67,10 @@ func New() *Config {
 			Cygnus_Host:     getEnv("CYGNUS_HOST", "localhost"),
 			Cygnus_Port:     getEnvAsInt("CYGNUS_PORT", 5050),
 			Cygnus_Database: getEnv("CYGNUS_DATABASE", "sth_default"),
+		},
+		Flink: FlinkConfig{
+			Host: getEnv("FLINK_HOST", "localhost"),
+			Port: getEnvAsInt("FLINK_PORT", 9001),
 		},
 	}
 }

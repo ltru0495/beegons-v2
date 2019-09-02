@@ -4,6 +4,7 @@ import (
 	"time"
 )
 
+// Subscriptions
 type Payload struct {
 	Description  string       `json:"description"`
 	Subject      Subject      `json:"subject"`

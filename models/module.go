@@ -19,6 +19,8 @@ type Module struct {
 	Coordinates       []float64 `json:"coordinates"`
 }
 
+var prefix string = "urn:ngsi-ld:"
+
 func (m *Module) DecodeModuleForm(r *http.Request) error {
 	err := r.ParseForm()
 	if err != nil {
@@ -31,7 +33,7 @@ func (m *Module) DecodeModuleForm(r *http.Request) error {
 }
 
 func (m *Module) CreateModule() (err error) {
-	m.Id = "urn:ngsi-ld:Module:" + m.Name
+	m.Id = prefix + "Module:" + m.Name
 	m.Type = "Module"
 	err = utils.PostEntity(m)
 	return
@@ -39,17 +41,27 @@ func (m *Module) CreateModule() (err error) {
 
 func (m *Module) CreateDataObserved() (err error) {
 	d := make(map[string]interface{})
-	d["id"] = "urn:ngsi-ld:DataObserved:" + m.Name
+	d["id"] = prefix + "DataObserved:" + m.Name
 	d["type"] = m.DataType + "Observed"
 	d["dateObserved"] = time.Now().Format("2006-01-02T15:04:05Z")
 	d["refModule"] = m.Id
 	err = utils.PostEntity(d)
+	return
+}
 
+func (m *Module) CreateAlert() (err error) {
+	d := make(map[string]interface{})
+	d["id"] = prefix + "Alert:" + m.Name
+	d["type"] = "Alert"
+	d["dateObserved"] = time.Now().Format("2006-01-02T15:04:05Z")
+	d["refModule"] = m.Id
+	d["condition"] = ""
+	err = utils.PostEntity(d)
 	return
 }
 
 func (m *Module) CreateCygnusSubscription() (err error) {
-	id := "urn:ngsi-ld:DataObserved:" + m.Name
+	id := prefix + "DataObserved:" + m.Name
 	entities := []Entity{{Id: id}}
 	subject := Subject{entities}
 
@@ -60,6 +72,27 @@ func (m *Module) CreateCygnusSubscription() (err error) {
 
 	data := Payload{
 		Description:  "Notify Cygnus of all sensor changes",
+		Subject:      subject,
+		Notification: notification,
+		Throttling:   5,
+	}
+
+	err = utils.PostSubscription(data)
+	return err
+}
+
+func (m *Module) CreateFlinkSubscription() (err error) {
+	id := prefix + "DataObserved:" + m.Name
+	entities := []Entity{{Id: id}}
+	subject := Subject{entities}
+
+	url := utils.GetFlinkURL() + "/notify"
+
+	protocol := HTTP{URL: url}
+	notification := Notification{HTTP: protocol, AttrsFormat: "legacy"}
+
+	data := Payload{
+		Description:  "Notify Flink of all sensor changes",
 		Subject:      subject,
 		Notification: notification,
 		Throttling:   5,

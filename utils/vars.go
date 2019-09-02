@@ -29,3 +29,8 @@ func GetCygnusDBName() string {
 	config := config.New()
 	return config.Fiware.Cygnus_Database
 }
+
+func GetFlinkURL() string {
+	config := config.New()
+	return fmt.Sprintf("http://%s:%d", config.Flink.Host, config.Flink.Port)
+}

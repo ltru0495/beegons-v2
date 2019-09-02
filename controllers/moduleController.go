@@ -40,6 +40,14 @@ func ModuleCreate(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
+			err = module.CreateFlinkSubscription()
+			if err != nil {
+				log.Println(err)
+				log.Println("Error While creating subscription")
+				models.SendUnprocessableEntity(w)
+				return
+			}
+
 			res := models.CreateDefaultResponse(w)
 			res.Message = "Module has been created"
 			res.Data = module

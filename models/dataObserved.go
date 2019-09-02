@@ -7,9 +7,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"strings"
 
-	"time"
-
 	"log"
+	"time"
 )
 
 type DataObserved struct {
@@ -61,6 +60,9 @@ var data []models.Data
 */
 func GetHistoricalData(id, dataType, parameter string, start, end time.Time) (d []CygnusDocument, err error) {
 	collection := "sth_/_" + id + "_" + dataType
+
+	log.Println(start)
+	log.Println(end)
 	filter := bson.M{
 		"attrName": parameter,
 		"recvTime": bson.M{
@@ -70,12 +72,19 @@ func GetHistoricalData(id, dataType, parameter string, start, end time.Time) (d 
 	}
 	cursor, err := GetCygnusDatabase().Collection(collection).Find(context.Background(), filter)
 	if err != nil {
+		log.Println(err)
 		return
 	}
 
 	err = cursor.All(context.Background(), &d)
 	if err != nil {
+		log.Println(err)
 		return
+	}
+	for cursor.Next(context.TODO()) {
+		aux := make(map[string]interface{})
+		err = cursor.Decode(&aux)
+		log.Println(aux)
 	}
 
 	if err = cursor.Err(); err != nil {
