@@ -48,6 +48,25 @@ func ModuleCreate(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
+			/**************************************************/
+			// For testing purposes
+			// Erase when Cep Creation option is created
+			err = module.CreateAlert()
+			if err != nil {
+				log.Println(err)
+				models.SendUnprocessableEntity(w)
+				return
+			}
+
+			err = module.CreateAlertSubscription()
+			if err != nil {
+				log.Println(err)
+				log.Println("Error while creating alert subscription")
+				models.SendUnprocessableEntity(w)
+				return
+			}
+			/**************************************************/
+
 			res := models.CreateDefaultResponse(w)
 			res.Message = "Module has been created"
 			res.Data = module

@@ -15,7 +15,10 @@ var mClient *mongo.Client
 var mDatabase *mongo.Database
 var db string
 
+var AlertsChannel chan Alert
+
 func ConnectToDB() {
+	AlertChannel = make(chan Alert, 1000)
 	connect()
 	ping()
 }

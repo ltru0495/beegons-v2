@@ -37,3 +37,16 @@ type CygnusDocument struct {
 	"attrType" : "Number",
 	"attrValue" : "29"
 */
+
+type Subscription struct {
+	Data           []map[string]interface{} `json:"data"`
+	SubscriptionId string                   `json:subscriptionId`
+}
+
+type Alert struct {
+	Id           string                 `json:"id"`
+	Condition    string                 `json:"condition"`
+	RefModule    string                 `json:"refModule"`
+	DateObserved string                 `json:"time"`
+	Parameters   map[string]interface{} `json:"parameters"`
+}

@@ -60,6 +60,26 @@ func (m *Module) CreateAlert() (err error) {
 	return
 }
 
+func (m *Module) CreateAlertSubscription() (err error) {
+	id := prefix + "Alert:" + m.Name
+	entities := []Entity{{Id: id}}
+	subject := Subject{entities}
+
+	url := utils.GetAlertURL() + "/alerts/notify"
+
+	protocol := HTTP{URL: url}
+	notification := Notification{HTTP: protocol, AttrsFormat: "keyValues"}
+
+	data := Payload{
+		Description:  "Notify Server of alerts generated",
+		Subject:      subject,
+		Notification: notification,
+	}
+
+	err = utils.PostSubscription(data)
+	return err
+}
+
 func (m *Module) CreateCygnusSubscription() (err error) {
 	id := prefix + "DataObserved:" + m.Name
 	entities := []Entity{{Id: id}}

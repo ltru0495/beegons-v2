@@ -34,3 +34,8 @@ func GetFlinkURL() string {
 	config := config.New()
 	return fmt.Sprintf("http://%s:%d", config.Flink.Host, config.Flink.Port)
 }
+
+func GetAlertURL() string {
+	config := config.New()
+	return fmt.Sprintf("http://%s:%d", config.Server.Host, config.Server.Port)
+}
