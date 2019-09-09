@@ -7,6 +7,7 @@ import (
 	"net/http"
 
 	"github.com/beegons/models"
+	"github.com/beegons/utils"
 )
 
 func AlertsNotify(w http.ResponseWriter, r *http.Request) {
@@ -47,6 +48,15 @@ func AlertsNotify(w http.ResponseWriter, r *http.Request) {
 	}
 	alert.Parameters = params
 
-	log.Println(alert)
-	models.AlertChann <- alert
+	// log.Println(alert)
+
+	alertBytes, err := json.Marshal(alert)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	// models.AlertChann <- alert
+	hub := utils.GetWSHub()
+	hub.Broadcast <- alertBytes
 }

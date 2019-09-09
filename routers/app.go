@@ -15,6 +15,8 @@ func SetAppRoutes(router *mux.Router) *mux.Router {
 	appRouter.HandleFunc("/module/create", controllers.ModuleCreate).Methods("GET", "POST")
 	appRouter.HandleFunc("/modules", controllers.ModuleTable).Methods("GET")
 
+	appRouter.HandleFunc("/alerts", controllers.Alerts).Methods("GET")
+
 	appRouter.HandleFunc("/charts/realtime", controllers.ChartsRealTime).Methods("GET")
 	appRouter.HandleFunc("/charts/historical", controllers.ChartsHistorical).Methods("GET")
 

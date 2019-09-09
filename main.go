@@ -16,6 +16,9 @@ func main() {
 
 	router := routers.InitRoutes()
 	config := config.New()
+
+	hub := utils.GetWSHub()
+	go hub.Run()
 	models.ConnectToDB()
 	address := fmt.Sprintf("%s:%d", config.Server.Host, config.Server.Port)
 	server := &http.Server{

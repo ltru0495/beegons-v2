@@ -10,6 +10,9 @@ func InitRoutes() *mux.Router {
 	router.PathPrefix("/assets/").Handler(http.StripPrefix("/assets/", http.FileServer(http.Dir("assets/"))))
 	router = SetApiRoutes(router)
 
+	router = SetWSRoutes(router)
+
 	router = SetAppRoutes(router)
+
 	return router
 }

@@ -42,3 +42,9 @@ func ChartsHistorical(w http.ResponseWriter, r *http.Request) {
 	context["Modules"] = modules
 	utils.RenderTemplate(w, "charts_historical", context)
 }
+
+func Alerts(w http.ResponseWriter, r *http.Request) {
+	context := make(map[string]interface{})
+
+	utils.RenderTemplate(w, "alerts", context)
+}
