@@ -33,6 +33,8 @@ services:
     image: fiware/orion:2.2.0
     hostname: orion
     container_name: fiware-orion
+    depends_on:
+      - mongo-db
     networks:
       - default
     expose:
@@ -47,6 +49,8 @@ services:
     image: fiware/cygnus-ngsi:1.13.0
     hostname: cygnus
     container_name: fiware-cygnus
+    depends_on:
+      - mongo-db
     networks:
       - default
     expose:

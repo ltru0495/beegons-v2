@@ -4,7 +4,7 @@ curl -iX POST \
   -H 'Content-Type: application/json' \
   -d '
 {
-    "id": "urn:ngsi-ld:Module:MOD01",
+    "id": "urn:ngsi-ld:Module:MOD09",
     "type": "Module",
     "name": "MOD001",
     "mac": "13A434A01B58",

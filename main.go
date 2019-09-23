@@ -20,7 +20,7 @@ func main() {
 	hub := utils.GetWSHub()
 	go hub.Run()
 	models.ConnectToDB()
-	address := fmt.Sprintf("%s:%d", config.Server.Host, config.Server.Port)
+	address := fmt.Sprintf(":%d", config.Server.Port)
 	server := &http.Server{
 		Addr:    address,
 		Handler: router,
