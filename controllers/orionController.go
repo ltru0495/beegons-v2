@@ -59,4 +59,5 @@ func AlertsNotify(w http.ResponseWriter, r *http.Request) {
 	// models.AlertChann <- alert
 	hub := utils.GetWSHub()
 	hub.Broadcast <- alertBytes
+
 }

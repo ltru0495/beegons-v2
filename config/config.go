@@ -17,9 +17,10 @@ type DatabaseConfig struct {
 }
 
 type ServerConfig struct {
-	Host    string
-	Port    int
-	LogFile string
+	Host     string
+	Hostname string
+	Port     int
+	LogFile  string
 }
 
 type FiwareConfig struct {
@@ -51,8 +52,9 @@ func init() {
 func New() *Config {
 	return &Config{
 		Server: ServerConfig{
-			Host: getEnv("HOST", "127.0.0.1"),
-			Port: getEnvAsInt("PORT", 9000),
+			Host:     getEnv("HOST", "127.0.0.1"),
+			Hostname: getEnv("HOSTNAME", "beegons"),
+			Port:     getEnvAsInt("PORT", 9000),
 		},
 		Database: DatabaseConfig{
 			Username: getEnv("DB_USERNAME", ""),

@@ -106,10 +106,10 @@ func (m *Module) CreateFlinkSubscription() (err error) {
 	entities := []Entity{{Id: id}}
 	subject := Subject{entities}
 
-	url := utils.GetFlinkURL() + "/notify"
+	url := utils.GetFlinkURL()
 
 	protocol := HTTP{URL: url}
-	notification := Notification{HTTP: protocol, AttrsFormat: "legacy"}
+	notification := Notification{HTTP: protocol, AttrsFormat: "normalized"}
 
 	data := Payload{
 		Description:  "Notify Flink of all sensor changes",

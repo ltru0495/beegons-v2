@@ -37,5 +37,5 @@ func GetFlinkURL() string {
 
 func GetAlertURL() string {
 	config := config.New()
-	return fmt.Sprintf("http://%s:%d", config.Server.Host, config.Server.Port)
+	return fmt.Sprintf("http://%s:%d", config.Server.Hostname, config.Server.Port)
 }

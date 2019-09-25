@@ -1,7 +1,21 @@
 version: "3.5"
 services:
+  beegons:
+    image: beegons:latest
+    hostname: beegons
+    container_name: beegons
+    depends_on:
+      - mongo-db
+      - orion
+    networks:
+      - default
+    expose:
+      - "9000"
+    ports:
+      - "9000:9000"
+
   jobmanager:
-    image: flink:latest
+    image: flink:1.9.0-scala_2.11
     hostname: jobmanager
     networks:
       - default
@@ -14,13 +28,16 @@ services:
       - JOB_MANAGER_RPC_ADDRESS=jobmanager
 
   taskmanager:
-    image: flink:latest
+    image: flink:1.9.0-scala_2.11
     hostname: taskmanager
     networks:
       - default
     expose:
       - "6121"
       - "6122"
+      - "9001"
+    ports:
+      - "9001:9001"
     depends_on:
       - jobmanager
     command: taskmanager
@@ -33,6 +50,8 @@ services:
     image: fiware/orion:2.2.0
     hostname: orion
     container_name: fiware-orion
+    depends_on:
+      - mongo-db
     networks:
       - default
     expose:
@@ -47,6 +66,8 @@ services:
     image: fiware/cygnus-ngsi:1.13.0
     hostname: cygnus
     container_name: fiware-cygnus
+    depends_on:
+      - mongo-db
     networks:
       - default
     expose:
@@ -86,3 +107,5 @@ networks:
 
 volumes:
   mongo-db: ~
+
+
