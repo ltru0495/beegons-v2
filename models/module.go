@@ -94,7 +94,7 @@ func (m *Module) CreateCygnusSubscription() (err error) {
 		Description:  "Notify Cygnus of all sensor changes",
 		Subject:      subject,
 		Notification: notification,
-		Throttling:   5,
+//		Throttling:   5,
 	}
 
 	err = utils.PostSubscription(data)
@@ -115,7 +115,7 @@ func (m *Module) CreateFlinkSubscription() (err error) {
 		Description:  "Notify Flink of all sensor changes",
 		Subject:      subject,
 		Notification: notification,
-		Throttling:   5,
+//		Throttling:   5,
 	}
 
 	err = utils.PostSubscription(data)

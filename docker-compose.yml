@@ -26,6 +26,8 @@ services:
     command: jobmanager
     environment:
       - JOB_MANAGER_RPC_ADDRESS=jobmanager
+      - TASK_MANAGER_NUMBER_OF_TASK_SLOTS=8
+      - PARALLELISM_DEFAULT=32
 
   taskmanager:
     image: flink:1.9.0-scala_2.11
