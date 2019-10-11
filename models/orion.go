@@ -27,7 +27,6 @@ type Notification struct {
 
 type CygnusDocument struct {
 	RecvTime  time.Time `json:"recvTime" bson:"recvTime"`
-	AttrName  string    `json:"attrName" bson:"attrName"`
 	AttrValue string    `json:"attrValue" bson:"attrValue"`
 }
 

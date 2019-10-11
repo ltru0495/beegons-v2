@@ -6,7 +6,7 @@ import (
 )
 
 func init() {
-	ConnectToDB("127.0.0.1", 27017, "test")
+	ConnectToDB()
 }
 
 func TestInsertUser(t *testing.T) {

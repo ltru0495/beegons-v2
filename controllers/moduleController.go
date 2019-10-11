@@ -69,7 +69,7 @@ func ModuleCreate(w http.ResponseWriter, r *http.Request) {
 
 			res := models.CreateDefaultResponse(w)
 			res.Message = "Module has been created"
-			res.Data = module
+			res.Content = module
 			res.Send()
 			return
 		}

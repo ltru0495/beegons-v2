@@ -8,10 +8,17 @@ import (
 
 type Response struct {
 	Status      int         `json:"status"`
-	Data        interface{} `json:"data"`
+	Content     interface{} `json:"content"`
 	Message     string      `json:"message"`
 	contentType string
 	writer      http.ResponseWriter
+}
+
+type ApiData struct {
+	Id        string           `json:"id"`
+	Type      string           `json:"type`
+	Parameter string           `json:"parameter"`
+	Data      []CygnusDocument `json:"data"`
 }
 
 func CreateDefaultResponse(w http.ResponseWriter) Response {
@@ -46,9 +53,9 @@ func (this *Response) NoContent() {
 
 }
 
-func SendData(w http.ResponseWriter, data interface{}) {
+func SendData(w http.ResponseWriter, content interface{}) {
 	response := CreateDefaultResponse(w)
-	response.Data = data
+	response.Content = content
 	response.Send()
 }
 

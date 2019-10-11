@@ -4,7 +4,7 @@ import (
 	"context"
 	"github.com/beegons/utils"
 	"go.mongodb.org/mongo-driver/bson"
-	"go.mongodb.org/mongo-driver/mongo/options"
+	// "go.mongodb.org/mongo-driver/mongo/options"
 	"strings"
 
 	"log"
@@ -58,11 +58,9 @@ var data []models.Data
 	}, "type": dataType, "id_moduleiot": moduleid, "id_sensor": sensorid}).Sort("date").Sort("-$natural").
 			Limit(100).Sort("date").Sort("$natural").Iter()
 */
-func GetHistoricalData(id, dataType, parameter string, start, end time.Time) (d []CygnusDocument, err error) {
+func FilterDataByDate(id, dataType, parameter string, start, end time.Time) (d []CygnusDocument, err error) {
 	collection := "sth_/_" + id + "_" + dataType
 
-	log.Println(start)
-	log.Println(end)
 	filter := bson.M{
 		"attrName": parameter,
 		"recvTime": bson.M{
@@ -81,11 +79,6 @@ func GetHistoricalData(id, dataType, parameter string, start, end time.Time) (d 
 		log.Println(err)
 		return
 	}
-	for cursor.Next(context.TODO()) {
-		aux := make(map[string]interface{})
-		err = cursor.Decode(&aux)
-		log.Println(aux)
-	}
 
 	if err = cursor.Err(); err != nil {
 		return
@@ -94,29 +87,33 @@ func GetHistoricalData(id, dataType, parameter string, start, end time.Time) (d 
 	return
 }
 
-func GetLastDataObservedByParameter(id, parameter string) (d []map[string]interface{}, err error) {
+func GetLastData(id, dataType, parameter string, n int64) (d []CygnusDocument, err error) {
+	collection := "sth_/_" + id + "_" + dataType
 
-	options := options.Find()
+	// options := options.Find()
+	// options.SetSort(bson.D{{"recvTime", -1}})
+	// options.SetLimit(n)
 
-	// Sort by `_id` field descending
-	options.SetSort(bson.D{{"dateObserved", 1}})
+	log.Println(id)
+	log.Println(dataType)
+	log.Println(parameter)
+	log.Println(n)
 
-	cursor, err := GetCygnusDatabase().Collection("data").Find(context.Background(), bson.D{{}}, options)
+	filter := bson.M{
+		"attrName": parameter,
+	}
+	cursor, err := GetCygnusDatabase().Collection(collection).Find(context.Background(), filter)
 	if err != nil {
+		log.Println(err)
 		return
 	}
-	var a map[string]interface{}
 
-	for cursor.Next(context.TODO()) {
-		aux := make(map[string]interface{})
-		err = cursor.Decode(&a)
-		if err != nil {
-			return
-		}
-		aux["dateObserved"] = a["dateObserved"]
-		aux[parameter] = a[parameter]
-		d = append(d, aux)
+	err = cursor.All(context.Background(), &d)
+	if err != nil {
+		log.Println(err)
+		return
 	}
+
 	if err = cursor.Err(); err != nil {
 		return
 	}

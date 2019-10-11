@@ -23,3 +23,20 @@ do
     }'
     sleep 1
 done
+
+# ENV 
+# HOST=127.0.0.1
+# HOSTNAME=beegons
+# PORT=9000
+# DB_USERNAME=
+# DB_PASSWORD=
+# DB_HOST=mongo-db
+# DB_PORT=27017
+# DB_DATABASE=test
+# ORION_CB_HOST=orion
+# ORION_CB_PORT=1026
+# CYGNUS_HOST=cygnus
+# CYGNUS_PORT=5050
+# CYGNUS_DATABASE=sth_default
+# FLINK_HOST=taskmanager
+# FLINK_PORT=9001

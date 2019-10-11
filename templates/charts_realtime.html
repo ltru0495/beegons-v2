@@ -8,18 +8,27 @@
 <div class="content-wrap">
 	<main id="content" class="content" role="main">
 		<div class="row">
-			<div class="col-md-3">
-				<div class="card">
-					<div class="card-body">
-						<select id="moduleid">
-							<option value="none">Seleccionar ID</option>
-							{{range .Modules}}
-							<option value="{{.Id}}">{{.Id}}</option>
-							{{ end }}
-						</select>
-					</div>
-				</div>
-			</div>
+			<div class = col-md-5>
+                <section class="card">
+                    <div class="card-header">
+                        <h4>Seleccionar Módulo</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class='col-md-6'>
+                            <div class="form-group">
+                                <label for="moduleid"></label>
+                                <select name="moduleid" id="moduleid">
+                                    <option value="none">Seleccionar Módulo</option>
+                                    {{range .Modules}}
+                                    <option value="{{.Id}}">{{.Id}}</option>
+                                    {{ end }}
+                                </select>
+                                
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
 		</div>
 	</main>
 </div>

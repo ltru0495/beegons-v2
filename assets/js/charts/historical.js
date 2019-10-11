@@ -39,7 +39,8 @@ $(function() {
             $.getJSON(url_server + `/api/module/${selectedModule}/parameters`, function(res) {
                 if (res.status == 200) {
                     $("#parameter").removeAttr("disabled")
-                    let params = res.data
+                    let params = res.content
+                    if (params == null) return;
                     params.forEach(function(p) {
                         $("#parameter").append(`<option value="${p}">${p}</option>`)
                     })

@@ -42,23 +42,39 @@ func ModuleParameters(w http.ResponseWriter, r *http.Request) {
 	return
 }
 
-func RealtimeInfoGet(w http.ResponseWriter, r *http.Request) {
+func ModuleRealTime(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
-	id := vars["id"]
+	id := vars["moduleid"]
 
-	module, err := models.GetModule(id)
+	d, err := models.GetDataObserved(id)
+	log.Println(d)
 	if err != nil {
 		log.Println(err)
 		models.SendNotFound(w)
 		return
 	}
+	dataId := d.Id
+	dataType := d.DataType
 
-	// data, err := models.GetDataObserved(id)
-	// if err != nil {
-	// 	log.Println(err)
-	// 	models.SendNotFound(w)
-	// }
+	var content []models.ApiData
+	for parameter := range d.Parameters {
+		var apiData models.ApiData
+		log.Println("########################")
 
-	models.SendData(w, module)
+		data, err := models.GetLastData(dataId, dataType, parameter, 10)
+		if err != nil {
+			log.Println(err)
+			models.SendNotFound(w)
+			return
+		}
+		apiData.Data = data
+		apiData.Id = dataId
+		apiData.Type = dataType
+		apiData.Parameter = parameter
+		content = append(content, apiData)
+		log.Println("**********************")
+	}
+
+	models.SendData(w, content)
 	return
 }

@@ -31,17 +31,25 @@ func HistoricalData(w http.ResponseWriter, r *http.Request) {
 
 	// TODO
 	// start, end <- QUERY
+	var response models.ApiData
+
 	start, err := time.Parse("2006-02-01T15:04Z", vars["start"])
 	if err != nil {
 		log.Println(err)
 	}
 	end, err := time.Parse("2006-02-01T15:04Z", vars["end"])
 
-	res, err := models.GetHistoricalData(dataId, dataType, parameter, start, end)
+	data, err := models.FilterDataByDate(dataId, dataType, parameter, start, end)
 	if err != nil {
 		log.Println(err)
 		models.SendNotFound(w)
 		return
 	}
-	models.SendData(w, res)
+	response.Data = data
+	response.Id = dataId
+	response.Type = dataType
+	response.Parameter = parameter
+
+	// = dataId + "\n" + dataType + ": " + parameter
+	models.SendData(w, response)
 }
