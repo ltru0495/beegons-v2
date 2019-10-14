@@ -47,7 +47,6 @@ func ModuleRealTime(w http.ResponseWriter, r *http.Request) {
 	id := vars["moduleid"]
 
 	d, err := models.GetDataObserved(id)
-	log.Println(d)
 	if err != nil {
 		log.Println(err)
 		models.SendNotFound(w)
@@ -59,7 +58,6 @@ func ModuleRealTime(w http.ResponseWriter, r *http.Request) {
 	var content []models.ApiData
 	for parameter := range d.Parameters {
 		var apiData models.ApiData
-		log.Println("########################")
 
 		data, err := models.GetLastData(dataId, dataType, parameter, 10)
 		if err != nil {
@@ -72,7 +70,6 @@ func ModuleRealTime(w http.ResponseWriter, r *http.Request) {
 		apiData.Type = dataType
 		apiData.Parameter = parameter
 		content = append(content, apiData)
-		log.Println("**********************")
 	}
 
 	models.SendData(w, content)

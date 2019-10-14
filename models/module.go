@@ -43,6 +43,7 @@ func (m *Module) CreateDataObserved() (err error) {
 	d := make(map[string]interface{})
 	d["id"] = prefix + "DataObserved:" + m.Name
 	d["type"] = m.DataType + "Observed"
+	d["dataType"] = m.DataType + "Observed"
 	d["dateObserved"] = time.Now().Format("2006-01-02T15:04:05Z")
 	d["refModule"] = m.Id
 	err = utils.PostEntity(d)
@@ -94,7 +95,7 @@ func (m *Module) CreateCygnusSubscription() (err error) {
 		Description:  "Notify Cygnus of all sensor changes",
 		Subject:      subject,
 		Notification: notification,
-//		Throttling:   5,
+		//		Throttling:   5,
 	}
 
 	err = utils.PostSubscription(data)
@@ -115,7 +116,7 @@ func (m *Module) CreateFlinkSubscription() (err error) {
 		Description:  "Notify Flink of all sensor changes",
 		Subject:      subject,
 		Notification: notification,
-//		Throttling:   5,
+		//		Throttling:   5,
 	}
 
 	err = utils.PostSubscription(data)

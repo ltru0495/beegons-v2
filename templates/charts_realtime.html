@@ -6,15 +6,15 @@
 <body>
 {{template "sidebar"}}
 <div class="content-wrap">
-	<main id="content" class="content" role="main">
-		<div class="row">
-			<div class = col-md-5>
+    <main id="content" class="content" role="main">
+        <div class="row">
+            <div class = col-md-4>
                 <section class="card">
                     <div class="card-header">
                         <h4>Seleccionar Módulo</h4>
                     </div>
                     <div class="card-body">
-                        <div class='col-md-6'>
+                        <div class='col-md-5'>
                             <div class="form-group">
                                 <label for="moduleid"></label>
                                 <select name="moduleid" id="moduleid">
@@ -29,15 +29,18 @@
                     </div>
                 </section>
             </div>
-		</div>
-	</main>
+        </div>
+        <div id="lastValues"></div>
+        <div id="charts">
+        </div>
+    </main>
 </div>
 {{template "footer"}}
-
 <script src="../../assets/vendor/d3/d3.min.js"></script>
 <script src="../../assets/vendor/rickshaw/rickshaw.min.js"></script>
-
+<script type="text/javascript" src="../../assets/js/utils.js"></script>
+<script type="text/javascript" src="../../assets/js/charts/liquidFillGauge.js"></script>
+<script type="text/javascript" src="../../assets/js/charts/gauge.min.js"></script>
 <script type="text/javascript" src="../../assets/js/charts/realtime.js"></script>
-
 </body>
 {{ end }}
