@@ -16,6 +16,7 @@ func ModuleCreate(w http.ResponseWriter, r *http.Request) {
 		} else {
 			module := new(models.Module)
 			err := module.DecodeModuleForm(r)
+			log.Println(module)
 
 			err = module.CreateModule()
 			if err != nil {
@@ -48,6 +49,14 @@ func ModuleCreate(w http.ResponseWriter, r *http.Request) {
 				return
 			}
 
+			err = module.CreateDataSubscription()
+			if err != nil {
+				log.Println(err)
+				log.Println("Error While creating data subscription")
+				models.SendUnprocessableEntity(w)
+				return
+			}
+
 			/**************************************************/
 			// For testing purposes
 			// Erase when Cep Creation option is created
@@ -75,6 +84,27 @@ func ModuleCreate(w http.ResponseWriter, r *http.Request) {
 		}
 	}
 	utils.RenderTemplate(w, "module_create", nil)
+}
+
+func ModuleModify(w http.ResponseWriter, r *http.Request) {
+	if r.Method == "POST" {
+		err := r.ParseForm()
+		if err != nil {
+			log.Println(err)
+		} else {
+			//
+		}
+	}
+	context := make(map[string]interface{})
+
+	modules, err := models.GetAllModules()
+	log.Println(modules)
+	if err != nil {
+		http.Redirect(w, r, "/error", http.StatusSeeOther)
+		return
+	}
+	context["Modules"] = modules
+	utils.RenderTemplate(w, "module_modify", context)
 }
 
 func ModuleTable(w http.ResponseWriter, r *http.Request) {

@@ -34,7 +34,7 @@ func AlertsNotify(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	hub := utils.GetWSHub()
+	hub := utils.GetWSAlertHub()
 	hub.Broadcast <- alertBytes
 
 	/*
@@ -79,4 +79,33 @@ func AlertsNotify(w http.ResponseWriter, r *http.Request) {
 		hub := utils.GetWSHub()
 		hub.Broadcast <- alertBytes
 	*/
+}
+
+func DataNotify(w http.ResponseWriter, r *http.Request) {
+	b, err := ioutil.ReadAll(r.Body)
+	defer r.Body.Close()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	var subNotification models.Subscription
+
+	err = json.Unmarshal(b, &subNotification)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	data := subNotification.Data[0]
+
+	dataBytes, err := json.Marshal(data)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	hub := utils.GetWSDataHub()
+	hub.Broadcast <- dataBytes
+
 }

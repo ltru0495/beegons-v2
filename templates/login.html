@@ -1,0 +1,89 @@
+{{ define "login"}}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="">
+  <meta name="author" content="">
+  <title>BeeGOns! Login</title>
+  <!-- Bootstrap core CSS-->
+  <link href="../../assets/css/application.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="../../assets/vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template-->
+  <link href="../../assets/css/sb-admin.css" rel="stylesheet">
+</head>
+
+<body class="bg-dark">
+	{{ if .Error }}
+  <div class="alert alert-danger">
+    <strong>{{ .Error }}</strong>
+  </div>
+  {{ end }}
+
+ <div class="container">
+
+<!--  asdas 
+asdasd
+-->
+    <main id="content" class="widget-login-container" role="main">
+        <div class="row">
+            <div class="col-lg-4 col-sm-6 col-xs-10 col-lg-offset-4 col-sm-offset-3 col-xs-offset-1">
+                
+                <section class="widget widget-login animated fadeInUp">
+                    <header>
+                        <h3>BeeGOns! Login</h3>
+                    </header>
+                    <div class="widget-body">
+                        <form class="login-form mt-lg" action="#" method="post">
+                            <div class="form-group">
+                                <input type="text" class="form-control" name="username" id="username" placeholder="Username">
+                            </div>
+                            <div class="form-group">
+                                <input class="form-control" name="password" id="password" type="password" placeholder="Password">
+                            </div>
+                            <div class="clearfix">
+                                <div class="btn-toolbar pull-right">
+                                    <button type="submit" class="btn btn-default btn-sm">Sign In</button>
+                                </div>
+                            </div>
+                            <!-- <div class="row">
+                                <div class="col-sm-6 col-sm-push-6">
+                                    <div class="clearfix">
+                                        <div class="checkbox widget-login-info pull-right ml-n-lg">
+                                            <input type="checkbox" id="checkbox1" value="1">
+                                            <label for="checkbox1">Keep me signed in </label>
+                                        </div>S
+                                    </div>
+                                </div>
+
+                                <div class="col-sm-6 col-sm-pull-6">
+                                    <a class="mr-n-lg" href="#">Trouble with account?</a>
+                                </div>
+                            </div> -->
+                        </form>
+                    </div>
+                </section>
+            </div>
+        </div>
+    </main>
+
+</div>
+<!-- The Loader. Is shown when pjax happens -->
+<div class="loader-wrap hiding hide">
+    <i class="fa fa-circle-o-notch fa-spin-fast"></i>
+</div>
+  <!-- Bootstrap core JavaScript-->
+  <script src="../../assets/vendor/jquery/dist/jquery.min.js"></script>
+  <script src="../../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+  <!-- Core plugin JavaScript-->
+  <script src="../../assets/vendor/jquery-easing/jquery.easing.min.js"></script>
+</body>
+
+</html>
+
+{{ end }}

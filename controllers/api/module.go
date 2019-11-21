@@ -9,7 +9,6 @@ import (
 )
 
 func Module(w http.ResponseWriter, r *http.Request) {
-
 	vars := mux.Vars(r)
 	id := vars["moduleid"]
 	module, err := models.GetModule(id)
@@ -73,5 +72,38 @@ func ModuleRealTime(w http.ResponseWriter, r *http.Request) {
 	}
 
 	models.SendData(w, content)
+	return
+}
+
+func GetModules(w http.ResponseWriter, r *http.Request) {
+	modules, err := models.GetAllModules()
+	if err != nil {
+		log.Println(err)
+		models.SendNotFound(w)
+		return
+	}
+	models.SendData(w, modules)
+	return
+}
+
+func GetModulesWithData(w http.ResponseWriter, r *http.Request) {
+	modules, err := models.GetAllModules()
+	if err != nil {
+		log.Println(err)
+		models.SendNotFound(w)
+		return
+	}
+
+	var md []models.ModuleAndData
+	for _, mod := range modules {
+		data, err := models.GetDataObserved(mod.Id)
+		if err != nil {
+			log.Println(err)
+			models.SendNotFound(w)
+			return
+		}
+		md = append(md, models.ModuleAndData{Module: mod, Data: data})
+	}
+	models.SendData(w, md)
 	return
 }

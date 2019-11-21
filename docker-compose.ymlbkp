@@ -12,7 +12,7 @@ services:
     expose:
       - "9000"
     ports:
-      - "9000:9000"
+      - "80:9000"
 
   jobmanager:
     image: flink:1.9.0-scala_2.11
@@ -97,15 +97,10 @@ services:
       - default
     command: --bind_ip_all --smallfiles
     volumes:
-      - mongo-db:/data
+      - ./data:/data/db
 
 networks:
   default:
     ipam:
       config:
         - subnet: 172.18.1.0/24
-
-volumes:
-  mongo-db: ~
-
-

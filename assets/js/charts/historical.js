@@ -1,8 +1,12 @@
 $(function() {
 
     function formatDate(dateString) {
-    	console.log(dateString)
         var aux = dateString.split(" ");
+        let offset = 0 ;
+        if (aux[2] == "PM") {
+            offset = 12;
+        }
+
         var h = aux[1];
         var d = aux[0];
         var dmy = d.split("/");
@@ -14,17 +18,30 @@ $(function() {
 
 
     function initDatePicker() {
-        $('#start_date').datetimepicker({});
+        $('#start_date').datetimepicker({
+            format: "MM/DD/Y HH:mm"
+        });
+
         $('#start_date').on("dp.change", function(e) {
             $('#end_date').data("DateTimePicker").minDate(e.date);
         });
 
         $('#end_date').datetimepicker({
+            format: "MM/DD/Y HH:mm",
             useCurrent: false
         });
         $('#end_date').on("dp.change", function(e) {
             $('#start_date').data("DateTimePicker").maxDate(e.date);
         });
+    }
+
+     function appendLinks(moduleid, parameter, start, end) {
+        $("#spaceAfter").append(
+            `<div class="row container">
+                <div class="col-md-1"></div>
+                <div><a target="_blank" class="btn btn-info btn-sm" href="${url_server}/api/file/${moduleid}/${parameter}/${start}/${end}/json">JSON</a>
+            `
+        )
     }
 
     function pageLoad() {
@@ -59,14 +76,15 @@ $(function() {
             if (moduleid != "none" && parameter != "none" && start != "" && end  != "") {
 
                 $.getJSON(url_server + `/api/data/${moduleid}/${parameter}/${start}/${end}`, function(res) {
+                    // console.log(res)
                     $("#charts").empty();
                     let content = res.content;
                     let p = content.parameter;
                     let nc = getNameAndColor(p);
                     appendChartDiv(p, nc.name);
-                    let chart = getChart(content.data.reverse(), nc.color, p);
+                    appendLinks(moduleid, parameter, start, end);
+                    let chart = getChart(content.data.reverse(), nc, p);
                     chart.render();
-                	console.log(res)
                 });
 
             }

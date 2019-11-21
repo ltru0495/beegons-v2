@@ -13,8 +13,26 @@ import (
 )
 
 func Index(w http.ResponseWriter, r *http.Request) {
+	http.Redirect(w, r, "/charts/realtime", http.StatusSeeOther)
+
 	context := make(map[string]interface{})
 	utils.RenderTemplate(w, "index", context)
+}
+
+func MapSensors(w http.ResponseWriter, r *http.Request) {
+	context := make(map[string]interface{})
+	utils.RenderTemplate(w, "maps_sensors", context)
+}
+
+func MapParking(w http.ResponseWriter, r *http.Request) {
+	context := make(map[string]interface{})
+	utils.RenderTemplate(w, "maps_parking", context)
+
+}
+
+func Error(w http.ResponseWriter, r *http.Request) {
+
+	utils.RenderTemplate(w, "error", nil)
 }
 
 func ChartsRealTime(w http.ResponseWriter, r *http.Request) {

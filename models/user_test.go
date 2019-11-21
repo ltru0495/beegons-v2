@@ -1,4 +1,3 @@
-
 package models
 
 import (
@@ -26,7 +25,6 @@ func TestDeleteUser(t *testing.T) {
 	err = user.Delete()
 }
 
-
 func TestUpdateUser(t *testing.T) {
 	user := User{}
 	err := user.Insert()
@@ -40,8 +38,8 @@ func TestUpdateUser(t *testing.T) {
 }
 
 func TestFindUser(t *testing.T) {
-	user:= User{}
-	err :=  user.Insert()
+	user := User{}
+	err := user.Insert()
 	if err != nil {
 		t.Error(err)
 	}
@@ -57,4 +55,3 @@ func TestAllUsers(t *testing.T) {
 		t.Error(err)
 	}
 }
-

@@ -2,6 +2,7 @@
 {{template "header"}}
 <link rel="stylesheet" type="text/css" href="../../assets/css/main.css">
 <link rel="stylesheet" type="text/css" href="../../assets/vendor/rickshaw/rickshaw.min.css">
+<link rel="stylesheet" type="text/css" href="../../assets/css/charts.css">
 </head>
 <body>
 {{template "sidebar"}}
@@ -23,14 +24,18 @@
                                     <option value="{{.Id}}">{{.Id}}</option>
                                     {{ end }}
                                 </select>
-                                
                             </div>
                         </div>
                     </div>
                 </section>
             </div>
         </div>
-        <div id="lastValues"></div>
+           <section id="gaugesDiv" class="widget hidden">
+            <header ><h4>Ultimos valores</h4></header>
+            <div class="widget-body" id="gauges">
+                
+            </div>
+        </section>
         <div id="charts">
         </div>
     </main>

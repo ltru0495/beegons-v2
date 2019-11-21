@@ -15,51 +15,39 @@ function download(filename, text) {
     document.body.removeChild(element);
 }
 
-    if (window["WebSocket"]) {
-        conn = new WebSocket("ws://localhost:9000/ws/alert");
-        conn.onclose = function(evt) {
-            console.log("WS Connection closed");
-        };
-        conn.onmessage = function(evt) {
-            var messageAlert = evt.data;
-            console.log(messageAlert)
-            var alert = JSON.parse(messageAlert);
-            console.log(alert)
+if (window["WebSocket"]) {
+    conn = new WebSocket(ws_server + "/ws/alert");
+    conn.onclose = function(evt) {
+        console.log("WS Connection closed");
+    };
+    conn.onmessage = function(evt) {
+        var messageAlert = evt.data;
+        console.log(messageAlert)
+        var alert = JSON.parse(messageAlert);
+        console.log(alert)
+    };
+} else {
+    console.log("Your Browser does not support WebSockets")
+}
 
-
-            let dateObserved = new Date(alert.dateObserved);
-        
-
-            let dateReceived = new Date();
-            let timeDifference = dateReceived.getTime() - dateObserved.getTime();
-            let counter = alert.counter;
-
-            if(dateObserved == null || counter == null ) {
-                return
-            }
-
-            let appendToFile = counter + "\t" + timeDifference + "\n";
-
-            file += appendToFile;
-
-            let max = 1000
-            if(counte === max) {
-                download(max+"_alerts.txt", file);
-                file = "";
-            }
-            
-            // Messenger().post({
-            //     message: JSON.stringify(alert),
-            //     type: 'error',
-            //     showCloseButton: true
-            // });
-
-
-        };
-    } else {
-        console.log("Your Browser does not support WebSockets")
-    }
-
-    // pageLoad();
+// pageLoad();
 //     SingApp.onPageLoad(pageLoad);
 // });
+
+/*
+
+HOST=127.0.0.1
+HOSTNAME=beegons
+PORT=9000
+DB_USERNAME=
+DB_PASSWORD=
+DB_HOST=mongo-db
+DB_PORT=27017
+DB_DATABASE=test
+ORION_CB_HOST=orion
+ORION_CB_PORT=1026
+CYGNUS_HOST=cygnus
+CYGNUS_PORT=5050
+CYGNUS_DATABASE=sth_default
+FLINK_HOST=taskmanager
+FLINK_PORT=9001*/

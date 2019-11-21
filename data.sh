@@ -1,42 +1,32 @@
+COUNTER="1"
+
 while true
 do
-  temp=$(shuf -i 35-53 -n 1);
-  number=$(shuf -i 1-3113 -n 1);
+  temp=$(shuf -i 45-53 -n 1);
+  hum=$(shuf -i 70-100 -n 1);
   da=$(date +'%Y-%m-%dT%H:%M:%S.%6NZ')
   daO="${da}"
   echo "data sent"
+  echo $temp
+  echo $daO
 
-    curl http://localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs -s -S -H 'Content-Type: application/json' -X PUT -d '{
+
+
+    curl http://localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs -s -S -H 'Content-Type: application/json' -X POST -d '{
       "temperature": {
         "value": '$temp',
-        "type": "Float"
-      },
-      "humidity": {
-        "value": '$number',
         "type": "Float"
       },
       "dateObserved": {
         "type": "Text",
         "value":"'${daO}'"
+      },
+      "humidity": {
+        "type": "Float",
+        "value": '$hum'
       }
 
     }'
-    sleep 1
-done
 
-# ENV 
-# HOST=127.0.0.1
-# HOSTNAME=beegons
-# PORT=9000
-# DB_USERNAME=
-# DB_PASSWORD=
-# DB_HOST=mongo-db
-# DB_PORT=27017
-# DB_DATABASE=test
-# ORION_CB_HOST=orion
-# ORION_CB_PORT=1026
-# CYGNUS_HOST=cygnus
-# CYGNUS_PORT=5050
-# CYGNUS_DATABASE=sth_default
-# FLINK_HOST=taskmanager
-# FLINK_PORT=9001
+    sleep 0.5
+done

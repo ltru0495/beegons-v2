@@ -2,21 +2,29 @@ package models
 
 import (
 	// "encoding/json"
-	"github.com/gorilla/schema"
 	"net/http"
 	"time"
 
+	"github.com/gorilla/schema"
+
 	"github.com/beegons/utils"
+	geojson "github.com/paulmach/go.geojson"
 )
 
 type Module struct {
-	Id                string    `json:"id" bson:"id"`
-	DataType          string    `json:"dataType"`
-	Type              string    `json:"type" bson:"type"`
-	Name              string    `json:"name" bson:"name"`
-	Mac               string    `json:"mac" bson:"mac"`
-	SupportedProtocol []string  `json:"supportedProtocol" bson:"protocol"`
-	Coordinates       []float64 `json:"coordinates"`
+	Id                string            `json:"id" bson:"id"`
+	DataType          string            `json:"dataType"`
+	Type              string            `json:"type" bson:"type"`
+	Name              string            `json:"name" bson:"name"`
+	Mac               string            `json:"mac" bson:"mac"`
+	SupportedProtocol []string          `json:"supportedProtocol" bson:"protocol"`
+	Coordinates       []float64         `json:"coordinates,omitempty"`
+	Location          *geojson.Geometry `json:"location"`
+}
+
+type Location struct {
+	Type        string    `json:"type"`
+	Coordinates []float64 `json:"coordinates"`
 }
 
 var prefix string = "urn:ngsi-ld:"
@@ -28,6 +36,11 @@ func (m *Module) DecodeModuleForm(r *http.Request) error {
 	}
 	decoder := schema.NewDecoder()
 	_ = decoder.Decode(m, r.PostForm)
+	g := geojson.NewPointGeometry(m.Coordinates)
+
+	m.Location = g
+
+	m.Coordinates = nil
 	m.Type = "Module"
 	return nil
 }
@@ -97,7 +110,25 @@ func (m *Module) CreateCygnusSubscription() (err error) {
 		Notification: notification,
 		//		Throttling:   5,
 	}
+	err = utils.PostSubscription(data)
+	return err
+}
 
+func (m *Module) CreateDataSubscription() (err error) {
+	id := prefix + "DataObserved:" + m.Name
+	entities := []Entity{{Id: id}}
+	subject := Subject{entities}
+
+	url := utils.GetAlertURL() + "/data/notify"
+
+	protocol := HTTP{URL: url}
+	notification := Notification{HTTP: protocol, AttrsFormat: "keyValues"}
+
+	data := Payload{
+		Description:  "Notify Beegons of all sensor changes",
+		Subject:      subject,
+		Notification: notification,
+	}
 	err = utils.PostSubscription(data)
 	return err
 }

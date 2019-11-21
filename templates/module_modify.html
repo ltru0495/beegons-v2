@@ -1,0 +1,37 @@
+{{ define "module_modify"}}
+{{template "header"}}
+</head>
+<body>
+{{template "sidebar"}}
+<div class="content-wrap">
+	<main id="content" class="content" role="main">
+		<div class="row">
+			<div class="col-md-2">
+                <div class="form-group">
+                    <label for="moduleid"></label>
+                    <select name="moduleid" id="moduleid">
+                        <option value="none">Seleccionar Módulo</option>
+                        {{range .Modules}}
+                        <option value="{{.Id}}">{{.Id}}</option>
+                        {{ end }}
+                    </select>
+                </div>
+            </div>
+			<div class="col-md-8">
+				<div class="card">
+					<div class="card-header">Modificar Módulo</div>
+					<div class="card-body">
+						{{ template "module_form"}}
+					</div>
+				</div>
+			</div>
+		</div>
+	</main>
+</div>
+{{template "footer"}}
+<script src="http://maps.google.com/maps/api/js?sensor=true"></script>
+<script src="../../assets/vendor/gmaps/gmaps.js"></script>
+<script type="text/javascript" src="../../assets/js/modules/modify.js"></script>
+</body>
+{{ end }}
+</html>

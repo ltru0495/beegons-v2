@@ -9,12 +9,12 @@ set -e
 
 stoppingContainers () {
 	echo "Stopping containers"
-	docker-compose --log-level ERROR -f docker-compose.yml -p fiware down -v --remove-orphans
+	docker-compose --log-level ERROR -f docker-compose.yml -p fiware down 
 }
 
 displayServices () {
 	echo ""
-	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" --filter name=fiware-*
+	docker ps --format "table {{.Names}}\t{{.Status}}\t{{.Ports}}" #--filter name=fiware-*
 	echo ""
 }
 
@@ -23,5 +23,6 @@ echo -e "Starting five containers \033[1;34mOrion\033[0m, \033[1;34mCygnus\033[0
 echo -e "- \033[1;34mOrion\033[0m is the context broker"
 echo -e "- \033[1;34mCygnus\033[0m is configured to write context data to Mongo-DB only"
 echo ""
-docker-compose --log-level ERROR -f docker-compose.yml -p fiware up -d --remove-orphans
+docker-compose --log-level ERROR -f docker-compose.yml -p fiware up -d 
+
 displayServices

@@ -2,24 +2,49 @@ package models
 
 import (
 	"context"
+
+	"golang.org/x/crypto/bcrypt"
+
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 type User struct {
-	Id       primitive.ObjectID `json:"id" bson:"id"`
-	Name     string             `json:"name" bson:"name"`
-	Username string             `json:"username" bson:"username"`
-	Password string             `json:"password" bson:"password"`
+	Id           primitive.ObjectID `json:"id" bson:"id"`
+	Name         string             `json:"name" bson:"name"`
+	Username     string             `json:"username" bson:"username"`
+	Password     string             `json:"password" bson:"password"`
+	HashPassword []byte             `json:"hashpassword" bson:"hashPassword"`
+	Role         string             `json:"role" bson:"role"`
 }
 
 const USER_COL = "users"
 
 func (u *User) Insert() error {
 	u.Id = primitive.NewObjectID()
+
+	hpass, err := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
+	if err != nil {
+		return err
+	}
+	u.HashPassword = hpass
+	u.Password = ""
+
 	res, err := GetAppDatabase().Collection(USER_COL).InsertOne(context.Background(), u)
 	u.Id = res.InsertedID.(primitive.ObjectID)
 	return err
+}
+
+func Login(user User) (u User, err error) {
+	u, err = FindUserByUsername(user.Username)
+	if err != nil {
+		return
+	}
+	err = bcrypt.CompareHashAndPassword(u.HashPassword, []byte(user.Password))
+	if err != nil {
+		u = User{}
+	}
+	return
 }
 
 func (u *User) Delete() error {
@@ -40,6 +65,12 @@ func (u *User) Update() error {
 
 func FindUser(id primitive.ObjectID) (u User, err error) {
 	filter := bson.D{{"_id", id}}
+	err = GetAppDatabase().Collection(USER_COL).FindOne(context.Background(), filter).Decode(&u)
+	return
+}
+
+func FindUserByUsername(username string) (u User, err error) {
+	filter := bson.D{{"username", username}}
 	err = GetAppDatabase().Collection(USER_COL).FindOne(context.Background(), filter).Decode(&u)
 	return
 }

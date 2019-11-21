@@ -11,15 +11,22 @@ import (
 	"github.com/beegons/utils"
 )
 
+// .env <- variables
 func main() {
 	utils.Init()
 
 	router := routers.InitRoutes()
 	config := config.New()
 
-	hub := utils.GetWSHub()
-	go hub.Run()
+	// for realtime
+	alertHub := utils.GetWSAlertHub()
+	dataHub := utils.GetWSDataHub()
+	go alertHub.Run()
+	go dataHub.Run()
+
+	// connect to database -> models: database.go
 	models.ConnectToDB()
+
 	address := fmt.Sprintf(":%d", config.Server.Port)
 	server := &http.Server{
 		Addr:    address,

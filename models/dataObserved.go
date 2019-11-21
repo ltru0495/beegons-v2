@@ -2,22 +2,28 @@ package models
 
 import (
 	"context"
+	"log"
+	"strconv"
+	"strings"
+	"time"
+
 	"github.com/beegons/utils"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo/options"
-	"strings"
-
-	"log"
-	"time"
 )
 
 type DataObserved struct {
 	Id           string             `json:"id" bson:"id"`
 	RefModule    string             `json:"refModule"`
-	Type         string             `json:"type" bson:"type`
+	Type         string             `json:"type" bson:"type"`
 	DataType     string             `json:"dataType"`
 	DateObserved string             `json:"dateObserved" bson:"dateObserved"`
 	Parameters   map[string]float64 ``
+}
+
+type ModuleAndData struct {
+	Module Module       `json:"module"`
+	Data   DataObserved `json:"data"`
 }
 
 func mapToDataObserved(m map[string]interface{}) (d DataObserved) {
@@ -35,9 +41,18 @@ func mapToDataObserved(m map[string]interface{}) (d DataObserved) {
 		case "dateObserved":
 			d.DateObserved = v.(string)
 		default:
+
 			switch value := v.(type) {
 			case float64:
 				params[k] = value
+			case string:
+				floatValue, err := strconv.ParseFloat(value, 64)
+				if err == nil {
+					params[k] = floatValue
+				}
+				// log.Println(k, floatValue)
+			default:
+				// log.Println(value)
 
 			}
 		}
@@ -72,7 +87,10 @@ var data []models.Data
 */
 func FilterDataByDate(id, dataType, parameter string, start, end time.Time) (d []CygnusDocument, err error) {
 	collection := "sth_/_" + id + "_" + dataType
-
+	start = FixDate(start)
+	end = FixDate(end)
+	log.Println(start)
+	log.Println(end)
 	filter := bson.M{
 		"attrName": parameter,
 		"recvTime": bson.M{
@@ -80,6 +98,7 @@ func FilterDataByDate(id, dataType, parameter string, start, end time.Time) (d [
 			"$lte": end,
 		},
 	}
+
 	cursor, err := GetCygnusDatabase().Collection(collection).Find(context.Background(), filter)
 	if err != nil {
 		log.Println(err)
@@ -96,6 +115,8 @@ func FilterDataByDate(id, dataType, parameter string, start, end time.Time) (d [
 		return
 	}
 	cursor.Close(context.TODO())
+
+	d = FixTimeZone(d)
 	return
 }
 
@@ -109,6 +130,7 @@ func GetLastData(id, dataType, parameter string, n int64) (d []CygnusDocument, e
 	// log.Println(dataType)
 	// log.Println(parameter)
 	// log.Println(n)
+	// log.Println(collection)
 
 	filter := bson.M{
 		"attrName": parameter,
@@ -129,6 +151,22 @@ func GetLastData(id, dataType, parameter string, n int64) (d []CygnusDocument, e
 		return
 	}
 	cursor.Close(context.TODO())
+
+	d = FixTimeZone(d)
+	// log.Println(d)
 	return
 
+}
+
+func FixDate(date time.Time) time.Time {
+	return date.Add(time.Hour * 5)
+}
+func FixTimeZone(d []CygnusDocument) []CygnusDocument {
+	for k, v := range d {
+		date := v.RecvTime
+
+		date = date.Add(-time.Hour * 5)
+		d[k].RecvTime = date
+	}
+	return d
 }

@@ -1,4 +1,4 @@
-function post(url, data, method) {
+function post(url, data, method, callback) {
     $.ajaxSettings.traditional = true;
 
     $.ajax({
@@ -9,6 +9,7 @@ function post(url, data, method) {
             console.log('OK');
         },
         error: function(jqXHR, textStatus, errorThrown) {
+            callback(textStatus)
             console.log('ERROR');
             console.log(jqXHR.status);
             console.log('textStatus: '+textStatus);
@@ -16,6 +17,6 @@ function post(url, data, method) {
 
         }
     }).done(function(res){
-    	console.log(res)
+    	callback(res);
     });
 }

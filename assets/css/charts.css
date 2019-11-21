@@ -1,0 +1,47 @@
+.gauge {
+	text-align: center;
+	width: 25%;
+	margin: 1% 0px;
+	display: inline-block;	
+}
+.gauge {
+	text-align: center;
+	width: 25%;
+	margin: 1% 0px;
+	display: inline-block;	
+}
+
+.legend{
+	text-align:center;
+	font-size: 2rem;
+	text-align: left;
+	border: 1px solid black;
+	margin: 0 1%;
+}
+
+.detail_swatch{ 
+	padding: 1% 4%;
+	margin: 1%;
+}
+
+.x_label{
+	display: none;
+}
+
+.gauge-label{
+	font-size: 1.5rem;
+	/*color: #000;*/
+}
+
+.pageinput {
+	text-align: center;
+	width: 5%;
+}
+
+.pagegroup {
+	text-align: right;
+}
+
+.pages {
+	margin: 3%;
+}

@@ -39,7 +39,7 @@ type CygnusDocument struct {
 
 type Subscription struct {
 	Data           []map[string]interface{} `json:"data"`
-	SubscriptionId string                   `json:subscriptionId`
+	SubscriptionId string                   `json:"subscriptionId"`
 }
 
 type Alert struct {

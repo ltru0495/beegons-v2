@@ -5,13 +5,21 @@ import (
 	"time"
 )
 
-var wsHub *Hub
+var wsAlertHub *Hub
+var wsDataHub *Hub
 
-func GetWSHub() *Hub {
-	if wsHub == nil {
-		wsHub = newHub()
+func GetWSAlertHub() *Hub {
+	if wsAlertHub == nil {
+		wsAlertHub = newHub()
 	}
-	return wsHub
+	return wsAlertHub
+}
+
+func GetWSDataHub() *Hub {
+	if wsDataHub == nil {
+		wsDataHub = newHub()
+	}
+	return wsDataHub
 }
 
 type Hub struct {
