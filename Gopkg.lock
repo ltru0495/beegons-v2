@@ -50,6 +50,14 @@
   version = "v1.3.0"
 
 [[projects]]
+  digest = "1:36cfc0b6facbc68c92a4d55f32eff22b872a899ab75c384ac24a08dd33bc1380"
+  name = "github.com/paulmach/go.geojson"
+  packages = ["."]
+  pruneopts = "UT"
+  revision = "a5c451da2d9c67c590ae6be92565b67698286a1a"
+  version = "v1.4"
+
+[[projects]]
   digest = "1:aee48a5cef97344996b0b403dde6a3c333baf4e9289991897bd401e61689df88"
   name = "github.com/thedevsaddam/renderer"
   packages = ["."]
@@ -112,9 +120,13 @@
 
 [[projects]]
   branch = "master"
-  digest = "1:f92f6956e4059f6a3efc14924d2dd58ba90da25cc57fe07ae3779ef2f5e0c5f2"
+  digest = "1:d71baed52a5a67407a72b63949aa042ea68bb32fdab03e07704a4f1dc309d193"
   name = "golang.org/x/crypto"
-  packages = ["pbkdf2"]
+  packages = [
+    "bcrypt",
+    "blowfish",
+    "pbkdf2",
+  ]
   pruneopts = "UT"
   revision = "22d7a77e9e5f409e934ed268692e56707cd169e5"
 
@@ -157,11 +169,13 @@
     "github.com/gorilla/schema",
     "github.com/gorilla/websocket",
     "github.com/joho/godotenv",
+    "github.com/paulmach/go.geojson",
     "github.com/thedevsaddam/renderer",
     "go.mongodb.org/mongo-driver/bson",
     "go.mongodb.org/mongo-driver/bson/primitive",
     "go.mongodb.org/mongo-driver/mongo",
     "go.mongodb.org/mongo-driver/mongo/options",
+    "golang.org/x/crypto/bcrypt",
   ]
   solver-name = "gps-cdcl"
   solver-version = 1

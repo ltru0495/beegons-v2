@@ -12,7 +12,7 @@ services:
     expose:
       - "9000"
     ports:
-      - "80:9000"
+      - "9000:9000"
 
   jobmanager:
     image: flink:1.9.0-scala_2.11

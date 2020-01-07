@@ -27,7 +27,6 @@ func MapSensors(w http.ResponseWriter, r *http.Request) {
 func MapParking(w http.ResponseWriter, r *http.Request) {
 	context := make(map[string]interface{})
 	utils.RenderTemplate(w, "maps_parking", context)
-
 }
 
 func Error(w http.ResponseWriter, r *http.Request) {
