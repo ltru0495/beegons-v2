@@ -8,10 +8,6 @@ import (
 func SetWSRoutes(router *mux.Router) *mux.Router {
 	router.HandleFunc("/ws/alert", controllers.WSAlert).Methods("GET")
 	router.HandleFunc("/ws/data", controllers.WSData).Methods("GET")
-
-	// router.HandleFunc("/api/modulewdata/{id}", api.RealtimeInfoGet).Methods("GET")
-	// router.HandleFunc("/api/lastdata/{id}/{parameter}", api.LastDataObserved).Methods("GET")
-
 	return router
 
 }

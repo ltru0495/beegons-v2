@@ -3,7 +3,6 @@ package models
 import (
 	// "encoding/json"
 	"net/http"
-	"time"
 
 	"github.com/gorilla/schema"
 
@@ -15,20 +14,15 @@ type ParkingSpot struct {
 	Id                string            `json:"id"`
 	Name              string            `json:"name"`
 	Type              string            `json:"type"`
-	Status            string            `json:"status"`
-	EnergyStatus      string            `json:"energyStatus"`
+	Status            bool              `json:"status"`
+	EnergyStatus      string            	`json:"energyStatus"`
 	Mac               string            `json:"mac" bson:"mac"`
 	SupportedProtocol []string          `json:"supportedProtocol" bson:"protocol"`
 	Coordinates       []float64         `json:"coordinates,omitempty"`
 	Location          *geojson.Geometry `json:"location"`
 }
 
-type Location struct {
-	Type        string    `json:"type"`
-	Coordinates []float64 `json:"coordinates"`
-}
 
-var prefix string = "urn:ngsi-ld:"
 
 func (p *ParkingSpot) DecodeParkingSpotForm(r *http.Request) error {
 	err := r.ParseForm()
@@ -43,6 +37,9 @@ func (p *ParkingSpot) DecodeParkingSpotForm(r *http.Request) error {
 
 	p.Coordinates = nil
 	p.Type = "ParkingSpot"
+
+	p.EnergyStatus = "100"
+	p.Status = true
 	return nil
 }
 

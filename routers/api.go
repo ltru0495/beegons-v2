@@ -13,6 +13,9 @@ func SetApiRoutes(router *mux.Router) *mux.Router {
 	router.HandleFunc("/api/data/{moduleid}/{parameter}/{start}/{end}", api.HistoricalData).Methods("GET")
 	router.HandleFunc("/api/file/{moduleid}/{parameter}/{start}/{end}/{format}", api.HistoricalData).Methods("GET")
 
+
+	router.HandleFunc("/api/parkingspots", api.GetParkingSpots).Methods("GET")
+	router.HandleFunc("/api/parkingspot/{id}", api.ParkingSpot).Methods("GET")
 	// router.HandleFunc("/api/modulewdata/{id}", api.RealtimeInfoGet).Methods("GET")
 	// router.HandleFunc("/api/lastdata/{id}/{parameter}", api.LastDataObserved).Methods("GET")
 

@@ -69,21 +69,5 @@ curl localhost:1026/v2/entities/urn:ngsi-ld:DataObserved:MOD1/attrs?options=keyV
       "pressure": '800'
 }'
 
-SIM OF A SUBSCRIPTION
-    curl -v -s -S -X POST http://localhost:9000/data/notify \
-    --header 'Content-Type: application/json; charset=utf-8' \
-    --header 'Accept: application/json' \
-    -d  '{
-         "data": [
-            {
-                 "id": "urn:ngsi-ld:DataObserved:MOD1","type": "DataObserved",
-                 "CO": 40,
-                 "humidity": 85,
-                 "temperature": 38,
-                 "dateObserved": "2019-07-16T14:00:00Z"
-            }
-         ],
-         "subscriptionId": "57458eb60962ef754e7c0998"
-     }'
-*/
 
+	curl 'localhost:1026/v2/entities/urn:ngsi-ld:ParkingSpot:PS_CTIC_3/attrs' -s -S -H 'Content-Type: application/json' -X POST -d '{ "status": {"value": 'false',"type": "Text"},"energyStatus": {"type": "Text","value":"80"}}'

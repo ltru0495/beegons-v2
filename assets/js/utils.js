@@ -32,6 +32,7 @@ function getTime(dateFormat) {
 }
 
 
+
 function appendGauge(parameter, title, color) {
     $('#gauges').append('<div id="divfillgauge_' + parameter + '"><header class="gauge-label" style="text-align:center;">' + title + '</header></div>');
 
@@ -225,3 +226,6 @@ var opts = {
     shadow: '0 0 1px transparent', // Box-shadow for the lines
     position: 'absolute' // Element positioning
 };
+
+
+

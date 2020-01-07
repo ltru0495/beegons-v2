@@ -28,6 +28,9 @@ func SetAppRoutes(router *mux.Router) *mux.Router {
 	appRouter.HandleFunc("/maps/sensors", controllers.MapSensors).Methods("GET")
 	appRouter.HandleFunc("/maps/parking", controllers.MapParking).Methods("GET")
 
+	appRouter.HandleFunc("/parkingspot/create", controllers.ParkingSpotCreate).Methods("GET", "POST")
+	appRouter.HandleFunc("/parkingspots", controllers.ParkingSpotTable).Methods("GET")
+
 	// appRouter.HandleFunc("/login", controllers.Login).Methods("GET", "POST")
 	// appRouter.HandleFunc("/logout", controllers.Logout).Methods("GET")
 

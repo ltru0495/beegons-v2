@@ -119,30 +119,3 @@ func ModuleTable(w http.ResponseWriter, r *http.Request) {
 	utils.RenderTemplate(w, "module_table", context)
 }
 
-func ParkingSpotCreate(w http.ResponseWriter, r *http.Request) {
-	if r.Method == "POST" {
-		err := r.ParseForm()
-		if err != nil {
-			log.Println(err)
-		} else {
-			module := new(models.Module)
-			err := module.DecodeModuleForm(r)
-			log.Println(module)
-
-			err = module.CreateModule()
-			if err != nil {
-				log.Println(err)
-				models.SendUnprocessableEntity(w)
-				return
-			}
-			/**************************************************/
-
-			res := models.CreateDefaultResponse(w)
-			res.Message = "Module has been created"
-			res.Content = module
-			res.Send()
-			return
-		}
-	}
-	utils.RenderTemplate(w, "module_create", nil)
-}

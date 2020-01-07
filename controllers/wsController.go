@@ -42,3 +42,18 @@ func WSData(w http.ResponseWriter, r *http.Request) {
 
 	go client.WritePump()
 }
+
+func WSParkingSpot(w http.ResponseWriter, r *http.Request) {
+	log.Println("WebSocket: New client connected.")
+	hub := utils.GetWSPSHub()
+
+	conn, err := upgrader.Upgrade(w, r, nil)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	client := &utils.Client{Hub: hub, Conn: conn, Send: make(chan []byte, 256)}
+	client.Hub.Register <- client
+
+	go client.WritePump()
+}

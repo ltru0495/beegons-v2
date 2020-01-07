@@ -3,8 +3,6 @@ $(function(){
     var map;
     var marker;
     var circle;
-
-
  
     function getMarkerFromEvent(event) {
         var lat = event.latLng.lat();
@@ -13,7 +11,7 @@ $(function(){
         return marker;
     }
 
-    
+
     function initGmap(){
         var map = new GMaps({
             el: '#gmap',
@@ -34,7 +32,6 @@ $(function(){
             if(circle != undefined) {
                 circle.setMap(null);
             }
-            circle = drawCircle(map, marker);
             map.removeMarkers();
             map.addMarker({
                 lat: marker.latitude,
@@ -42,11 +39,6 @@ $(function(){
                 draggable:true,
                 dragend: function(event) {
                     marker = getMarkerFromEvent(event);
-                    if(circle != undefined) {
-                        circle.setMap(null);
-                    }
-                    circle = drawCircle(map, marker);
-                    
                 }   
             });
         });
@@ -54,7 +46,7 @@ $(function(){
 
     
 
-    function getModuleFromForm() {
+    function getParkingSpotFromForm() {
         if (marker == undefined) {
             return {
                 name: "" 
@@ -62,9 +54,8 @@ $(function(){
         }
         return { 
             name: $("#name").val(),
-            dataType: $("#type").val(),
+            type: $("#type").val(),
             mac: $("#mac").val(),
-            state: $("#state").val(),
             supportedProtocol: $("#protocol").val(),
             coordinates:[marker.latitude, marker.longitude],
         };
@@ -90,15 +81,15 @@ $(function(){
     $('#create').on('click', function(e) {
         e.preventDefault();
 
-        let mod = getModuleFromForm();
-        if(!checkModule(mod)) {
+        let ps = getParkingSpotFromForm();
+        if(!checkModule(ps)) {
             alert("Ha ocurrido un error");
             return;
         }
-        post("/module/create", mod, "post", moduleCreated);
+        post("/parkingspot/create", ps, "post", moduleCreated);
 
 
-        console.log(mod);
+        console.log(ps);
         e.stopPropagation();
     });
 
