@@ -43,6 +43,27 @@ func (p *ParkingSpot) DecodeParkingSpotForm(r *http.Request) error {
 	return nil
 }
 
+
+func (p *ParkingSpot) CreatePSSubscription() (err error) {
+	id := prefix + "ParkingSpot:" + p.Name
+	entities := []Entity{{Id: id}}
+	subject := Subject{entities}
+
+	url := utils.GetAlertURL() + "/ps/notify"
+
+	protocol := HTTP{URL: url}
+	notification := Notification{HTTP: protocol, AttrsFormat: "keyValues"}
+
+	data := Payload{
+		Description:  "Notify Beegons of all parkiing spot changes",
+		Subject:      subject,
+		Notification: notification,
+	}
+	err = utils.PostSubscription(data)
+	return err
+}
+
+
 func (p *ParkingSpot) CreateParkingSpot() (err error) {
 	p.Id = prefix + "ParkingSpot:" + p.Name
 	p.Type = "ParkingSpot"

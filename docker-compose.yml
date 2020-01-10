@@ -1,18 +1,18 @@
 version: "3.5"
 services:
-#  beegons:
-#    image: beegons:latest
-#    hostname: beegons
-#    container_name: beegons
-#    depends_on:
-#      - mongo-db
-#      - orion
-#    networks:
-#      - default
-#    expose:
-#      - "9000"
-#    ports:
-#      - "80:9000"
+  beegons:
+    image: beegons:latest
+    hostname: beegons
+    container_name: beegons
+    depends_on:
+      - mongo-db
+      - orion
+    networks:
+      - default
+    expose:
+      - "9000"
+    ports:
+      - "80:9000"
 
   jobmanager:
     image: flink:1.9.0-scala_2.11

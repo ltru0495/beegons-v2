@@ -23,6 +23,7 @@ func SetAppRoutes(router *mux.Router) *mux.Router {
 
 	appRouter.HandleFunc("/alerts/notify", controllers.AlertsNotify).Methods("GET", "POST")
 	appRouter.HandleFunc("/data/notify", controllers.DataNotify).Methods("GET", "POST")
+	appRouter.HandleFunc("/ps/notify", controllers.ParkingSpotNotify).Methods("GET", "POST")
 
 	appRouter.HandleFunc("/error", controllers.Error).Methods("GET")
 	appRouter.HandleFunc("/maps/sensors", controllers.MapSensors).Methods("GET")

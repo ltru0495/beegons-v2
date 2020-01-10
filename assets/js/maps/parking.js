@@ -1,5 +1,22 @@
 $(function(){
 
+
+    if (window["WebSocket"]) {
+        console.log("Connecting WS...")
+        conn = new WebSocket(ws_server+"/ws/ps");
+
+        conn.onclose = function(evt) {
+            console.log("WS Connection closed");
+        };
+        conn.onmessage = function(evt) {
+            var messageData = evt.data;
+            // console.log(messageData)
+            var data = JSON.parse(messageData);
+            // console.log(data)
+        };
+    } else {
+        console.log("Your Browser does not support WebSockets")
+    }
     function initGmap(){
         var map = new GMaps({
             el: '#gmap',

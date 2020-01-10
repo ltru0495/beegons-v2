@@ -43,7 +43,7 @@ func WSData(w http.ResponseWriter, r *http.Request) {
 	go client.WritePump()
 }
 
-func WSParkingSpot(w http.ResponseWriter, r *http.Request) {
+func WSPS(w http.ResponseWriter, r *http.Request) {
 	log.Println("WebSocket: New client connected.")
 	hub := utils.GetWSPSHub()
 

@@ -36,6 +36,15 @@ func ParkingSpotCreate(w http.ResponseWriter, r *http.Request) {
 				models.SendUnprocessableEntity(w)
 				return
 			}
+			err = parkingSpot.CreatePSSubscription()
+			if err != nil {
+				log.Println(err)
+				log.Println("Error While creating data subscription")
+				models.SendUnprocessableEntity(w)
+				return
+			}
+
+
 			/**************************************************/
 
 			res := models.CreateDefaultResponse(w)

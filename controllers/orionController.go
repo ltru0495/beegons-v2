@@ -109,3 +109,33 @@ func DataNotify(w http.ResponseWriter, r *http.Request) {
 	hub.Broadcast <- dataBytes
 
 }
+
+
+func ParkingSpotNotify(w http.ResponseWriter, r *http.Request) {
+	b, err := ioutil.ReadAll(r.Body)
+	defer r.Body.Close()
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	var subNotification models.Subscription
+
+	err = json.Unmarshal(b, &subNotification)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	data := subNotification.Data[0]
+
+	dataBytes, err := json.Marshal(data)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	hub := utils.GetWSPSHub()
+	hub.Broadcast <- dataBytes
+
+}

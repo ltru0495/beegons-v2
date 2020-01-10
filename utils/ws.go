@@ -7,6 +7,8 @@ import (
 
 var wsAlertHub *Hub
 var wsDataHub *Hub
+var wsPSHub *Hub
+
 
 func GetWSAlertHub() *Hub {
 	if wsAlertHub == nil {
@@ -21,6 +23,14 @@ func GetWSDataHub() *Hub {
 	}
 	return wsDataHub
 }
+
+func GetWSPSHub() *Hub {
+	if wsPSHub == nil {
+		wsPSHub = newHub()
+	}
+	return wsPSHub
+}
+
 
 type Hub struct {
 	Clients    map[*Client]bool

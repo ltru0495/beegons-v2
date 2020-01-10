@@ -2,7 +2,7 @@ COUNTER="1"
 
 while true
 do
-  temp=$(shuf -i 45-53 -n 1);
+  temp=$(shuf -i 18-23 -n 1);
   hum=$(shuf -i 70-100 -n 1);
   da=$(date +'%Y-%m-%dT%H:%M:%S.%6NZ')
   daO="${da}"
@@ -28,5 +28,5 @@ do
 
     }'
 
-    sleep 0.5
+    sleep 2.5
 done
