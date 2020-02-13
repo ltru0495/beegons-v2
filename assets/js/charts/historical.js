@@ -34,12 +34,14 @@ $(function() {
             $('#start_date').data("DateTimePicker").maxDate(e.date);
         });
     }
-
+	// <div><a target="_blank" class="btn btn-info btn-sm" href="${url_server}/api/file/${moduleid}/${parameter}/${start}/${end}/json">JSON</a>
      function appendLinks(moduleid, parameter, start, end) {
+	var inicio = start.replace(":","_");
+	var fin = end.replace(":","_");
         $("#spaceAfter").append(
             `<div class="row container">
                 <div class="col-md-1"></div>
-                <div><a target="_blank" class="btn btn-info btn-sm" href="${url_server}/api/file/${moduleid}/${parameter}/${start}/${end}/json">JSON</a>
+                <div><a class="btn btn-info btn-sm" href="${url_server}/api/file/${moduleid}/${parameter}/${start}/${end}/json" download="${parameter}_${inicio}_to_${fin}.json">JSON</a>
             `
         )
     }
