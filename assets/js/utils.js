@@ -65,56 +65,66 @@ function appendGauge(parameter, title, color) {
 
 function getNameAndColor(parameter) {
     switch (parameter) {
-        case "temperature":
+        case "tempHIH":
             return {
-                name: "Temperatura",
+                name: "Temperatura (C)",
                 color: "#387aa3"
             };
-        case "humidity":
+        case "humidityHIH":
             return {
-                name: "Humedad",
+                name: "Humedad (%)",
                 color: "#77ab59"
             };
         case "pressure":
             return {
-                name: "Presión",
+                name: "Presión (hPa)",
                 color: "#963b20"
             };
         case "o3":
             {
-                return gasColor("o3")
+                return gasColor("O3")
             };
         case "co":
             {
-                return gasColor("co")
+                return gasColor("CO")
             };
         case "co2":
             {
-                return gasColor("co")
+                return gasColor("CO2")
             };
         case "so2":
             {
-                return gasColor("so2")
+                return gasColor("SO2")
             };
         case "h2s":
             {
-                return gasColor("h2s")
+                return gasColor("H2S")
             };
         case "no2":
             {
-                return gasColor("h2s")
+                return gasColor("NO2")
             };
-        case "altitude":
+        case "altitudeMPL":
             return {
-                name: "Altitud",
+                name: "Altitud (m)",
                 color: "#808015"
             };
+	case "UV":
+		return {
+			name: "Índice UV",
+			color: "#f542a4", 
+		};
+	case "luminosity":
+		return {
+			name: "Luminosidad (lx)",
+			color: "f54242",
+		};
     }
 
-    if (parameter.indexOf("temp") != -1) {
+    if (parameter.indexOf("pm") != -1) {
         return {
-            name: parameter,
-            color: "#387aa3"
+            name: parameter + " (µg/m3)",
+            color: "#f58742"
         }
     }
     return {
@@ -125,7 +135,7 @@ function getNameAndColor(parameter) {
 
 function gasColor(name) {
     return {
-        name: name,
+        name: name+" (ppm)",
         color: "#ddcb53"
     }
 }
