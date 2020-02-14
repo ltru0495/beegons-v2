@@ -97,7 +97,7 @@ function getNameAndColor(parameter) {
         case "humidityHIH":
             return {
                 name: "Humedad (%)",
-                color: "#77ab59"
+                color: "#598042"
             };
         case "pressure":
             return {
@@ -136,24 +136,24 @@ function getNameAndColor(parameter) {
 	case "UV":
 		return {
 			name: "Índice UV",
-			color: "#f542a4", 
+			color: "#660066", 
 		};
 	case "luminosity":
 		return {
 			name: "Luminosidad (lx)",
-			color: "f54242",
+			color: "#f54242",
 		};
     }
 
     if (parameter.indexOf("pm") != -1) {
         return {
             name: parameter + " (µg/m3)",
-            color: "#f58742"
+            color: "#fc5a03"
         }
     }
     return {
         name: parameter,
-        color: "#77ab59"
+        color: "#598042"
     };
 }
 
