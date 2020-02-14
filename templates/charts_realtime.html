@@ -21,7 +21,7 @@
                                 <select name="moduleid" id="moduleid">
                                     <option value="none">Seleccionar Módulo</option>
                                     {{range .Modules}}
-                                    <option value="{{.Id}}">{{.Id}}</option>
+                                    <option value="{{.Id}}">{{.Name}}</option>
                                     {{ end }}
                                 </select>
                             </div>
@@ -31,7 +31,7 @@
             </div>
         </div>
            <section id="gaugesDiv" class="widget hidden">
-            <header ><h4>Ultimos valores</h4></header>
+            <header ><h4>Últimos valores</h4></header>
             <div class="widget-body" id="gauges">
                 
             </div>
