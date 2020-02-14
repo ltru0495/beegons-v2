@@ -90,7 +90,7 @@ function appendGauge(parameter, title, color) {
 function getNameAndColor(parameter) {
     if (parameter.indexOf("temp") != -1){
         return {
-                name: "Temperatura (C)",
+                name: "Temperatura (°C)",
                 color: "#387aa3"
         };
     }	    
@@ -107,22 +107,22 @@ function getNameAndColor(parameter) {
         };
     }	    
     if (parameter.indexOf("o3") != -1){
-        return gasColor("O3")
+        return gasColor("O"+"3".sub())
     }
     if (parameter.indexOf("co") != -1){
         return gasColor("CO")
     }
     if (parameter.indexOf("co2") != -1){
-        return gasColor("CO2")
+        return gasColor("CO"+"2".sub())
     }
     if (parameter.indexOf("so2") != -1){
-        return gasColor("SO2")
+        return gasColor("SO"+"2".sub())
     }
     if (parameter.indexOf("h2s") != -1){
-        return gasColor("H2S")
+        return gasColor("H"+"2".sub()+"S")
     }
     if (parameter.indexOf("no2") != -1){
-        return gasColor("NO2")
+        return gasColor("NO"+"2".sub())
     }
     if (parameter.indexOf("altitude") != -1){
         return {
@@ -145,12 +145,12 @@ function getNameAndColor(parameter) {
     if (parameter.indexOf("pm") != -1) {
         if (parameter.indexOf("_") != -1){
             return {
-                name: parameter.replace("_",".") + " (µg/m3)",
+                name: parameter.replace("_",".") + " (µg/m"+"3".sup()+")",
                 color: "#fc5a03"
             };
 	}		
 	return {
-            name: parameter + " (µg/m3)",
+            name: parameter + " (µg/m"+"3".sup()+")",
             color: "#fc5a03"
         };
     }
