@@ -88,74 +88,71 @@ function appendGauge(parameter, title, color) {
 
 
 function getNameAndColor(parameter) {
-    switch (parameter) {
-        case "tempHIH":
-            return {
+    if (parameter.indexOf("temp") != -1){
+        return {
                 name: "Temperatura (C)",
                 color: "#387aa3"
-            };
-        case "humidityHIH":
-            return {
+        };
+    }	    
+    if (parameter.indexOf("humidity") != -1){
+        return {
                 name: "Humedad (%)",
                 color: "#598042"
-            };
-        case "pressure":
-            return {
+        };
+    }	    
+    if (parameter.indexOf("pressure") != -1){
+        return {
                 name: "Presión (hPa)",
                 color: "#963b20"
-            };
-        case "o3":
-            {
-                return gasColor("O3")
-            };
-        case "co":
-            {
-                return gasColor("CO")
-            };
-        case "co2":
-            {
-                return gasColor("CO2")
-            };
-        case "so2":
-            {
-                return gasColor("SO2")
-            };
-        case "h2s":
-            {
-                return gasColor("H2S")
-            };
-        case "no2":
-            {
-                return gasColor("NO2")
-            };
-        case "altitudeMPL":
-            return {
+        };
+    }	    
+    if (parameter.indexOf("o3") != -1){
+        return gasColor("O3")
+    }
+    if (parameter.indexOf("co") != -1){
+        return gasColor("CO")
+    }
+    if (parameter.indexOf("co2") != -1){
+        return gasColor("CO2")
+    }
+    if (parameter.indexOf("so2") != -1){
+        return gasColor("SO2")
+    }
+    if (parameter.indexOf("h2s") != -1){
+        return gasColor("H2S")
+    }
+    if (parameter.indexOf("no2") != -1){
+        return gasColor("NO2")
+    }
+    if (parameter.indexOf("altitude") != -1){
+        return {
                 name: "Altitud (m)",
                 color: "#808015"
-            };
-	case "UV":
-		return {
-			name: "Índice UV",
-			color: "#660066", 
-		};
-	case "luminosity":
-		return {
-			name: "Luminosidad (lx)",
-			color: "#f54242",
-		};
+        };
+    }	    
+    if (parameter.indexOf("UV") != -1){
+        return {
+                name: "Índice UV",
+                color: "#660066", 
+        };
     }
-
+    if (parameter.indexOf("luminosity") != -1){
+        return {
+                name: "Luminosidad (lx)",
+                color: "#f54242",
+        };
+    }
     if (parameter.indexOf("pm") != -1) {
         if (parameter.indexOf("_") != -1){
             return {
                 name: parameter.replace("_",".") + " (µg/m3)",
                 color: "#fc5a03"
-            }
+            };
 	}		
 	return {
             name: parameter + " (µg/m3)",
             color: "#fc5a03"
-        }
+        };
     }
     return {
         name: parameter,
