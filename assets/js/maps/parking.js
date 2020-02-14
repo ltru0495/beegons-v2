@@ -22,6 +22,7 @@ $(function(){
             el: '#gmap',
             lat: -12.000123,
             lng: -77.12312,
+            mapTypeId: 'hybrid',
             zoomControl : false,
             panControl : false,
             streetViewControl : false,
