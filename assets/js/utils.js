@@ -146,7 +146,13 @@ function getNameAndColor(parameter) {
     }
 
     if (parameter.indexOf("pm") != -1) {
-        return {
+        if (parameter.indexOf("_") != -1){
+            return {
+                name: parameter.replace("_",".") + " (µg/m3)",
+                color: "#fc5a03"
+            }
+	}		
+	return {
             name: parameter + " (µg/m3)",
             color: "#fc5a03"
         }
