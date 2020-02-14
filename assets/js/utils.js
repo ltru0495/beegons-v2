@@ -32,6 +32,28 @@ function getTime(dateFormat) {
 }
 
 
+// Acalar u obscurecer un color (tomado de How to Calculate Lighter or Darker Hex Colors in JavaScript)
+function ColorLuminance(hex, lum) {
+
+        // validate hex string
+        hex = String(hex).replace(/[^0-9a-f]/gi, '');
+        if (hex.length < 6) {
+                hex = hex[0]+hex[0]+hex[1]+hex[1]+hex[2]+hex[2];
+        }
+        lum = lum || 0;
+
+        // convert to decimal and change luminosity
+        var rgb = "#", c, i;
+        for (i = 0; i < 3; i++) {
+                c = parseInt(hex.substr(i*2,2), 16);
+                c = Math.round(Math.min(Math.max(0, c + (c * lum)), 255)).toString(16);
+                rgb += ("00"+c).substr(c.length);
+        }
+
+        return rgb;
+}
+
+
 
 function appendGauge(parameter, title, color) {
     $('#gauges').append('<div id="divfillgauge_' + parameter + '"><header class="gauge-label" style="text-align:center;">' + title + '</header></div>');
@@ -43,11 +65,13 @@ function appendGauge(parameter, title, color) {
     config.circleColor = color;
     config.textColor = "#FF4444";
     config.waveTextColor = "#FFAAAA";
-    config.waveColor = "#FFDDDD";
+    config.waveColor = ColorLuminance(color,0.9);//"#FFDDDD";
     config.circleThickness = 0.2;
     config.textVertPosition = 0.52;
 
-    // config.waveAnimateTime = 1000;
+    config.waveHeight = 0.1;
+    config.waveCount = 2;
+    config.waveAnimateTime = 1000;
     config.displayPercent = false;
     config.textSize = 1.0;
     // .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; font-size: 30px; }
@@ -56,7 +80,7 @@ function appendGauge(parameter, title, color) {
     let gauge = loadLiquidFillGauge("fillgauge_" + parameter, 0, config);
 
     // No color over text
-    $('circle').css('fill', '#fff');
+    //$('circle').css('fill', '#fff');
     $(".liquidFillGaugeText").css("fill", 'red');
     return gauge;
 }
