@@ -100,7 +100,7 @@ $(function() {
                 if (res.status == 200) {
                     $("#parameter").removeAttr("disabled")
                     $("#parameter").empty()
-                    $("#parameter").append(`<option value="none">Seleccionar parametro</option>`)
+                    $("#parameter").append(`<option value="none">Seleccionar parámetro</option>`)
                     let params = res.content
                     if (params == null) return;
                     params.forEach(function(p) {
