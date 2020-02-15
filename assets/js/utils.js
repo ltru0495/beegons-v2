@@ -142,6 +142,12 @@ function getNameAndColor(parameter) {
                 color: "#f54242",
         };
     }
+    if (parameter.indexOf("sonido") != -1){
+        return {
+                name: "Sonido (V)",
+                color: "#9403fc",
+        };
+    }
     if (parameter.indexOf("pm") != -1) {
         if (parameter.indexOf("_") != -1){
             return {
