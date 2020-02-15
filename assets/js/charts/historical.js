@@ -46,6 +46,13 @@ $(function() {
         )
     }
 
+	function getName(p){
+		if (p.indexOf("temp") != -1){
+			return "temperatura";
+		}
+		return p;
+	}
+
     function pageLoad() {
         initDatePicker();
         $('#moduleid').val("none");
@@ -63,7 +70,7 @@ $(function() {
                     let params = res.content
                     if (params == null) return;
                     params.forEach(function(p) {
-                        $("#parameter").append(`<option value="${p}">${p}</option>`)
+                        $("#parameter").append(`<option value="${p}">${getName(p)}</option>`)
                     })
                 }
             });
