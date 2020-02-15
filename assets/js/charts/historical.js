@@ -50,6 +50,40 @@ $(function() {
 		if (p.indexOf("temp") != -1){
 			return "temperatura";
 		}
+		if (p.indexOf("humidity") != -1){
+                        return "humedad";
+                }
+		if (p.indexOf("pressure") != -1){
+                        return "presión";
+                }
+		if (p.indexOf("altitude") != -1){
+                        return "altitud";
+                }
+		if (p.indexOf("UV") != -1){
+                        return "índice UV";
+                }
+		if (p.indexOf("luminosity") != -1){
+                        return "luminosidad";
+                }
+		if (p.indexOf("o3") != -1){
+                        return "O3";
+                }
+		if (p.indexOf("co") != -1){
+                        return "CO";
+                }
+		if (p.indexOf("so2") != -1){
+                        return "SO2";
+                }
+		if (p.indexOf("h2s") != -1){
+                        return "H2S";
+                }
+		if (p.indexOf("no2") != -1){
+                        return "NO2";
+                }
+		if (p.indexOf("pm") != -1){
+			return p.replace("_",".");
+		}
+
 		return p;
 	}
 
