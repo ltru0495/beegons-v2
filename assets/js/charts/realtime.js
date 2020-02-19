@@ -15,10 +15,21 @@ $(function() {
                 if (res.status == 200) {
                     charts = [];
                     $("#charts").empty();
+
                     $("#gauges").empty();
+                    $("#gaugesMet").empty();
+
                     $("#gaugesDiv").removeClass("hidden");
+                    $("#gaugesDivMet").removeClass("hidden");
+
                     let sensors = res.content;
                     if (sensors == null) return;
+                    sensors.sort(function(a,b) {
+                        var x = a.parameter.toLowerCase();
+                        var y = b.parameter.toLowerCase();
+                        return x < y ? -1 : x > y ? 1 : 0;
+                    });
+
                     sensors.forEach(sensor => {
 
                         gauges[sensor.parameter] = {};
@@ -40,7 +51,10 @@ $(function() {
                 }
             }).fail(function() {
                 $("#charts").empty();
+
                 $("#gauges").empty();
+                $("#gaugesMet").empty();
+
                 $("#gaugesDiv").addClass("hidden");
             });
         });

@@ -56,8 +56,11 @@ function ColorLuminance(hex, lum) {
 
 
 function appendGauge(parameter, title, color) {
-    $('#gauges').append('<div id="divfillgauge_' + parameter + '"><header class="gauge-label" style="text-align:center;">' + title + '</header></div>');
-
+    if(parameter.indexOf("pm") != -1 || parameter.indexOf("gas") != -1){ //Calidad de aire
+        $('#gauges').append('<div id="divfillgauge_' + parameter + '"><header class="gauge-label" style="text-align:center;">' + title + '</header></div>');
+    } else{
+        $('#gaugesMet').append('<div id="divfillgauge_' + parameter + '"><header class="gauge-label" style="text-align:center;">' + title + '</header></div>');
+    }
     $('#divfillgauge_' + parameter).addClass("gauge");
     $('#divfillgauge_' + parameter).append('<svg id="fillgauge_' + parameter + '" width="100%" height="120"></svg>');
 
