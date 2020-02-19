@@ -62,30 +62,91 @@ function appendGauge(parameter, title, color) {
         $('#gaugesMet').append('<div id="divfillgauge_' + parameter + '"><header class="gauge-label" style="text-align:center;">' + title + '</header></div>');
     }
     $('#divfillgauge_' + parameter).addClass("gauge");
-    $('#divfillgauge_' + parameter).append('<svg id="fillgauge_' + parameter + '" width="100%" height="120"></svg>');
 
-    var config = liquidFillGaugeDefaultSettings();
-    config.circleColor = color;
-    config.textColor = "#FF4444";
-    config.waveTextColor = "#FFAAAA";
-    config.waveColor = ColorLuminance(color,0.9);//"#FFDDDD";
-    config.circleThickness = 0.2;
-    config.textVertPosition = 0.52;
+    if (parameter.indexOf("direccion") != -1){
+        $('#divfillgauge_' + parameter).append('<canvas id="fillgauge_' + parameter + '" width="100%" height="120" style="vertical-align: middle;"></canvas>');
+        let gauge = new RadialGauge({
+            renderTo: 'fillgauge_' + parameter, // canvas id
+            minValue: 0,
+            maxValue: 360,
+            majorTicks: [
+                "N",
+                "NE",
+                "E",
+                "SE",
+                "S",
+                "SO",
+                "O",
+                "NO",
+                "N"
+            ],
+            minorTicks: 22,
+            ticksAngle: 360,
+            startAngle: 180,
+            strokeTicks: false,
+            highlights: false,
+            colorPlate: color, // color gauge
+            colorMajorTicks: "#f5f5f5",
+            colorMinorTicks: "#ddd",
+            colorNumbers: "#ccc",
+            colorNeedle: "rgba(240, 128, 128, 1)",
+            colorNeedleEnd: "rgba(255, 160, 122, .9)",
+            valueBox: false,
+            valueTextShadow: false,
+            colorCircleInner: "#fff",
+            colorNeedleCircleOuter: "#ccc",
+            needleCircleSize: 15,
+            needleCircleOuter: false,
+            animationRule: "linear",
+            needleType: "line",
+            needleStart: 75,
+            needleEnd: 99,
+            needleWidth: 3,
+            borders: true,
+            borderInnerWidth: 0,
+            borderMiddleWidth: 0,
+            borderOuterWidth: 10,
+            colorBorderOuter: "#ccc",
+            colorBorderOuterEnd: "#ccc",
+            colorNeedleShadowDown: "#222",
+            borderShadowWidth: 0,
+            animationTarget: "plate",
+            animationDuration: 1500,
+            value: 0, // lectura del sensor
+            //title: "title", // titulo
+            //units: 'km/h', // unidades
+            animateOnInit: true
+        });
 
-    config.waveHeight = 0.1;
-    config.waveCount = 2;
-    config.waveAnimateTime = 1000;
-    config.displayPercent = false;
-    config.textSize = 1.0;
-    // .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; font-size: 30px; }
-    // $(".liquidFillGaugeText").css("font-size", 22);
-    $(".liquidFillGaugeText").css("font-weight", 400);
-    let gauge = loadLiquidFillGauge("fillgauge_" + parameter, 0, config);
+        // draw initially
+        gauge.draw();
+        return gauge;
+    }else{
+        $('#divfillgauge_' + parameter).append('<svg id="fillgauge_' + parameter + '" width="100%" height="120"></svg>');
+        var config = liquidFillGaugeDefaultSettings();
+        config.circleColor = color;
+        config.textColor = "#FF4444";
+        config.waveTextColor = "#FFAAAA";
+        config.waveColor = ColorLuminance(color,0.9);//"#FFDDDD";
+        config.circleThickness = 0.2;
+        config.textVertPosition = 0.52;
 
-    // No color over text
-    //$('circle').css('fill', '#fff');
-    $(".liquidFillGaugeText").css("fill", 'red');
-    return gauge;
+        config.waveHeight = 0.1;
+        config.waveCount = 2;
+        config.waveAnimateTime = 1000;
+        config.displayPercent = false;
+        config.textSize = 1.0;
+        // .liquidFillGaugeText { font-family: Helvetica; font-weight: bold; font-size: 30px; }
+        // $(".liquidFillGaugeText").css("font-size", 22);
+        $(".liquidFillGaugeText").css("font-weight", 400);
+        let gauge = loadLiquidFillGauge("fillgauge_" + parameter, 0, config);
+
+        // No color over text
+        //$('circle').css('fill', '#fff');
+        $(".liquidFillGaugeText").css("fill", 'red');
+
+        return gauge;
+    }
 }
 
 
@@ -157,12 +218,18 @@ function getNameAndColor(parameter) {
                 name: parameter.replace("_",".") + " (µg/m"+"3".sup()+")",
                 color: "#fc5a03"
             };
-	}		
-	return {
-            name: parameter + " (µg/m"+"3".sup()+")",
-            color: "#fc5a03"
+        }		
+        return {
+                name: parameter + " (µg/m"+"3".sup()+")",
+                color: "#fc5a03"
         };
     }
+    if (parameter.indexOf("direccion") != -1){
+        return {
+            name: "Dirección del viento",
+            color: "#33a"
+        };
+    }	
     return {
         name: parameter,
         color: "#598042"
