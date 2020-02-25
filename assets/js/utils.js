@@ -57,9 +57,9 @@ function ColorLuminance(hex, lum) {
 
 function appendGauge(parameter, title, color) {
     if(parameter.indexOf("pm") != -1 || parameter.indexOf("gas") != -1){ //Calidad de aire
-        $('#gauges').append('<div id="divfillgauge_' + parameter + '"><header class="gauge-label" style="text-align:center;">' + title + '</header></div>');
+        $('#gauges').append('<div id="divfillgauge_' + parameter + '" class="col-lg-3 col-md-4 col-sm-6"><header class="gauge-label" style="text-align:center;">' + title + '</header></div>');
     } else{
-        $('#gaugesMet').append('<div id="divfillgauge_' + parameter + '"><header class="gauge-label" style="text-align:center;">' + title + '</header></div>');
+        $('#gaugesMet').append('<div id="divfillgauge_' + parameter + '" class="col-lg-3 col-md-4 col-sm-6"><header class="gauge-label" style="text-align:center;">' + title + '</header></div>');
     }
     $('#divfillgauge_' + parameter).addClass("gauge");
 
@@ -122,7 +122,7 @@ function appendGauge(parameter, title, color) {
         gauge.draw();
         return gauge;
     }else{
-        $('#divfillgauge_' + parameter).append('<svg id="fillgauge_' + parameter + '" width="100%" height="120"></svg>');
+        $('#divfillgauge_' + parameter).append('<svg id="fillgauge_' + parameter + '" viewBox="0 0 161.5 120" width="161.5" height="120"></svg>');
         var config = liquidFillGaugeDefaultSettings();
         config.circleColor = color;
         config.textColor = "#FF4444";
