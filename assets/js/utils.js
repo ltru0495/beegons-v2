@@ -122,7 +122,7 @@ function appendGauge(parameter, title, color) {
         gauge.draw();
         return gauge;
     }else{
-        $('#divfillgauge_' + parameter).append('<svg id="fillgauge_' + parameter + '" viewBox="0 0 161.5 120" width="161.5" height="120"></svg>');
+        $('#divfillgauge_' + parameter).append('<svg id="fillgauge_' + parameter + '" viewBox="0 0 161.5 120" width="161.5" height="120" style="pointer-events: none;"></svg>');
         var config = liquidFillGaugeDefaultSettings();
         config.circleColor = color;
         config.textColor = "#FF4444";
