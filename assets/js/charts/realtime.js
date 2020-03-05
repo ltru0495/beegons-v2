@@ -42,11 +42,13 @@ $(function() {
                             let chart = getChart(sensor.data, nc, sensor.parameter);
                             charts[sensor.parameter] = chart;
                             gauges[sensor.parameter] = gauge;
+                            let value = sensor.data[sensor.data.length - 1].attrValue; 
                             if (sensor.parameter.indexOf("direccion")!= -1){
-			        gauges[sensor.parameter].update(function(){gauges[sensor.parameter].value = sensor.data[sensor.data.length - 1].attrValue;})
-			    }else{
-                                gauges[sensor.parameter].update(sensor.data[sensor.data.length - 1].attrValue)
-			    }
+                                gauges[sensor.parameter].update(gauges[sensor.parameter].value = value);
+                            }else{
+                                gauges[sensor.parameter].update(value);
+                                updateColourCA(sensor.parameter,value);
+                            }
                             chart.render();
                         }
                     });

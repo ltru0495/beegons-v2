@@ -244,6 +244,61 @@ function gasColor(name) {
 }
 
 
+// Retorna el color del gauge segun su clasificacion para la Calidad de Aire
+function getColourCA(score){
+	switch(score){
+	case "buena":
+		return "#167d40";
+	case "moderada":
+		return "#ecde25";
+	case "mala":
+		return "#ee6f3a";
+	case "vuec": // valor umbral del estado de cuidado
+		return "#db132b";
+	default: // error
+		return "skyblue";
+	}
+}
+
+// Actulizar el color de los gauges para la Calidad de Aire
+function updateColourCA(sensorCA,value) {
+	let nameId = "#divfillgauge_"+sensorCA+" path";
+	let score = "";
+	
+	if (sensorCA.indexOf("pm") != -1 ){
+        switch (sensorCA){
+
+            case "pm10":
+                if (value <= 75){
+                    score = "buena";
+                } else if (value <= 150){
+                    score = "moderada";
+                } else if (value <= 250){
+                    score = "mala";
+                } else {
+                    score = "vuec";
+                }
+                document.querySelector(nameId).setAttribute("fill",getColourCA(score));
+                break;
+
+            case "pm2_5":
+                if (value <= 12.5){
+                    score = "buena";
+                } else if (value <= 25){
+                    score = "moderada";
+                } else if (value <= 125){
+                    score = "mala";
+                } else {
+                    score = "vuec";
+                }
+                document.querySelector(nameId).setAttribute("fill",getColourCA(score));
+                break;
+            default:
+                break;
+        }
+	}
+}
+
 
 function getChart(data, nameAndColor, id) {
     var dataChart = [];
