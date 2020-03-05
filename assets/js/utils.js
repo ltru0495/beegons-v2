@@ -262,7 +262,7 @@ function getColourCA(score){
 
 // Actulizar el color de los gauges para la Calidad de Aire
 function updateColourCA(sensorCA,value) {
-	let nameId = "#divfillgauge_"+sensorCA+" path";
+	let nameId = "#fillgauge_"+sensorCA+" path";
 	let score = "";
 	
 	if (sensorCA.indexOf("pm") != -1 ){
@@ -278,7 +278,8 @@ function updateColourCA(sensorCA,value) {
                 } else {
                     score = "vuec";
                 }
-                document.querySelector(nameId).setAttribute("fill",getColourCA(score));
+                //document.querySelector(nameId).setAttribute("fill",);
+                d3.select(nameId).style("fill",getColourCA(score));
                 break;
 
             case "pm2_5":
@@ -291,7 +292,8 @@ function updateColourCA(sensorCA,value) {
                 } else {
                     score = "vuec";
                 }
-                document.querySelector(nameId).setAttribute("fill",getColourCA(score));
+                //document.querySelector(nameId).setAttribute("fill",getColourCA(score));
+                d3.select(nameId).style("fill",getColourCA(score));
                 break;
             default:
                 break;
