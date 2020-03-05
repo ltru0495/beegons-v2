@@ -47,7 +47,6 @@ $(function() {
                                 gauges[sensor.parameter].update(gauges[sensor.parameter].value = value);
                             }else{
                                 gauges[sensor.parameter].update(value);
-                                updateColourCA(sensor.parameter,value);
                             }
                             chart.render();
                         }
@@ -83,7 +82,13 @@ $(function() {
                     for (key in data) {
                         if (key !== "id") {
                             if(gauges[key] != undefined) {
-                                gauges[key].update(data[key])
+                                if (key.indexOf("direccion") != -1){
+                                    gauges[key].update(gauges[key].value = data[key]);
+                                } else {
+                                    gauges[key].update(data[key])
+                                }
+                                updateColourCA(key,data[key]);
+                                
                                 charts[key].series[0].data.shift()
                                 charts[key].series[0].data.push({x: timestamp, y: data[key], y0: 0})
                                 charts[key].update()
